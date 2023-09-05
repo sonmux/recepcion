@@ -32,7 +32,7 @@ const CompShowCompus = () => {
         <div className='container'>
             <div className='row'>
                 <div className='col'>
-                <Link to={`/create`} className='btn btn-primary mt-2 mb-2'>Agregar Computadora</Link>
+                <Link to={`/createCompu`} className='btn btn-primary mt-2 mb-2'>Agregar Computadora</Link>
                     <table className='table'>
                         <thead className='table-primary'>
                             <tr>
@@ -55,7 +55,7 @@ const CompShowCompus = () => {
                             {compus.map((compu) => (
                                 <tr key={compu.id}>
                                     <td>
-                                        <Link to={`/edit/${compu.id}`} className='btn btn-info'><i className="fa-solid fa-pen-to-square"></i></Link>
+                                        <Link to={`/editCompu/${compu.id}`} className='btn btn-info'><i className="fa-solid fa-pen-to-square"></i></Link>
                                         <button onClick={() => deleteCompu(compu.id)} className='btn btn-danger'><i className="fa-solid fa-trash"></i></button>
                                     </td>
                                     <td>{compu.marca}</td>

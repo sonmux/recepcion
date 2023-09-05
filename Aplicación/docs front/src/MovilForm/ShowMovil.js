@@ -23,7 +23,7 @@ const CompShowMovil = () => {
 
     //* procedimiento para eliminar un dispositivo movil
     const deleteMovil = async (id) => {
-        await axios.delete(`${URI}${parseInt(id)}`)
+        await axios.delete(`${URI}${id}`)
         getMovils()
     }
 
@@ -32,7 +32,7 @@ const CompShowMovil = () => {
         <div className='container'>
             <div className='row'>
                 <div className='col'>
-                <Link to={`/create`} className='btn btn-primary mt-2 mb-2'>Agregar Dispositivo Movil</Link>
+                <Link to={`/createMovil`} className='btn btn-primary mt-2 mb-2'>Agregar Dispositivo Movil</Link>
                     <table className='table'>
                         <thead className='table-primary'>
                             <tr>
@@ -49,9 +49,9 @@ const CompShowMovil = () => {
                         </thead>
                         <tbody>
                             {movils.map((movil) => (
-                                <tr key={"M"+toString(movil.id)}>
+                                <tr key={movil.id}>
                                     <td>
-                                        <Link to={`/edit/${movil.id}`} className='btn btn-info'><i className="fa-solid fa-pen-to-square"></i></Link>
+                                        <Link to={`/editMovil/${movil.id}`} className='btn btn-info'><i className="fa-solid fa-pen-to-square"></i></Link>
                                         <button onClick={() => deleteMovil(movil.id)} className='btn btn-danger'><i className="fa-solid fa-trash"></i></button>
                                     </td>
                                     <td>{movil.marca}</td>

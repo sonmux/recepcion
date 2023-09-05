@@ -7,6 +7,7 @@ import CompCreateCompu from './CompuForm/CreateCompu';
 import CompEditCompu from './CompuForm/EditCompu';
 import CompCreateMovil from './MovilForm/CreateMovil';
 import CompShowMovil from './MovilForm/ShowMovil';
+import CompEditMovil from './MovilForm/EditMovil';
 
 //* importamos el router
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -30,7 +31,8 @@ function App() {
           />
           <Route path='/createCompu' element={<CompCreateCompu/>} />
           <Route path='/createMovil' element={<CompCreateMovil/>} />
-          <Route path='/edit/:id' element={<CompEditCompu/>} />
+          <Route path='/editCompu/:id' element={<CompEditCompu/>} />
+          <Route path='/editMovil/:id' element={<CompEditMovil/>} />
         </Routes>
       </BrowserRouter>
     </div>
