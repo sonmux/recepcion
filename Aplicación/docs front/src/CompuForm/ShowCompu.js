@@ -66,7 +66,7 @@ const CompShowCompus = () => {
                                     <td>{compu.serieDisco}</td>
                                     <td>{compu.sistemaOperativo}</td>
                                     <td>{compu.contraseñaDispositivo}</td>
-                                    <td>{compu.foto1}</td>
+                                    <td><img src={compu.foto1} alt=""/></td>
                                     <td>{compu.foto2}</td>
                                     <td>{compu.foto3}</td>
                                     <td>{compu.foto4}</td>

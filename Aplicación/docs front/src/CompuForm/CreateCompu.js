@@ -5,6 +5,8 @@ import {useState} from 'react'
 //* importar react-router-dom
 import {useNavigate} from 'react-router-dom'
 
+import { useRef } from "react";
+
 //* hacemos una constante para las rutas del back
 const URI = 'http://localhost:8000/compu/'
 
@@ -44,7 +46,21 @@ const CompCreateCompu = () => {
         })
         navigate('/')
     }
-    
+
+    //?-------------------
+    const inputRef = useRef(null);
+    const [image,setImage]=useState("")
+    const handleImageClick = () => {
+        inputRef.current.click()
+    }
+    const handleImageChange = (event) => {
+        const file = event.target.files[0]
+        console.log(file)
+        setImage(event.target.files[0])
+        setFotografia1(URL.createObjectURL(event.target.files[0]))
+    }
+
+
     return(
         <div>
             <h3>Agregar computadora</h3>
@@ -121,13 +137,14 @@ const CompCreateCompu = () => {
                         className="form-control"
                     />
                 </div>
-                <div className="mb-3">
-                    <label className="form-label">Fotografia1</label>
+                <div className="mb-3" onClick={handleImageClick}>
+                    {image ? (<img src={URL.createObjectURL(image)} alt=""/>) :
+                    (<img src="https://cdn-icons-png.flaticon.com/512/492/492705.png" alt=""/>)}
                     <input 
-                        value={Fotografia1}
-                        onChange={(e) => setFotografia1(e.target.value)}
-                        type="text"
-                        className="form-control"
+                        type="file" 
+                        ref={inputRef}
+                        accept="image/*"
+                        onChange={handleImageChange}
                     />
                 </div>
                 <div className="mb-3">
