@@ -1,6 +1,7 @@
 //* importamos las librerias
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { useRef } from "react";
 import { useNavigate, useParams } from 'react-router-dom'
 
 //* hacemos una constante para las rutas del back
@@ -64,6 +65,19 @@ const CompEditCompu = () => {
         setFotografia2(res.data.foto2)
         setFotografia3(res.data.foto3)
         setFotografia4(res.data.foto4)
+    }
+
+    //? Función para seleccionar foto1
+    const inputRef = useRef(null);
+    const [image,setImage]=useState("")
+    const handleImageClick = () => {
+        inputRef.current.click()
+    }
+    const handleImageChange = (event) => {
+        const file = event.target.files[0]
+        console.log(file)
+        setImage(event.target.files[0])
+        setFotografia1(URL.createObjectURL(event.target.files[0]))
     }
 
     return (
@@ -142,13 +156,14 @@ const CompEditCompu = () => {
                         className="form-control"
                     />
                 </div>
-                <div className="mb-3">
-                    <label className="form-label">Fotografia1</label>
+                <div className="mb-3" onClick={handleImageClick}>
+                    {image ? (<img src={URL.createObjectURL(image)} alt=""/>) :
+                    (<img src={Fotografia1} alt=""/>)}
                     <input 
-                        value={Fotografia1}
-                        onChange={(e) => setFotografia1(e.target.value)}
-                        type="text"
-                        className="form-control"
+                        type="file" 
+                        ref={inputRef}
+                        accept="image/*"
+                        onChange={handleImageChange}
                     />
                 </div>
                 <div className="mb-3">

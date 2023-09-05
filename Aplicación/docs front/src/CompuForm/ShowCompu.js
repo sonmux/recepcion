@@ -67,8 +67,8 @@ const CompShowCompus = () => {
                                     <td>{compu.sistemaOperativo}</td>
                                     <td>{compu.contraseñaDispositivo}</td>
                                     <td><img src={compu.foto1} alt=""/></td>
-                                    <td>{compu.foto2}</td>
-                                    <td>{compu.foto3}</td>
+                                    <td><img src={compu.foto2} alt=""/></td>
+                                    <td><img src={compu.foto3} alt=""/></td>
                                     <td>{compu.foto4}</td>
                                 </tr>
                             ))}

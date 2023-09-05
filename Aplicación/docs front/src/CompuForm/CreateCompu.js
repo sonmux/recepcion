@@ -2,10 +2,9 @@
 import axios from "axios";
 //* importar las librerias de react
 import {useState} from 'react'
+import { useRef } from "react";
 //* importar react-router-dom
 import {useNavigate} from 'react-router-dom'
-
-import { useRef } from "react";
 
 //* hacemos una constante para las rutas del back
 const URI = 'http://localhost:8000/compu/'
@@ -47,17 +46,51 @@ const CompCreateCompu = () => {
         navigate('/')
     }
 
-    //?-------------------
+    //? Función para seleccionar foto1
     const inputRef = useRef(null);
+    const inputRef2 = useRef(null);
+    const inputRef3 = useRef(null);
+    const inputRef4 = useRef(null);
     const [image,setImage]=useState("")
+    const [image2,setImage2]=useState("")
+    const [image3,setImage3]=useState("")
+    const [image4,setImage4]=useState("")
+
     const handleImageClick = () => {
         inputRef.current.click()
+    }
+    const handleImageClick2 = () => {
+        inputRef2.current.click()
+    }
+    const handleImageClick3 = () => {
+        inputRef3.current.click()
+    }
+    const handleImageClick4 = () => {
+        inputRef4.current.click()
     }
     const handleImageChange = (event) => {
         const file = event.target.files[0]
         console.log(file)
         setImage(event.target.files[0])
         setFotografia1(URL.createObjectURL(event.target.files[0]))
+    }
+    const handleImageChange2 = (event) => {
+        const file2 = event.target.files[0]
+        console.log(file2)
+        setImage2(event.target.files[0])
+        setFotografia2(URL.createObjectURL(event.target.files[0]))
+    }
+    const handleImageChange3 = (event) => {
+        const file3 = event.target.files[0]
+        console.log(file3)
+        setImage3(event.target.files[0])
+        setFotografia3(URL.createObjectURL(event.target.files[0]))
+    }
+    const handleImageChange4 = (event) => {
+        const file4 = event.target.files[0]
+        console.log(file4)
+        setImage4(event.target.files[0])
+        setFotografia4(URL.createObjectURL(event.target.files[0]))
     }
 
 
@@ -147,31 +180,34 @@ const CompCreateCompu = () => {
                         onChange={handleImageChange}
                     />
                 </div>
-                <div className="mb-3">
-                    <label className="form-label">Fotografia2</label>
+                <div className="mb-3" onClick={handleImageClick2}>
+                    {image2 ? (<img src={URL.createObjectURL(image2)} alt=""/>) :
+                    (<img src="https://cdn-icons-png.flaticon.com/512/492/492705.png" alt=""/>)}
                     <input 
-                        value={Fotografia2}
-                        onChange={(e) => setFotografia2(e.target.value)}
-                        type="text"
-                        className="form-control"
+                        type="file" 
+                        ref={inputRef2}
+                        accept="image/*"
+                        onChange={handleImageChange2}
                     />
                 </div>
-                <div className="mb-3">
-                    <label className="form-label">Fotografia3</label>
+                <div className="mb-3" onClick={handleImageClick3}>
+                    {image3 ? (<img src={URL.createObjectURL(image3)} alt=""/>) :
+                    (<img src="https://cdn-icons-png.flaticon.com/512/492/492705.png" alt=""/>)}
                     <input 
-                        value={Fotografia3}
-                        onChange={(e) => setFotografia3(e.target.value)}
-                        type="text"
-                        className="form-control"
+                        type="file" 
+                        ref={inputRef3}
+                        accept="image/*"
+                        onChange={handleImageChange3}
                     />
                 </div>
-                <div className="mb-3">
-                    <label className="form-label">Fotografia4</label>
+                <div className="mb-3" onClick={handleImageClick4}>
+                    {image4 ? (<img src={URL.createObjectURL(image4)} alt=""/>) :
+                    (<img src="https://cdn-icons-png.flaticon.com/512/492/492705.png" alt=""/>)}
                     <input 
-                        value={Fotografia4}
-                        onChange={(e) => setFotografia4(e.target.value)}
-                        type="text"
-                        className="form-control"
+                        type="file" 
+                        ref={inputRef4}
+                        accept="image/*"
+                        onChange={handleImageChange4}
                     />
                 </div>
                 <div className="mb-3">
