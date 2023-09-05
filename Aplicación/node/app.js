@@ -6,11 +6,13 @@ import cors from 'cors'
 import db from "./database/db.js"
 //*importamos nuestro enrutador
 import router from "./routes/routes.js";
+import MovilRouter from "./routes/MovilRoutes.js"
 
 const app = express()
 app.use(cors())
 app.use(express.json())
-app.use('/blogs', router)
+app.use('/compu', router)
+app.use('/movil', MovilRouter)
 
 try {
     await db.authenticate()

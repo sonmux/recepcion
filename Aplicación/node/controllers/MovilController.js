@@ -1,26 +1,25 @@
-//* importamos el Modelo
-import BlogModel from "../models/BlogModel.js";
+//* importamos el modelo
+import MovilModel from "../models/MovilModel.js";
 
-//* Metodo para el CRUD de computadora
+//* Metodo para el CRUD de dispositivos Moviles
 
-//! Mostrar todos los registros de computadoras
-export const getAllCompu = async (req, res) => {
+//! Mostrar todos los registros de moviles
+export const getAllMovil = async (req, res) => {
     try {
-        const compus = await BlogModel.findAll()
-        res.json(compus)
+        const movils = await MovilModel.findAll()
+        res.json(movils)
     } catch (error) {
         res.json({
             "auth":false,
-            "hola":"hola",
             message: error.message
         })
     }
 }
 
-//! Mostrar sol un registro computadora
-export const getCompu = async (req, res) => {
+//! Mostrar solo un registro movil
+export const getMovil = async (req, res) => {
     try {
-        const compu = await BlogModel.findAll({
+        const compu = await MovilModel.findAll({
             where:{id:req.params.id}
         })
         res.json(compu[0])
@@ -32,13 +31,13 @@ export const getCompu = async (req, res) => {
     }
 }
 
-//! Crear un registro computadora
-export const createCompu = async (req, res) => {
+//! Crear un registro dispositivo movil
+export const createMovil = async (req, res) => {
     try {
-        await BlogModel.create(req.body)
+        await MovilModel.create(req.body)
         res.json({
             "auth":true,
-            "mesage":"Orden creada!"
+            "message": "Dispositivo Movil Ingresado"
         })
     } catch (error) {
         res.json({
@@ -48,11 +47,11 @@ export const createCompu = async (req, res) => {
     }
 }
 
-//! Actualizar un registro computadora
-export const updateCompu = async (req, res) => {
+//! Actualizar un registro dispositivo movil
+export const updateMovil = async (req, res) => {
     try {
-        await BlogModel.update(req.body,{
-            where:{id: req.params.id}
+        await MovilModel.update(req.body,{
+            where:{id:req.params.id}
         })
         res.json({
             "auth":true,
@@ -66,10 +65,10 @@ export const updateCompu = async (req, res) => {
     }
 }
 
-//! Eliminar un registro computadora
-export const deleteCompu = async (req, res) => {
+//! Eliminar un registro dispositivo movil
+export const deleteMovil = async (req, res) => {
     try {
-        await BlogModel.destroy({
+        await MovilModel.destroy({
             where: {id: req.params.id}
         })
         res.json({

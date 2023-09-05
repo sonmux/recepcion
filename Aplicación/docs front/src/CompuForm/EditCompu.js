@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 //* hacemos una constante para las rutas del back
-const URI = 'http://localhost:8000/blogs/'
+const URI = 'http://localhost:8000/compu/'
 
 const CompEditCompu = () => {
     const [Marca,setMarca]=useState('')

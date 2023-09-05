@@ -1,6 +1,6 @@
 //* importamos express
 import express from 'express'
-import { createCompu, deleteCompu, getAllCompu, getCompu, updateCompu } from '../controllers/BlogController.js'
+import { createCompu, deleteCompu, getAllCompu, getCompu, updateCompu } from '../controllers/CompuController.js'
 
 const router = express.Router()
 

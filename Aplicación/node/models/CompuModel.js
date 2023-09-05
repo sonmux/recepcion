@@ -4,8 +4,9 @@ import db from '../database/db.js';
 //* Importar sequelize
 import { DataTypes } from "sequelize";
 
-//! en define colocamos el nombre de nuestra tabla
-const BlogModel = db.define('computadoraPs',{
+//! en "define" colocamos el nombre de nuestra tabla
+//? para sequelize el nombre de las tablas en la db deben estar escritas en plural
+const CompuModel = db.define('computadoraPs',{
     // AUTO INCREMENT id: {type: DataTypes.INTEGER},
     marca: {type: DataTypes.STRING},
     modelo: {type: DataTypes.STRING},
@@ -22,4 +23,4 @@ const BlogModel = db.define('computadoraPs',{
     idCliente: {type: DataTypes.STRING},
 })
 
-export default BlogModel
+export default CompuModel

@@ -86,3 +86,28 @@ select*from computadoraPs;
 
 drop table computadoraPs;
 
+
+create table movilPs(
+	id int primary key auto_increment,
+    marca varchar(250) not null,
+    modelo varchar(250) not null,
+    imei varchar(250) not null,
+    serie varchar(250) not null,
+    color varchar(250) not null,
+    foto1 varchar(250) not null,
+    foto2 varchar(250) not null,
+    foto3 varchar(250) not null,
+    idCliente varchar(250) not null,
+    createdAt date,
+    updatedAt date
+);
+
+insert into movilPs(marca, modelo, imei, serie, color, foto1, foto2, foto3, idCliente)
+values ("marca1","modelo1", "imei1", "serie1", "color1", "foto1", "foto2", "foto3", "cliente1");
+
+select*from movilPs;
+
+drop table movilPs;
+
+
+

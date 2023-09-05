@@ -6,7 +6,7 @@ import {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 
 //* hacemos una constante para las rutas del back
-const URI = 'http://localhost:8000/blogs/'
+const URI = 'http://localhost:8000/compu/'
 
 const CompShowCompus = () => {
     const [compus, setCompus] = useState([])
