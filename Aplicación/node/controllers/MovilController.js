@@ -19,10 +19,10 @@ export const getAllMovil = async (req, res) => {
 //! Mostrar solo un registro movil
 export const getMovil = async (req, res) => {
     try {
-        const compu = await MovilModel.findAll({
+        const movil = await MovilModel.findAll({
             where:{id:req.params.id}
         })
-        res.json(compu[0])
+        res.json(movil[0])
     } catch (error) {
         res.json({
             "auth":false,

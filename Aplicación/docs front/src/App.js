@@ -8,6 +8,8 @@ import CompEditCompu from './CompuForm/EditCompu';
 import CompCreateMovil from './MovilForm/CreateMovil';
 import CompShowMovil from './MovilForm/ShowMovil';
 import CompEditMovil from './MovilForm/EditMovil';
+import CompCreateCliente from './ClienteForm/CreateCliente';
+import CompCreateAcuerdo from './AcuerdoForm/CreateAcuerdo';
 
 //* importamos el router
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -20,8 +22,10 @@ function App() {
       </header>
       <BrowserRouter>
         <Routes>
+        <Route path='/' element={<CompCreateCliente/>} />
+        <Route path='/Acuerdo' element={<CompCreateAcuerdo/>} />
           <Route
-            path='/'
+            path='/Dispositivo'
             element={
               <>
                 <CompShowCompus/>
@@ -29,10 +33,10 @@ function App() {
               </>
             }
           />
-          <Route path='/createCompu' element={<CompCreateCompu/>} />
-          <Route path='/createMovil' element={<CompCreateMovil/>} />
-          <Route path='/editCompu/:id' element={<CompEditCompu/>} />
-          <Route path='/editMovil/:id' element={<CompEditMovil/>} />
+          <Route path='/Dispositivo/CreateCompu' element={<CompCreateCompu/>} />
+          <Route path='/Dispositivo/CreateMovil' element={<CompCreateMovil/>} />
+          <Route path='/Dispositivo/EditCompu/:id' element={<CompEditCompu/>} />
+          <Route path='/Dispositivo/EditMovil/:id' element={<CompEditMovil/>} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -32,7 +32,7 @@ const CompShowCompus = () => {
         <div className='container'>
             <div className='row'>
                 <div className='col'>
-                <Link to={`/createCompu`} className='btn btn-primary mt-2 mb-2'>Agregar Computadora</Link>
+                <Link to={`/Dispositivo/createCompu`} className='btn btn-primary mt-2 mb-2'>Agregar Computadora</Link>
                     <table className='table'>
                         <thead className='table-primary'>
                             <tr>
@@ -69,7 +69,7 @@ const CompShowCompus = () => {
                                     <td><img src={compu.foto1} alt=""/></td>
                                     <td><img src={compu.foto2} alt=""/></td>
                                     <td><img src={compu.foto3} alt=""/></td>
-                                    <td>{compu.foto4}</td>
+                                    <td><img src={compu.foto4} alt=""/></td>
                                 </tr>
                             ))}
                         </tbody>

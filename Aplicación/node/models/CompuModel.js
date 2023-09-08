@@ -5,7 +5,7 @@ import db from '../database/db.js';
 import { DataTypes } from "sequelize";
 
 //! en "define" colocamos el nombre de nuestra tabla
-//? para sequelize el nombre de las tablas en la db deben estar escritas en plural
+//? para sequelize el nombre de las tablas, en la db, deben estar escritas en plural
 const CompuModel = db.define('computadoraPs',{
     // AUTO INCREMENT id: {type: DataTypes.INTEGER},
     marca: {type: DataTypes.STRING},

@@ -2,17 +2,17 @@
 import express from 'express'
 import { createCompu, deleteCompu, getAllCompu, getCompu, updateCompu } from '../controllers/CompuController.js'
 
-const router = express.Router()
+const CompuRouter = express.Router()
 
 //? Ruta para traer todos los registros de computadoras
-router.get('/', getAllCompu)
+CompuRouter.get('/', getAllCompu)
 //? Ruta para traer solo un registro computadora
-router.get('/:id', getCompu)
+CompuRouter.get('/:id', getCompu)
 //? Ruta para crear un registro computadora
-router.post('/', createCompu)
+CompuRouter.post('/', createCompu)
 //? Ruta para actualizar un registro computadora
-router.put('/:id', updateCompu)
+CompuRouter.put('/:id', updateCompu)
 //? Ruta para eliminar un registro computadora
-router.delete('/:id', deleteCompu)
+CompuRouter.delete('/:id', deleteCompu)
 
-export default router
+export default CompuRouter

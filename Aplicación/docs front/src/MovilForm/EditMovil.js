@@ -31,7 +31,7 @@ const CompEditMovil = () => {
             foto2:Fotografia2,
             foto3:Fotografia3,
         })
-        navigate('/')
+        navigate('/Dispositivo')
     }
 
     useEffect(() => {
@@ -49,6 +49,47 @@ const CompEditMovil = () => {
         setFotografia2(res.data.foto2)
         setFotografia3(res.data.foto3)
     }
+
+    //? Función para seleccionar las fotos
+    const [imageBase64, setImageBase64] = useState('');
+    const handleImageUpload1 = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64 = e.target.result;
+            setImageBase64(base64);
+            setFotografia1(base64)
+        };
+        reader.readAsDataURL(file);
+        }
+    };
+    const [image2Base64, setImage2Base64] = useState('');
+    const handleImageUpload2 = (event2) => {
+        const file = event2.target.files[0];
+        if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64 = e.target.result;
+            setImage2Base64(base64);
+            setFotografia2(base64)
+        };
+        reader.readAsDataURL(file);
+        }
+    };
+    const [image3Base64, setImage3Base64] = useState('');
+    const handleImageUpload3 = (event3) => {
+        const file = event3.target.files[0];
+        if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64 = e.target.result;
+            setImage3Base64(base64);
+            setFotografia3(base64)
+        };
+        reader.readAsDataURL(file);
+        }
+    };
 
     return(
         <div>
@@ -100,30 +141,33 @@ const CompEditMovil = () => {
                     />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Fotografia1</label>
+                    {imageBase64 ? (<img src={imageBase64} alt=""/>) :
+                    (<img src={Fotografia1} alt=""/>)}
                     <input 
-                        value={Fotografia1}
-                        onChange={(e) => setFotografia1(e.target.value)}
-                        type="text"
+                        type="file" 
+                        accept="image/*"
                         className="form-control"
+                        onChange={handleImageUpload1}
                     />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Fotografia2</label>
+                    {image2Base64 ? (<img src={image2Base64} alt=""/>) :
+                    (<img src={Fotografia2} alt=""/>)}
                     <input 
-                        value={Fotografia2}
-                        onChange={(e) => setFotografia2(e.target.value)}
-                        type="text"
+                        type="file" 
+                        accept="image/*"
                         className="form-control"
+                        onChange={handleImageUpload2}
                     />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Fotografia3</label>
+                    {image3Base64 ? (<img src={image3Base64} alt=""/>) :
+                    (<img src={Fotografia3} alt=""/>)}
                     <input 
-                        value={Fotografia3}
-                        onChange={(e) => setFotografia3(e.target.value)}
-                        type="text"
+                        type="file" 
+                        accept="image/*"
                         className="form-control"
+                        onChange={handleImageUpload3}
                     />
                 </div>
                 <button type='submit' className="btn btn-primary">Actualizar</button>

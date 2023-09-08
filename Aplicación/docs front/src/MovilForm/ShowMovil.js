@@ -32,7 +32,7 @@ const CompShowMovil = () => {
         <div className='container'>
             <div className='row'>
                 <div className='col'>
-                <Link to={`/createMovil`} className='btn btn-primary mt-2 mb-2'>Agregar Dispositivo Movil</Link>
+                <Link to={`/Dispositivo/createMovil`} className='btn btn-primary mt-2 mb-2'>Agregar Dispositivo Movil</Link>
                     <table className='table'>
                         <thead className='table-primary'>
                             <tr>
@@ -59,9 +59,9 @@ const CompShowMovil = () => {
                                     <td>{movil.imei}</td>
                                     <td>{movil.serie}</td>
                                     <td>{movil.color}</td>
-                                    <td>{movil.foto1}</td>
-                                    <td>{movil.foto2}</td>
-                                    <td>{movil.foto3}</td>
+                                    <td><img src={movil.foto1} alt=""/></td>
+                                    <td><img src={movil.foto2} alt=""/></td>
+                                    <td><img src={movil.foto3} alt=""/></td>
                                 </tr>
                             ))}
                         </tbody>

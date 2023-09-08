@@ -1,40 +1,43 @@
 //* importar axios
-import axios from "axios";
+import axios from "axios"
 //* importar las librerias de react
 import {useState} from 'react'
 //* importar react-router-dom
-import{useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 //* hacemos una constante para las rutas del back
-const URI = 'http://localhost:8000/movil/'
+const URI = 'http://localhost:8000/cliente/'
 
-const CompCreateMovil = () => {
-    const [Marca,setMarca]=useState('')
-    const [Modelo,setModelo]=useState('')
-    const [Imei,setImei]=useState('') 
-    const [Serie,setSerie]=useState('')
-    const [Color,setColor]=useState('') 
-    const [Fotografia1,setFotografia1]=useState('') 
-    const [Fotografia2,setFotografia2]=useState('') 
-    const [Fotografia3,setFotografia3]=useState('') 
-    //const [IDcliente,setIDcliente]=useState('') 
+//* borra la variable de sesión
+sessionStorage.removeItem('Idcliente');
+
+const CompCreateCliente = () => {
+    const [Idcliente,setIdcliente]=useState('')
+    const [NombreCliente,setNombreCliente]=useState('')
+    const [DirecciónCliente,setDirecciónCliente]=useState('')
+    const [Telefono,setTelefono]=useState(0)
+    const [Correo,setCorreo]=useState('')
+    const [Nit,setNit]=useState(0)
+    const [DpiFrontal,setDpiFrontal]=useState('')
+    const [DpiReverso,setDpiReverso]=useState('')
     const navigate = useNavigate()
 
-    //* procedimiento para guardad datos
     const store = async (e) => {
         e.preventDefault()
         await axios.post(URI,{
-            marca:Marca,
-            modelo:Modelo,
-            imei:Imei,
-            serie:Serie,
-            color:Color,
-            foto1:Fotografia1,
-            foto2:Fotografia2,
-            foto3:Fotografia3,
-            idCliente:sessionStorage.getItem("Idcliente")
+            id: Idcliente,
+            nombreCliente: NombreCliente,
+            direcciónCliente: DirecciónCliente,
+            telefono: parseInt(Telefono),
+            correo: Correo,
+            nit: parseInt(Nit),
+            dpiFrontal: DpiFrontal,
+            dpiReverso: DpiReverso
         })
-        navigate('/Dispositivo')
+        //* guarda el id como variable de sesión
+        sessionStorage.setItem("Idcliente", Idcliente);
+        //* ---------
+        navigate('/Acuerdo')
     }
 
     //? Función para seleccionar las fotos
@@ -46,7 +49,7 @@ const CompCreateMovil = () => {
         reader.onload = (e) => {
             const base64 = e.target.result;
             setImageBase64(base64);
-            setFotografia1(base64)
+            setDpiFrontal(base64)
         };
         reader.readAsDataURL(file);
         }
@@ -59,20 +62,7 @@ const CompCreateMovil = () => {
         reader.onload = (e) => {
             const base64 = e.target.result;
             setImage2Base64(base64);
-            setFotografia2(base64)
-        };
-        reader.readAsDataURL(file);
-        }
-    };
-    const [image3Base64, setImage3Base64] = useState('');
-    const handleImageUpload3 = (event3) => {
-        const file = event3.target.files[0];
-        if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const base64 = e.target.result;
-            setImage3Base64(base64);
-            setFotografia3(base64)
+            setDpiReverso(base64)
         };
         reader.readAsDataURL(file);
         }
@@ -80,49 +70,58 @@ const CompCreateMovil = () => {
 
     return(
         <div>
-            <h3>Agregar dispositivo movil</h3>
+            <h3>Agregar cliente</h3>
             <form onSubmit={store}>
-                <div className="mb-3">
-                    <label className="form-label">Marca</label>
+            <div className="mb-3">
+                    <label className="form-label">ID cliente</label>
                     <input 
-                        value={Marca}
-                        onChange={(e) => setMarca(e.target.value)}
+                        value={Idcliente}
+                        onChange={(e) => setIdcliente(e.target.value)}
                         type="text"
                         className="form-control"
                     />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Modelo</label>
+                    <label className="form-label">Nombre Completo</label>
                     <input 
-                        value={Modelo}
-                        onChange={(e) => setModelo(e.target.value)}
+                        value={NombreCliente}
+                        onChange={(e) => setNombreCliente(e.target.value)}
                         type="text"
                         className="form-control"
                     />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">IMEI</label>
+                    <label className="form-label">Dirección</label>
                     <input 
-                        value={Imei}
-                        onChange={(e) => setImei(e.target.value)}
+                        value={DirecciónCliente}
+                        onChange={(e) => setDirecciónCliente(e.target.value)}
                         type="text"
                         className="form-control"
                     />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Serie</label>
+                    <label className="form-label">telefono</label>
                     <input 
-                        value={Serie}
-                        onChange={(e) => setSerie(e.target.value)}
+                        value={Telefono}
+                        onChange={(e) => setTelefono(e.target.value)}
                         type="text"
                         className="form-control"
                     />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Color</label>
+                    <label className="form-label">Correo</label>
                     <input 
-                        value={Color}
-                        onChange={(e) => setColor(e.target.value)}
+                        value={Correo}
+                        onChange={(e) => setCorreo(e.target.value)}
+                        type="text"
+                        className="form-control"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">NIT</label>
+                    <input 
+                        value={Nit}
+                        onChange={(e) => setNit(e.target.value)}
                         type="text"
                         className="form-control"
                     />
@@ -147,20 +146,9 @@ const CompCreateMovil = () => {
                         onChange={handleImageUpload2}
                     />
                 </div>
-                <div className="mb-3">
-                    {image3Base64 ? (<img src={image3Base64} alt=""/>) :
-                    (<img src="https://cdn-icons-png.flaticon.com/512/492/492705.png" alt=""/>)}
-                    <input 
-                        type="file" 
-                        accept="image/*"
-                        className="form-control"
-                        onChange={handleImageUpload3}
-                    />
-                </div>
-                <button type='submit' className="btn btn-primary">Agregar</button>
+                <button type='submit' className="btn btn-primary">Agregar Cliente</button>
             </form>
         </div>
     )
 }
-
-export default CompCreateMovil
+export default CompCreateCliente

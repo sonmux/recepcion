@@ -2,7 +2,6 @@
 import axios from "axios";
 //* importar las librerias de react
 import {useState} from 'react'
-import { useRef } from "react";
 //* importar react-router-dom
 import {useNavigate} from 'react-router-dom'
 
@@ -22,12 +21,27 @@ const CompCreateCompu = () => {
     const [Fotografia2,setFotografia2]=useState('') 
     const [Fotografia3,setFotografia3]=useState('') 
     const [Fotografia4,setFotografia4]=useState('') 
-    const [IDcliente,setIDcliente]=useState('') 
+    //const [IDcliente,setIDcliente]=useState('') 
     const navigate = useNavigate()
 
     //*procedimiento para guardar datos
     const store = async (e) => {
         e.preventDefault()
+        console.log({
+            marca:Marca,
+            modelo:Modelo,
+            serie:Serie,
+            color:Color,
+            capacidadDisco:parseInt(Capacidad),
+            serieDisco:SerieDisco,
+            sistemaOperativo:Sistema,
+            contraseñaDispositivo:Contraseña,
+            foto1:Fotografia1,
+            foto2:Fotografia2,
+            foto3:Fotografia3,
+            foto4:Fotografia4,
+            idCliente:sessionStorage.getItem("Idcliente")
+        })
         await axios.post(URI,{
             marca:Marca,
             modelo:Modelo,
@@ -41,57 +55,64 @@ const CompCreateCompu = () => {
             foto2:Fotografia2,
             foto3:Fotografia3,
             foto4:Fotografia4,
-            idCliente:IDcliente
+            idCliente:sessionStorage.getItem("Idcliente")
         })
-        navigate('/')
+        navigate('/Dispositivo')
     }
 
-    //? Función para seleccionar foto1
-    const inputRef = useRef(null);
-    const inputRef2 = useRef(null);
-    const inputRef3 = useRef(null);
-    const inputRef4 = useRef(null);
-    const [image,setImage]=useState("")
-    const [image2,setImage2]=useState("")
-    const [image3,setImage3]=useState("")
-    const [image4,setImage4]=useState("")
-
-    const handleImageClick = () => {
-        inputRef.current.click()
-    }
-    const handleImageClick2 = () => {
-        inputRef2.current.click()
-    }
-    const handleImageClick3 = () => {
-        inputRef3.current.click()
-    }
-    const handleImageClick4 = () => {
-        inputRef4.current.click()
-    }
-    const handleImageChange = (event) => {
-        const file = event.target.files[0]
-        console.log(file)
-        setImage(event.target.files[0])
-        setFotografia1(URL.createObjectURL(event.target.files[0]))
-    }
-    const handleImageChange2 = (event) => {
-        const file2 = event.target.files[0]
-        console.log(file2)
-        setImage2(event.target.files[0])
-        setFotografia2(URL.createObjectURL(event.target.files[0]))
-    }
-    const handleImageChange3 = (event) => {
-        const file3 = event.target.files[0]
-        console.log(file3)
-        setImage3(event.target.files[0])
-        setFotografia3(URL.createObjectURL(event.target.files[0]))
-    }
-    const handleImageChange4 = (event) => {
-        const file4 = event.target.files[0]
-        console.log(file4)
-        setImage4(event.target.files[0])
-        setFotografia4(URL.createObjectURL(event.target.files[0]))
-    }
+    //? Función para seleccionar las fotos
+    const [imageBase64, setImageBase64] = useState('');
+    const handleImageUpload1 = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64 = e.target.result;
+            setImageBase64(base64);
+            setFotografia1(base64)
+        };
+        reader.readAsDataURL(file);
+        }
+    };
+    const [image2Base64, setImage2Base64] = useState('');
+    const handleImageUpload2 = (event2) => {
+        const file = event2.target.files[0];
+        if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64 = e.target.result;
+            setImage2Base64(base64);
+            setFotografia2(base64)
+        };
+        reader.readAsDataURL(file);
+        }
+    };
+    const [image3Base64, setImage3Base64] = useState('');
+    const handleImageUpload3 = (event3) => {
+        const file = event3.target.files[0];
+        if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64 = e.target.result;
+            setImage3Base64(base64);
+            setFotografia3(base64)
+        };
+        reader.readAsDataURL(file);
+        }
+    };
+    const [image4Base64, setImage4Base64] = useState('');
+    const handleImageUpload4 = (event4) => {
+        const file = event4.target.files[0];
+        if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64 = e.target.result;
+            setImage4Base64(base64);
+            setFotografia4(base64)
+        };
+        reader.readAsDataURL(file);
+        }
+    };
 
 
     return(
@@ -170,53 +191,44 @@ const CompCreateCompu = () => {
                         className="form-control"
                     />
                 </div>
-                <div className="mb-3" onClick={handleImageClick}>
-                    {image ? (<img src={URL.createObjectURL(image)} alt=""/>) :
+                <div className="mb-3">
+                    {imageBase64 ? (<img src={imageBase64} alt=""/>) :
                     (<img src="https://cdn-icons-png.flaticon.com/512/492/492705.png" alt=""/>)}
                     <input 
                         type="file" 
-                        ref={inputRef}
                         accept="image/*"
-                        onChange={handleImageChange}
-                    />
-                </div>
-                <div className="mb-3" onClick={handleImageClick2}>
-                    {image2 ? (<img src={URL.createObjectURL(image2)} alt=""/>) :
-                    (<img src="https://cdn-icons-png.flaticon.com/512/492/492705.png" alt=""/>)}
-                    <input 
-                        type="file" 
-                        ref={inputRef2}
-                        accept="image/*"
-                        onChange={handleImageChange2}
-                    />
-                </div>
-                <div className="mb-3" onClick={handleImageClick3}>
-                    {image3 ? (<img src={URL.createObjectURL(image3)} alt=""/>) :
-                    (<img src="https://cdn-icons-png.flaticon.com/512/492/492705.png" alt=""/>)}
-                    <input 
-                        type="file" 
-                        ref={inputRef3}
-                        accept="image/*"
-                        onChange={handleImageChange3}
-                    />
-                </div>
-                <div className="mb-3" onClick={handleImageClick4}>
-                    {image4 ? (<img src={URL.createObjectURL(image4)} alt=""/>) :
-                    (<img src="https://cdn-icons-png.flaticon.com/512/492/492705.png" alt=""/>)}
-                    <input 
-                        type="file" 
-                        ref={inputRef4}
-                        accept="image/*"
-                        onChange={handleImageChange4}
+                        className="form-control"
+                        onChange={handleImageUpload1}
                     />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">IDcliente</label>
+                    {image2Base64 ? (<img src={image2Base64} alt=""/>) :
+                    (<img src="https://cdn-icons-png.flaticon.com/512/492/492705.png" alt=""/>)}
                     <input 
-                        value={IDcliente}
-                        onChange={(e) => setIDcliente(e.target.value)}
-                        type="text"
+                        type="file" 
+                        accept="image/*"
                         className="form-control"
+                        onChange={handleImageUpload2}
+                    />
+                </div>
+                <div className="mb-3">
+                    {image3Base64 ? (<img src={image3Base64} alt=""/>) :
+                    (<img src="https://cdn-icons-png.flaticon.com/512/492/492705.png" alt=""/>)}
+                    <input 
+                        type="file" 
+                        accept="image/*"
+                        className="form-control"
+                        onChange={handleImageUpload3}
+                    />
+                </div>
+                <div className="mb-3">
+                    {image4Base64 ? (<img src={image4Base64} alt=""/>) :
+                    (<img src="https://cdn-icons-png.flaticon.com/512/492/492705.png" alt=""/>)}
+                    <input 
+                        type="file" 
+                        accept="image/*"
+                        className="form-control"
+                        onChange={handleImageUpload4}
                     />
                 </div>
                 <button type='submit' className="btn btn-primary">Agregar</button>

@@ -1,7 +1,6 @@
 //* importamos las librerias
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { useRef } from "react";
 import { useNavigate, useParams } from 'react-router-dom'
 
 //* hacemos una constante para las rutas del back
@@ -44,7 +43,7 @@ const CompEditCompu = () => {
             idCliente:IDcliente
             */
         })
-        navigate('/')
+        navigate('/Dispositivo')
     }
 
     useEffect(() => {
@@ -67,18 +66,59 @@ const CompEditCompu = () => {
         setFotografia4(res.data.foto4)
     }
 
-    //? Función para seleccionar foto1
-    const inputRef = useRef(null);
-    const [image,setImage]=useState("")
-    const handleImageClick = () => {
-        inputRef.current.click()
-    }
-    const handleImageChange = (event) => {
-        const file = event.target.files[0]
-        console.log(file)
-        setImage(event.target.files[0])
-        setFotografia1(URL.createObjectURL(event.target.files[0]))
-    }
+    //? Función para seleccionar las fotos
+    const [imageBase64, setImageBase64] = useState('');
+    const handleImageUpload1 = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64 = e.target.result;
+            setImageBase64(base64);
+            setFotografia1(base64)
+        };
+        reader.readAsDataURL(file);
+        }
+    };
+    const [image2Base64, setImage2Base64] = useState('');
+    const handleImageUpload2 = (event2) => {
+        const file = event2.target.files[0];
+        if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64 = e.target.result;
+            setImage2Base64(base64);
+            setFotografia2(base64)
+        };
+        reader.readAsDataURL(file);
+        }
+    };
+    const [image3Base64, setImage3Base64] = useState('');
+    const handleImageUpload3 = (event3) => {
+        const file = event3.target.files[0];
+        if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64 = e.target.result;
+            setImage3Base64(base64);
+            setFotografia3(base64)
+        };
+        reader.readAsDataURL(file);
+        }
+    };
+    const [image4Base64, setImage4Base64] = useState('');
+    const handleImageUpload4 = (event4) => {
+        const file = event4.target.files[0];
+        if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64 = e.target.result;
+            setImage4Base64(base64);
+            setFotografia4(base64)
+        };
+        reader.readAsDataURL(file);
+        }
+    };
 
     return (
         <div>
@@ -156,41 +196,44 @@ const CompEditCompu = () => {
                         className="form-control"
                     />
                 </div>
-                <div className="mb-3" onClick={handleImageClick}>
-                    {image ? (<img src={URL.createObjectURL(image)} alt=""/>) :
+                <div className="mb-3">
+                    {imageBase64 ? (<img src={imageBase64} alt=""/>) :
                     (<img src={Fotografia1} alt=""/>)}
                     <input 
                         type="file" 
-                        ref={inputRef}
                         accept="image/*"
-                        onChange={handleImageChange}
+                        className="form-control"
+                        onChange={handleImageUpload1}
                     />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Fotografia2</label>
+                    {image2Base64 ? (<img src={image2Base64} alt=""/>) :
+                    (<img src={Fotografia2} alt=""/>)}
                     <input 
-                        value={Fotografia2}
-                        onChange={(e) => setFotografia2(e.target.value)}
-                        type="text"
+                        type="file" 
+                        accept="image/*"
                         className="form-control"
+                        onChange={handleImageUpload2}
                     />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Fotografia3</label>
+                    {image3Base64 ? (<img src={image3Base64} alt=""/>) :
+                    (<img src={Fotografia3} alt=""/>)}
                     <input 
-                        value={Fotografia3}
-                        onChange={(e) => setFotografia3(e.target.value)}
-                        type="text"
+                        type="file" 
+                        accept="image/*"
                         className="form-control"
+                        onChange={handleImageUpload3}
                     />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Fotografia4</label>
+                    {image4Base64 ? (<img src={image4Base64} alt=""/>) :
+                    (<img src={Fotografia4} alt=""/>)}
                     <input 
-                        value={Fotografia4}
-                        onChange={(e) => setFotografia4(e.target.value)}
-                        type="text"
+                        type="file" 
+                        accept="image/*"
                         className="form-control"
+                        onChange={handleImageUpload4}
                     />
                 </div>
                 <button type='submit' className="btn btn-primary">actualizar</button>
