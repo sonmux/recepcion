@@ -9,6 +9,8 @@ import CompuRouter from "./routes/CompuRoutes.js";
 import MovilRouter from "./routes/MovilRoutes.js";
 import ClienteRouter from "./routes/ClienteRoutes.js";
 import AcuerdoRouter from "./routes/AcuerdoRoutes.js";
+import MailRouter from "./routes/MailRoutes.js";
+import DispRouter from "./routes/DispositivoRoutes.js";
 
 const app = express()
 app.use(cors())
@@ -21,6 +23,8 @@ app.use('/compu', CompuRouter)
 app.use('/movil', MovilRouter)
 app.use('/cliente', ClienteRouter)
 app.use('/acuerdo', AcuerdoRouter)
+app.use('/mailAcuerdo', MailRouter)
+app.use('/disp', DispRouter)
 
 try {
     await db.authenticate()

@@ -55,7 +55,7 @@ const CompShowCompus = () => {
                             {compus.map((compu) => (
                                 <tr key={compu.id}>
                                     <td>
-                                        <Link to={`/editCompu/${compu.id}`} className='btn btn-info'><i className="fa-solid fa-pen-to-square"></i></Link>
+                                        <Link to={`/Dispositivo/editCompu/${compu.id}`} className='btn btn-info'><i className="fa-solid fa-pen-to-square"></i></Link>
                                         <button onClick={() => deleteCompu(compu.id)} className='btn btn-danger'><i className="fa-solid fa-trash"></i></button>
                                     </td>
                                     <td>{compu.marca}</td>

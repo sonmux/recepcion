@@ -10,9 +10,14 @@ import CompShowMovil from './MovilForm/ShowMovil';
 import CompEditMovil from './MovilForm/EditMovil';
 import CompCreateCliente from './ClienteForm/CreateCliente';
 import CompCreateAcuerdo from './AcuerdoForm/CreateAcuerdo';
+import ViewPdfSign from './AcuerdoForm/ViewPdfSign';
+import CompCreateDisp from './Dispositivo/CreateDisp';
+import CompEditDisp from './Dispositivo/EditDisp';
+import CompShowDisp from './Dispositivo/showDisp';
 
 //* importamos el router
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 
 function App() {
   return (
@@ -22,9 +27,9 @@ function App() {
       </header>
       <BrowserRouter>
         <Routes>
-        <Route path='/' element={<CompCreateCliente/>} />
-        <Route path='/Acuerdo' element={<CompCreateAcuerdo/>} />
-          <Route
+          <Route path='/' element={<CompCreateCliente/>} />
+          <Route path='/Dispositivo' element={<CompShowDisp/>} />
+          {/*<Route
             path='/Dispositivo'
             element={
               <>
@@ -33,10 +38,12 @@ function App() {
               </>
             }
           />
-          <Route path='/Dispositivo/CreateCompu' element={<CompCreateCompu/>} />
-          <Route path='/Dispositivo/CreateMovil' element={<CompCreateMovil/>} />
+          <Route path='/Dispositivo/Create' element={<CompCreateDisp/>} />
+          <Route path='/Dispositivo/Edit/:id' element={<CompEditDisp/>} />
           <Route path='/Dispositivo/EditCompu/:id' element={<CompEditCompu/>} />
-          <Route path='/Dispositivo/EditMovil/:id' element={<CompEditMovil/>} />
+          <Route path='/Dispositivo/EditMovil/:id' element={<CompEditMovil/>} />*/}
+          <Route path='/Acuerdo' element={<CompCreateAcuerdo/>} />
+          <Route path='/Acuerdo/Sign' element={<ViewPdfSign/>} />
         </Routes>
       </BrowserRouter>
     </div>

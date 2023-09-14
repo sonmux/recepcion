@@ -8,10 +8,12 @@ import SignatureCanvas from 'react-signature-canvas';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import './styles.css';
 import { PDFDocument } from 'pdf-lib';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
 // Configura la ubicación del worker de pdf.js
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-const URI = 'http://localhost:8000/acuerdo'
+//* hacemos una constante para las rutas del back
+const URI = 'http://localhost:8000/acuerdo/'
 
 const App = () => {
   const [pdfFile, setPdfFile] = useState(null);
@@ -31,42 +33,51 @@ const App = () => {
 
   const handleSaveSignature = async () => {
     const signatureImage = signatureRef.current.toDataURL();
-  
+
+    if (!pdfFile) {
+      return;
+    }
+
     const originalPdfBytes = await fetch(pdfFile).then((res) => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(new Uint8Array(originalPdfBytes));
-    const [page] = pdfDoc.getPages();
-  
-    const image = await pdfDoc.embedPng(signatureImage);
-    const { width, height } = image.size();
-    const x = 100; // Posición X de la firma
-    const y = 100; // Posición Y de la firma
-  
-    page.drawImage(image, {
-      x,
-      y,
-      width: width * 0.5,
-      height: height * 0.5,
-    });
-  
-    const modifiedPdfBytes = await pdfDoc.save();
-    const modifiedPdfBlob = new Blob([modifiedPdfBytes], { type: 'application/pdf' });
-    setPdfFile(URL.createObjectURL(modifiedPdfBlob));
-    let binaryString = '';
-        modifiedPdfBytes.forEach((byte) => {
+    const pages = pdfDoc.getPages();
+
+    if (pageNumber <= pages.length) {
+      const page = pages[pageNumber - 1];
+
+      const image = await pdfDoc.embedPng(signatureImage);
+      const { width, height } = image.size();
+      const x = 100; // Posición X de la firma
+      const y = 100; // Posición Y de la firma
+
+      page.drawImage(image, {
+        x,
+        y,
+        width: width * 0.5,
+        height: height * 0.5,
+      });
+
+      const modifiedPdfBytes = await pdfDoc.save();
+      const modifiedPdfBlob = new Blob([modifiedPdfBytes], { type: 'application/pdf' });
+      setPdfFile(URL.createObjectURL(modifiedPdfBlob));
+      let binaryString = '';
+      modifiedPdfBytes.forEach((byte) => {
         binaryString += String.fromCharCode(byte);
-    });
+      });
 
-    // Convierte la cadena a Base64
-    const base64modifiedPdf = btoa(binaryString);
+      // Convierte la cadena a Base64
+      const base64modifiedPdf = btoa(binaryString);
 
-    console.log(base64modifiedPdf); // Muestra la cadena Base64 en la consola
-  
-    await axios.post(URI,{
-      acuerdo:base64modifiedPdf,
-      idCliente:1
-    })
+      
+      await axios.post(URI,{
+        acuerdo:base64modifiedPdf,
+        idCliente:localStorage.getItem("Idcliente")
+      })
+      
+      console.log(base64modifiedPdf); // Muestra la cadena Base64 en la consola
+      navigate('/Acuerdo/Sign')
+    }
   };
-  
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
@@ -102,7 +113,7 @@ const App = () => {
           <div>
             <SignatureCanvas
               ref={signatureRef}
-              canvasProps={{ width: 400, height: 200 }}
+              canvasProps={{ width: 400, height: 200, className: "cuadroFirma" }}
             />
           </div>
           <div>

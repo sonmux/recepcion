@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 //* hacemos una constante para las rutas del back
-const URI = 'http://localhost:8000/compu/'
+const URI = 'http://localhost:8000/disp/'
 
-const CompEditCompu = () => {
+const CompEditCompu = (props) => {
     const [Marca,setMarca]=useState('')
     const [Modelo,setModelo]=useState('')
     const [Serie,setSerie]=useState('')
@@ -21,7 +21,10 @@ const CompEditCompu = () => {
     const [Fotografia4,setFotografia4]=useState('') 
     //const [IDcliente,setIDcliente]=useState('') 
     const navigate = useNavigate()
-    const {id} = useParams()
+    //const {id} = useParams()
+
+    const { id } = props;
+    //console.log(id)
 
     //* procedimiento para actualizar
     const update = async (e) => {
@@ -119,6 +122,11 @@ const CompEditCompu = () => {
         reader.readAsDataURL(file);
         }
     };
+
+    //? funcion para recargar la pagina
+    const handleReload = () => {
+        window.location.reload(); // Recargar la página actual
+      };
 
     return (
         <div>
@@ -236,7 +244,7 @@ const CompEditCompu = () => {
                         onChange={handleImageUpload4}
                     />
                 </div>
-                <button type='submit' className="btn btn-primary">actualizar</button>
+                <button type='submit' className="btn btn-primary" onClick={handleReload}>actualizar</button>
             </form>
         </div>
     )

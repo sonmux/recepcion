@@ -51,7 +51,7 @@ const CompShowMovil = () => {
                             {movils.map((movil) => (
                                 <tr key={movil.id}>
                                     <td>
-                                        <Link to={`/editMovil/${movil.id}`} className='btn btn-info'><i className="fa-solid fa-pen-to-square"></i></Link>
+                                        <Link to={`/Dispositivo/editMovil/${movil.id}`} className='btn btn-info'><i className="fa-solid fa-pen-to-square"></i></Link>
                                         <button onClick={() => deleteMovil(movil.id)} className='btn btn-danger'><i className="fa-solid fa-trash"></i></button>
                                     </td>
                                     <td>{movil.marca}</td>

@@ -7,7 +7,7 @@ import AcuerdoModel from "../models/AcuerdoModel.js";
 export const getAcuerdo = async (req, res) => {
     try {
         const acuerdo = await AcuerdoModel.findAll({
-            where:{id:req.params.id}
+            where:{idCliente:req.params.id}
         })
         res.json(acuerdo[0])
     } catch (error) {

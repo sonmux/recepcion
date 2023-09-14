@@ -6,7 +6,7 @@ import {useState} from 'react'
 import{useNavigate} from 'react-router-dom'
 
 //* hacemos una constante para las rutas del back
-const URI = 'http://localhost:8000/movil/'
+const URI = 'http://localhost:8000/disp/'
 
 const CompCreateMovil = () => {
     const [Marca,setMarca]=useState('')
@@ -24,15 +24,21 @@ const CompCreateMovil = () => {
     const store = async (e) => {
         e.preventDefault()
         await axios.post(URI,{
+            tipo:"Móvil",
             marca:Marca,
             modelo:Modelo,
-            imei:Imei,
             serie:Serie,
             color:Color,
+            capacidadDisco:0,
+            serieDisco:'',
+            sistemaOperativo:'',
+            imei:Imei,
+            contraseñaDispositivo:'',
             foto1:Fotografia1,
             foto2:Fotografia2,
             foto3:Fotografia3,
-            idCliente:sessionStorage.getItem("Idcliente")
+            foto4:'',
+            idCliente:localStorage.getItem("Idcliente")
         })
         navigate('/Dispositivo')
     }
@@ -77,6 +83,11 @@ const CompCreateMovil = () => {
         reader.readAsDataURL(file);
         }
     };
+
+    const handleReload = () => {
+        window.location.reload(); // Recargar la página actual
+      };
+
 
     return(
         <div>
@@ -157,7 +168,7 @@ const CompCreateMovil = () => {
                         onChange={handleImageUpload3}
                     />
                 </div>
-                <button type='submit' className="btn btn-primary">Agregar</button>
+                <button type='submit' className="btn btn-primary" onClick={handleReload}>Agregar</button>
             </form>
         </div>
     )

@@ -8,7 +8,7 @@ import {useNavigate} from 'react-router-dom'
 //* hacemos una constante para las rutas del back
 const URI = 'http://localhost:8000/disp/'
 
-const CompCreateCompu = () => {
+const CompCreateDisp = () => {
     const [Marca,setMarca]=useState('')
     const [Modelo,setModelo]=useState('')
     const [Serie,setSerie]=useState('')
@@ -16,6 +16,7 @@ const CompCreateCompu = () => {
     const [Capacidad,setCapacidad]=useState('')
     const [SerieDisco,setSerieDisco]=useState('')
     const [Sistema,setSistema]=useState('')
+    const [Imei,setImei]=useState('')
     const [Contraseña,setContraseña]=useState('') 
     const [Fotografia1,setFotografia1]=useState('') 
     const [Fotografia2,setFotografia2]=useState('') 
@@ -27,7 +28,7 @@ const CompCreateCompu = () => {
     //*procedimiento para guardar datos
     const store = async (e) => {
         e.preventDefault()
-        /*console.log({
+        console.log({
             marca:Marca,
             modelo:Modelo,
             serie:Serie,
@@ -35,15 +36,15 @@ const CompCreateCompu = () => {
             capacidadDisco:parseInt(Capacidad),
             serieDisco:SerieDisco,
             sistemaOperativo:Sistema,
+            imei:Imei,
             contraseñaDispositivo:Contraseña,
             foto1:Fotografia1,
             foto2:Fotografia2,
             foto3:Fotografia3,
             foto4:Fotografia4,
             idCliente:localStorage.getItem("Idcliente")
-        })*/
+        })
         await axios.post(URI,{
-            tipo:"Computadora",
             marca:Marca,
             modelo:Modelo,
             serie:Serie,
@@ -51,7 +52,7 @@ const CompCreateCompu = () => {
             capacidadDisco:parseInt(Capacidad),
             serieDisco:SerieDisco,
             sistemaOperativo:Sistema,
-            imei:"",
+            Imei:Imei,
             contraseñaDispositivo:Contraseña,
             foto1:Fotografia1,
             foto2:Fotografia2,
@@ -115,11 +116,6 @@ const CompCreateCompu = () => {
         reader.readAsDataURL(file);
         }
     };
-
-    //? funcion para recargar la pagina
-    const handleReload = () => {
-        window.location.reload(); // Recargar la página actual
-      };
 
 
     return(
@@ -190,6 +186,15 @@ const CompCreateCompu = () => {
                     />
                 </div>
                 <div className="mb-3">
+                    <label className="form-label">IMEI</label>
+                    <input 
+                        value={Imei}
+                        onChange={(e) => setImei(e.target.value)}
+                        type="text"
+                        className="form-control"
+                    />
+                </div>
+                <div className="mb-3">
                     <label className="form-label">Contraseña dispositivo</label>
                     <input 
                         value={Contraseña}
@@ -238,10 +243,10 @@ const CompCreateCompu = () => {
                         onChange={handleImageUpload4}
                     />
                 </div>
-                <button type='submit' className="btn btn-primary" onClick={handleReload}>Agregar</button>
+                <button type='submit' className="btn btn-primary">Agregar</button>
             </form>
         </div>
     )
 }
 
-export default CompCreateCompu
+export default CompCreateDisp

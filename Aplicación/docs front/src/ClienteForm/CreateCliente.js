@@ -4,12 +4,18 @@ import axios from "axios"
 import {useState} from 'react'
 //* importar react-router-dom
 import {useNavigate} from 'react-router-dom'
+//* import para poder utilizar cookies en el navegador
+//import Cookies from 'js-cookie'
 
 //* hacemos una constante para las rutas del back
 const URI = 'http://localhost:8000/cliente/'
 
 //* borra la variable de sesión
-sessionStorage.removeItem('Idcliente');
+//sessionStorage.removeItem('Idcliente');
+//! borra la cookie
+//! Cookies.remove('Idcliente')
+//? para borara la variable del local storage
+//localStorage.removeItem('Idcliente')
 
 const CompCreateCliente = () => {
     const [Idcliente,setIdcliente]=useState('')
@@ -35,9 +41,14 @@ const CompCreateCliente = () => {
             dpiReverso: DpiReverso
         })
         //* guarda el id como variable de sesión
-        sessionStorage.setItem("Idcliente", Idcliente);
+        //sessionStorage.setItem("Idcliente", Idcliente);
+        //! Para guardar una variable en una cookie
+        //!Cookies.set('miVariable', 'miValor');
+        //? para guardar datos en local storage
+        localStorage.setItem("Idcliente", Idcliente)
         //* ---------
-        navigate('/Acuerdo')
+        //navigate('/Acuerdo')
+        navigate('/Dispositivo')
     }
 
     //? Función para seleccionar las fotos
@@ -68,6 +79,7 @@ const CompCreateCliente = () => {
         }
     };
 
+
     return(
         <div>
             <h3>Agregar cliente</h3>
@@ -79,6 +91,7 @@ const CompCreateCliente = () => {
                         onChange={(e) => setIdcliente(e.target.value)}
                         type="text"
                         className="form-control"
+                        required 
                     />
                 </div>
                 <div className="mb-3">
@@ -88,6 +101,7 @@ const CompCreateCliente = () => {
                         onChange={(e) => setNombreCliente(e.target.value)}
                         type="text"
                         className="form-control"
+                        //required 
                     />
                 </div>
                 <div className="mb-3">
@@ -97,15 +111,23 @@ const CompCreateCliente = () => {
                         onChange={(e) => setDirecciónCliente(e.target.value)}
                         type="text"
                         className="form-control"
+                        //required 
                     />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">telefono</label>
-                    <input 
-                        value={Telefono}
-                        onChange={(e) => setTelefono(e.target.value)}
-                        type="text"
-                        className="form-control"
+                    <input
+                    value={Telefono}
+                    onChange={(e) => {
+                        // Utiliza una expresión regular para eliminar caracteres no numéricos
+                        const numericValue = e.target.value.replace(/\D/g, '');
+                        setTelefono(numericValue);
+                    }}
+                    type="text"
+                    className="form-control"
+                    inputMode="numeric" // Indica que se espera un valor numérico
+                    pattern="[0-9]*"  // Acepta solo caracteres numéricos
+                    //required 
                     />
                 </div>
                 <div className="mb-3">
@@ -115,15 +137,23 @@ const CompCreateCliente = () => {
                         onChange={(e) => setCorreo(e.target.value)}
                         type="text"
                         className="form-control"
+                        //required 
                     />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">NIT</label>
-                    <input 
-                        value={Nit}
-                        onChange={(e) => setNit(e.target.value)}
-                        type="text"
-                        className="form-control"
+                    <input
+                    value={Nit}
+                    onChange={(e) => {
+                        // Utiliza una expresión regular para eliminar caracteres no numéricos
+                        const numericValue = e.target.value.replace(/\D/g, '');
+                        setNit(numericValue);
+                    }}
+                    type="text"
+                    className="form-control"
+                    inputMode="numeric" // Indica que se espera un valor numérico
+                    pattern="[0-9]*"  // Acepta solo caracteres numéricos
+                    //required 
                     />
                 </div>
                 <div className="mb-3">
@@ -134,6 +164,7 @@ const CompCreateCliente = () => {
                         accept="image/*"
                         className="form-control"
                         onChange={handleImageUpload1}
+                        //required 
                     />
                 </div>
                 <div className="mb-3">
@@ -144,6 +175,7 @@ const CompCreateCliente = () => {
                         accept="image/*"
                         className="form-control"
                         onChange={handleImageUpload2}
+                        //required 
                     />
                 </div>
                 <button type='submit' className="btn btn-primary">Agregar Cliente</button>

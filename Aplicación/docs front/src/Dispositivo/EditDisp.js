@@ -6,18 +6,23 @@ import { useNavigate, useParams } from 'react-router-dom'
 //* hacemos una constante para las rutas del back
 const URI = 'http://localhost:8000/disp/'
 
-const CompEditMovil = (props) => {
+const CompEditDisp = () => {
     const [Marca,setMarca]=useState('')
     const [Modelo,setModelo]=useState('')
-    const [Imei,setImei]=useState('') 
     const [Serie,setSerie]=useState('')
-    const [Color,setColor]=useState('') 
+    const [Color,setColor]=useState('')
+    const [Capacidad,setCapacidad]=useState('')
+    const [SerieDisco,setSerieDisco]=useState('')
+    const [Sistema,setSistema]=useState('')
+    const [Imei,setImei]=useState('')
+    const [Contraseña,setContraseña]=useState('') 
     const [Fotografia1,setFotografia1]=useState('') 
     const [Fotografia2,setFotografia2]=useState('') 
     const [Fotografia3,setFotografia3]=useState('') 
+    const [Fotografia4,setFotografia4]=useState('') 
+    //const [IDcliente,setIDcliente]=useState('') 
     const navigate = useNavigate()
-    //const {id} = useParams()
-    const { id } = props;
+    const {id} = useParams()
 
     //* procedimiento para actualizar
     const update = async (e) => {
@@ -25,30 +30,43 @@ const CompEditMovil = (props) => {
         await axios.put(URI+id,{
             marca:Marca,
             modelo:Modelo,
-            imei:Imei,
             serie:Serie,
             color:Color,
+            capacidadDisco:parseInt(Capacidad),
+            serieDisco:SerieDisco,
+            sistemaOperativo:Sistema,
+            imei:Imei,
+            contraseñaDispositivo:Contraseña,
             foto1:Fotografia1,
             foto2:Fotografia2,
             foto3:Fotografia3,
+            foto4:Fotografia4
+            /* aqui no se debe actualizar el idCliente
+            idCliente:IDcliente
+            */
         })
         navigate('/Dispositivo')
     }
 
     useEffect(() => {
-        getMovilById()
+        getDispById()
     },[])
 
-    const getMovilById = async () => {
+    const getDispById = async () => {
         const res = await axios.get(URI+id)
         setMarca(res.data.marca)
         setModelo(res.data.modelo)
-        setImei(res.data.imei)
         setSerie(res.data.serie)
         setColor(res.data.color)
+        setCapacidad(res.data.capacidadDisco)
+        setSerieDisco(res.data.serieDisco)
+        setSistema(res.data.sistemaOperativo)
+        setImei(res.data.imei)
+        setContraseña(res.data.contraseñaDispositivo)
         setFotografia1(res.data.foto1)
         setFotografia2(res.data.foto2)
         setFotografia3(res.data.foto3)
+        setFotografia4(res.data.foto4)
     }
 
     //? Función para seleccionar las fotos
@@ -91,15 +109,23 @@ const CompEditMovil = (props) => {
         reader.readAsDataURL(file);
         }
     };
+    const [image4Base64, setImage4Base64] = useState('');
+    const handleImageUpload4 = (event4) => {
+        const file = event4.target.files[0];
+        if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64 = e.target.result;
+            setImage4Base64(base64);
+            setFotografia4(base64)
+        };
+        reader.readAsDataURL(file);
+        }
+    };
 
-    //? funcion para recargar la pagina
-    const handleReload = () => {
-        window.location.reload(); // Recargar la página actual
-      };
-
-    return(
+    return (
         <div>
-            <h3>Editar dispositivo movil</h3>
+            <h3>Editar Dispositivo</h3>
             <form onSubmit={update}>
                 <div className="mb-3">
                     <label className="form-label">Marca</label>
@@ -120,15 +146,6 @@ const CompEditMovil = (props) => {
                     />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">IMEI</label>
-                    <input 
-                        value={Imei}
-                        onChange={(e) => setImei(e.target.value)}
-                        type="text"
-                        className="form-control"
-                    />
-                </div>
-                <div className="mb-3">
                     <label className="form-label">Serie</label>
                     <input 
                         value={Serie}
@@ -142,6 +159,51 @@ const CompEditMovil = (props) => {
                     <input 
                         value={Color}
                         onChange={(e) => setColor(e.target.value)}
+                        type="text"
+                        className="form-control"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Capacidad</label>
+                    <input 
+                        value={Capacidad}
+                        onChange={(e) => setCapacidad(e.target.value)}
+                        type="text"
+                        className="form-control"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Serie del disco</label>
+                    <input 
+                        value={SerieDisco}
+                        onChange={(e) => setSerieDisco(e.target.value)}
+                        type="text"
+                        className="form-control"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Sistema operativo</label>
+                    <input 
+                        value={Sistema}
+                        onChange={(e) => setSistema(e.target.value)}
+                        type="text"
+                        className="form-control"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">IMEI</label>
+                    <input 
+                        value={Imei}
+                        onChange={(e) => setImei(e.target.value)}
+                        type="text"
+                        className="form-control"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Contraseña dispositivo</label>
+                    <input 
+                        value={Contraseña}
+                        onChange={(e) => setContraseña(e.target.value)}
                         type="text"
                         className="form-control"
                     />
@@ -176,10 +238,22 @@ const CompEditMovil = (props) => {
                         onChange={handleImageUpload3}
                     />
                 </div>
-                <button type='submit' className="btn btn-primary" onClick={handleReload}>Actualizar</button>
+                <div className="mb-3">
+                    {image4Base64 ? (<img src={image4Base64} alt=""/>) :
+                    (<img src={Fotografia4} alt=""/>)}
+                    <input 
+                        type="file" 
+                        accept="image/*"
+                        className="form-control"
+                        onChange={handleImageUpload4}
+                    />
+                </div>
+                <button type='submit' className="btn btn-primary">actualizar</button>
             </form>
         </div>
     )
+
+
 }
 
-export default CompEditMovil
+export default CompEditDisp
