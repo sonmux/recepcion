@@ -9,6 +9,7 @@ import {useNavigate} from 'react-router-dom'
 
 //* hacemos una constante para las rutas del back
 const URI = 'http://localhost:8000/cliente/'
+//const URI = 'https://prueba-wytc.onrender.com/cliente/'
 
 //* borra la variable de sesión
 //sessionStorage.removeItem('Idcliente');

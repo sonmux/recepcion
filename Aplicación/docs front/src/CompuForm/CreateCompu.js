@@ -5,6 +5,8 @@ import {useState} from 'react'
 //* importar react-router-dom
 import {useNavigate} from 'react-router-dom'
 
+import React, { useRef } from 'react';
+
 //* hacemos una constante para las rutas del back
 const URI = 'http://localhost:8000/disp/'
 
@@ -121,6 +123,42 @@ const CompCreateCompu = () => {
         window.location.reload(); // Recargar la página actual
       };
 
+    //? Función para tomar una foto
+    const videoRef = useRef(null);
+    const [capturedImage, setCapturedImage] = useState(null);
+    const [stream, setStream] = useState(null);
+
+    const startCamera = async () => {
+        try {
+        const userMediaStream = await navigator.mediaDevices.getUserMedia({
+            video: {
+            facingMode: { exact: "environment" } // Activar la cámara trasera
+            }
+        });
+        videoRef.current.srcObject = userMediaStream;
+        setStream(userMediaStream);
+        } catch (error) {
+        console.error('Error al acceder a la cámara:', error);
+        }
+    };
+
+    const captureImage = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = videoRef.current.videoWidth;
+        canvas.height = videoRef.current.videoHeight;
+        const context = canvas.getContext('2d');
+        context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+        const imageSrc = canvas.toDataURL('image/jpeg');
+        setCapturedImage(imageSrc);
+
+        // Detener la cámara y desactivar la vista previa
+        if (stream) {
+        const tracks = stream.getTracks();
+        tracks.forEach(track => track.stop());
+        }
+        videoRef.current.srcObject = null;
+    };
+
 
     return(
         <div>
@@ -199,14 +237,18 @@ const CompCreateCompu = () => {
                     />
                 </div>
                 <div className="mb-3">
-                    {imageBase64 ? (<img src={imageBase64} alt=""/>) :
+                    {/*{imageBase64 ? (<img src={imageBase64} alt=""/>) :
                     (<img src="https://cdn-icons-png.flaticon.com/512/492/492705.png" alt=""/>)}
                     <input 
                         type="file" 
                         accept="image/*"
                         className="form-control"
                         onChange={handleImageUpload1}
-                    />
+                    />*/}
+                    <button onClick={startCamera}>Iniciar Cámara</button>
+                    <video ref={videoRef} autoPlay />
+                    <button onClick={captureImage}>Tomar Foto</button>
+                    {capturedImage && <img src={capturedImage} alt="Captured" />}
                 </div>
                 <div className="mb-3">
                     {image2Base64 ? (<img src={image2Base64} alt=""/>) :

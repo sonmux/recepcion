@@ -13,7 +13,15 @@ import MailRouter from "./routes/MailRoutes.js";
 import DispRouter from "./routes/DispositivoRoutes.js";
 
 const app = express()
-app.use(cors())
+/*app.use(cors({
+    origin: '*', // Cambia esto a la URL de tu aplicación React si es necesario
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    headers: '*',
+    credentials: false, // Habilitar el envío de cookies y encabezados de autenticación
+  }));*/
+  
+app.use(cors());
+
 // Aumentar el límite de tamaño de carga para solicitudes JSON
 app.use(express.json({ limit: '200mb' }));
 

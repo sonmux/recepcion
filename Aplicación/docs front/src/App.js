@@ -10,6 +10,7 @@ import CompShowMovil from './MovilForm/ShowMovil';
 import CompEditMovil from './MovilForm/EditMovil';
 import CompCreateCliente from './ClienteForm/CreateCliente';
 import CompCreateAcuerdo from './AcuerdoForm/CreateAcuerdo';
+import CompCreateAcuerdo2 from './AcuerdoForm/CreateAcuerdo2';
 import ViewPdfSign from './AcuerdoForm/ViewPdfSign';
 import CompCreateDisp from './Dispositivo/CreateDisp';
 import CompEditDisp from './Dispositivo/EditDisp';
@@ -43,6 +44,7 @@ function App() {
           <Route path='/Dispositivo/EditCompu/:id' element={<CompEditCompu/>} />
           <Route path='/Dispositivo/EditMovil/:id' element={<CompEditMovil/>} />*/}
           <Route path='/Acuerdo' element={<CompCreateAcuerdo/>} />
+          <Route path='/Acuerdo2' element={<CompCreateAcuerdo2/>} />
           <Route path='/Acuerdo/Sign' element={<ViewPdfSign/>} />
         </Routes>
       </BrowserRouter>
