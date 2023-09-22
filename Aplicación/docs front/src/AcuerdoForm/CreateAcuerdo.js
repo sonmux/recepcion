@@ -6,7 +6,7 @@ import React, { useState, useRef } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import SignatureCanvas from 'react-signature-canvas';
 import '@react-pdf-viewer/core/lib/styles/index.css';
-import './styles.css';
+import '../estilos/stylesPDF.css';
 import { PDFDocument } from 'pdf-lib';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 

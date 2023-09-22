@@ -6,9 +6,11 @@ import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 
 import React, { useRef } from 'react';
+import Modal from 'react-modal';
 
 //* hacemos una constante para las rutas del back
 const URI = 'http://localhost:8000/disp/'
+const URILOG = 'http://localhost:8000/log/';
 
 const CompCreateCompu = () => {
     const [Marca,setMarca]=useState('')
@@ -19,6 +21,8 @@ const CompCreateCompu = () => {
     const [SerieDisco,setSerieDisco]=useState('')
     const [Sistema,setSistema]=useState('')
     const [Contraseña,setContraseña]=useState('') 
+    const [Descripcion,setDescripcion]=useState('') 
+    const [Solicitud,setSolicitud]=useState('') 
     const [Fotografia1,setFotografia1]=useState('') 
     const [Fotografia2,setFotografia2]=useState('') 
     const [Fotografia3,setFotografia3]=useState('') 
@@ -44,28 +48,44 @@ const CompCreateCompu = () => {
             foto4:Fotografia4,
             idCliente:localStorage.getItem("Idcliente")
         })*/
-        await axios.post(URI,{
-            tipo:"Computadora",
-            marca:Marca,
-            modelo:Modelo,
-            serie:Serie,
-            color:Color,
-            capacidadDisco:parseInt(Capacidad),
-            serieDisco:SerieDisco,
-            sistemaOperativo:Sistema,
-            imei:"",
-            contraseñaDispositivo:Contraseña,
-            foto1:Fotografia1,
-            foto2:Fotografia2,
-            foto3:Fotografia3,
-            foto4:Fotografia4,
-            idCliente:localStorage.getItem("Idcliente")
-        })
-        navigate('/Dispositivo')
+        try {
+            await axios.post(URI,{
+                numOrden:localStorage.getItem("RegOrden"),
+                tipo:"Computadora",
+                marca:Marca,
+                modelo:Modelo,
+                serie:Serie,
+                color:Color,
+                capacidadDisco:parseInt(Capacidad),
+                serieDisco:SerieDisco,
+                sistemaOperativo:Sistema,
+                imei:"",
+                contraseñaDispositivo:Contraseña,
+                descripcion:Descripcion,
+                solicitud:Solicitud,
+                foto1:Fotografia1,
+                foto2:Fotografia2,
+                foto3:Fotografia3,
+                foto4:Fotografia4,
+                idCliente:localStorage.getItem("Idcliente")
+            })
+            //? función para guardar un log en el sistema
+            //const URILOG = 'http://localhost:8000/log/';
+            await axios.post(URILOG, {
+                usuario: localStorage.getItem("usuario"),
+                tema: "Crear Computadora",
+                descripcion:`El usuario ${localStorage.getItem("usuario")} registro la computadora con serie: ${Serie}, del cliente con dpi: ${localStorage.getItem("Idcliente")}`
+            });
+            //?------------------
+            window.location.reload(); // Recargar la página actual
+        } catch (error) {
+            console.error('Error al agregar la computadora:', error);
+            // Aquí puedes manejar errores de manera adecuada, como mostrar un mensaje de error al usuario
+        }
     }
 
     //? Función para seleccionar las fotos
-    const [imageBase64, setImageBase64] = useState('');
+    /*const [imageBase64, setImageBase64] = useState('');
     const handleImageUpload1 = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -77,64 +97,35 @@ const CompCreateCompu = () => {
         };
         reader.readAsDataURL(file);
         }
-    };
-    const [image2Base64, setImage2Base64] = useState('');
-    const handleImageUpload2 = (event2) => {
-        const file = event2.target.files[0];
-        if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const base64 = e.target.result;
-            setImage2Base64(base64);
-            setFotografia2(base64)
-        };
-        reader.readAsDataURL(file);
-        }
-    };
-    const [image3Base64, setImage3Base64] = useState('');
-    const handleImageUpload3 = (event3) => {
-        const file = event3.target.files[0];
-        if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const base64 = e.target.result;
-            setImage3Base64(base64);
-            setFotografia3(base64)
-        };
-        reader.readAsDataURL(file);
-        }
-    };
-    const [image4Base64, setImage4Base64] = useState('');
-    const handleImageUpload4 = (event4) => {
-        const file = event4.target.files[0];
-        if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const base64 = e.target.result;
-            setImage4Base64(base64);
-            setFotografia4(base64)
-        };
-        reader.readAsDataURL(file);
-        }
-    };
-
-    //? funcion para recargar la pagina
-    const handleReload = () => {
-        window.location.reload(); // Recargar la página actual
-      };
+    };*/
 
     //? Función para tomar una foto
     const videoRef = useRef(null);
     const [capturedImage, setCapturedImage] = useState(null);
     const [stream, setStream] = useState(null);
+    const [capturedImages, setCapturedImages] = useState({
+        1: null,
+        2: null,
+        3: null,
+        4: null,
+    });
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const startCamera = async () => {
+    const startCamera = async (tipoCamara) => {
+        setIsModalOpen(true);
         try {
-        const userMediaStream = await navigator.mediaDevices.getUserMedia({
-            video: {
-            facingMode: { exact: "environment" } // Activar la cámara trasera
+            var userMediaStream=null;
+            if(tipoCamara==1){
+                userMediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
+                videoRef.current.srcObject = stream;     
+            }else{
+                userMediaStream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                    facingMode: { exact: "environment" } // Activar la cámara trasera
+                    }
+                });
             }
-        });
+        
         videoRef.current.srcObject = userMediaStream;
         setStream(userMediaStream);
         } catch (error) {
@@ -142,21 +133,68 @@ const CompCreateCompu = () => {
         }
     };
 
-    const captureImage = () => {
+    const captureImage = (numFoto) => {
         const canvas = document.createElement('canvas');
         canvas.width = videoRef.current.videoWidth;
         canvas.height = videoRef.current.videoHeight;
         const context = canvas.getContext('2d');
         context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
         const imageSrc = canvas.toDataURL('image/jpeg');
-        setCapturedImage(imageSrc);
+
+        // Crear una copia del estado actual de las imágenes capturadas
+        const newCapturedImages = { ...capturedImages };
+        newCapturedImages[numFoto] = imageSrc;
+        closeModal(numFoto)
+        if(numFoto==1){
+            setFotografia1(imageSrc)
+        }else if(numFoto==2){
+            setFotografia2(imageSrc)
+        }if(numFoto==3){
+            setFotografia3(imageSrc)
+        }if(numFoto==4){
+            setFotografia4(imageSrc)
+        }
+
+        // Actualizar el estado con la nueva imagen
+        setCapturedImages(newCapturedImages);
+        console.log(newCapturedImages)
 
         // Detener la cámara y desactivar la vista previa
         if (stream) {
-        const tracks = stream.getTracks();
-        tracks.forEach(track => track.stop());
+            const tracks = stream.getTracks();
+            tracks.forEach(track => track.stop());
         }
         videoRef.current.srcObject = null;
+        setIsModalOpen(false)
+    };
+
+    const [isModalOpen1, setIsModalOpen1] = useState(false);
+    const [isModalOpen2, setIsModalOpen2] = useState(false);
+    const [isModalOpen3, setIsModalOpen3] = useState(false);
+    const [isModalOpen4, setIsModalOpen4] = useState(false);
+
+    const openModal = (num) => {
+        if (num === 1) {
+        setIsModalOpen1(true);
+        } else if (num === 2) {
+        setIsModalOpen2(true);
+        } else if (num === 3) {
+        setIsModalOpen3(true);
+        } else if (num === 4) {
+        setIsModalOpen4(true);
+        }
+    };
+
+    const closeModal = (num) => {
+        if (num === 1) {
+        setIsModalOpen1(false);
+        } else if (num === 2) {
+        setIsModalOpen2(false);
+        } else if (num === 3) {
+        setIsModalOpen3(false);
+        } else if (num === 4) {
+        setIsModalOpen4(false);
+        }
     };
 
 
@@ -237,6 +275,24 @@ const CompCreateCompu = () => {
                     />
                 </div>
                 <div className="mb-3">
+                    <label className="form-label">Observaciones</label>
+                    <textarea 
+                        value={Descripcion}
+                        onChange={(e) => setDescripcion(e.target.value)}
+                        type="text"
+                        className="form-control"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Solicitud</label>
+                    <textarea 
+                        value={Solicitud}
+                        onChange={(e) => setSolicitud(e.target.value)}
+                        type="text"
+                        className="form-control"
+                    />
+                </div>
+                <div className="mb-3">
                     {/*{imageBase64 ? (<img src={imageBase64} alt=""/>) :
                     (<img src="https://cdn-icons-png.flaticon.com/512/492/492705.png" alt=""/>)}
                     <input 
@@ -245,42 +301,72 @@ const CompCreateCompu = () => {
                         className="form-control"
                         onChange={handleImageUpload1}
                     />*/}
-                    <button onClick={startCamera}>Iniciar Cámara</button>
-                    <video ref={videoRef} autoPlay />
-                    <button onClick={captureImage}>Tomar Foto</button>
-                    {capturedImage && <img src={capturedImage} alt="Captured" />}
+                    <div>
+                        <h2>FOTO 1</h2>
+                        <button type="button" onClick={() => { startCamera(1); openModal(1); }}>Cámara frontal</button>
+                        <button type="button" onClick={()=>{ startCamera(2); openModal(1); }}>Cámara trasera</button>
+                        <Modal
+                            isOpen={isModalOpen1}
+                            //onRequestClose={closeModal}
+                            //contentLabel='Ejemplo de Menú Emergente'
+                        >
+                            <div>
+                                <video ref={videoRef} autoPlay />
+                            </div>
+                            <button type="button" onClick={() => captureImage(1)}>Tomar Foto 1</button>
+                        </Modal>
+                        {capturedImages[1] && <img src={capturedImages[1]} alt="Captured" />}
+                    </div>
                 </div>
                 <div className="mb-3">
-                    {image2Base64 ? (<img src={image2Base64} alt=""/>) :
-                    (<img src="https://cdn-icons-png.flaticon.com/512/492/492705.png" alt=""/>)}
-                    <input 
-                        type="file" 
-                        accept="image/*"
-                        className="form-control"
-                        onChange={handleImageUpload2}
-                    />
+                    <div>
+                        <h2>FOTO 2</h2>
+                        <button type="button" onClick={() => { startCamera(1); openModal(2); }}>Cámara frontal</button>
+                        <button type="button" onClick={()=>{ startCamera(2); openModal(2); }}>Cámara trasera</button>
+                        <Modal
+                            isOpen={isModalOpen2}
+                        >
+                            <div>
+                                <video ref={videoRef} autoPlay />
+                            </div>
+                            <button type="button" onClick={() => captureImage(2)}>Tomar Foto 2</button>
+                        </Modal>
+                        {capturedImages[2] && <img src={capturedImages[2]} alt="Captured" />}
+                    </div>
                 </div>
                 <div className="mb-3">
-                    {image3Base64 ? (<img src={image3Base64} alt=""/>) :
-                    (<img src="https://cdn-icons-png.flaticon.com/512/492/492705.png" alt=""/>)}
-                    <input 
-                        type="file" 
-                        accept="image/*"
-                        className="form-control"
-                        onChange={handleImageUpload3}
-                    />
+                    <div>
+                        <h2>FOTO 3</h2>
+                        <button type="button" onClick={() => { startCamera(1); openModal(3); }}>Cámara frontal</button>
+                        <button type="button" onClick={()=>{ startCamera(2); openModal(3); }}>Cámara trasera</button>
+                        <Modal
+                            isOpen={isModalOpen3}
+                        >
+                            <div>
+                                <video ref={videoRef} autoPlay />
+                            </div>
+                            <button type="button" onClick={() => captureImage(3)}>Tomar Foto 3</button>
+                        </Modal>
+                        {capturedImages[3] && <img src={capturedImages[3]} alt="Captured" />}
+                    </div>
                 </div>
                 <div className="mb-3">
-                    {image4Base64 ? (<img src={image4Base64} alt=""/>) :
-                    (<img src="https://cdn-icons-png.flaticon.com/512/492/492705.png" alt=""/>)}
-                    <input 
-                        type="file" 
-                        accept="image/*"
-                        className="form-control"
-                        onChange={handleImageUpload4}
-                    />
+                    <div>
+                        <h2>FOTO 4</h2>
+                        <button type="button" onClick={() => { startCamera(1); openModal(4); }}>Cámara frontal</button>
+                        <button type="button" onClick={()=>{ startCamera(2); openModal(4); }}>Cámara trasera</button>
+                        <Modal
+                            isOpen={isModalOpen4}
+                        >
+                            <div>
+                                <video ref={videoRef} autoPlay />
+                            </div>
+                            <button type="button" onClick={() => captureImage(4)}>Tomar Foto 4</button>
+                        </Modal>
+                        {capturedImages[4] && <img src={capturedImages[4]} alt="Captured" />}
+                    </div>
                 </div>
-                <button type='submit' className="btn btn-primary" onClick={handleReload}>Agregar</button>
+                <button type='submit' className="btn btn-primary">Agregar</button>
             </form>
         </div>
     )

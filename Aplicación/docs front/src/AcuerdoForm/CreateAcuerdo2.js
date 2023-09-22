@@ -5,7 +5,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import { pdf } from '@react-pdf/renderer'; // Importa 'pdf' desde '@react-pdf/renderer'
 import SignatureCanvas from 'react-signature-canvas';
 import '@react-pdf-viewer/core/lib/styles/index.css';
-import './styles.css';
+import '../estilos/stylesPDF.css';
 import { PDFDocument } from 'pdf-lib';
 import Recibo from "./Recibo";
 import jsPDF from 'jspdf';
@@ -56,7 +56,9 @@ const App = () => {
       //console.log(modifiedPdfBase64); // Muestra la cadena Base64 en la consola
       await axios.post(URI,{
         acuerdo:modifiedPdfBase64,
-        idCliente:localStorage.getItem("Idcliente")
+        idCliente:localStorage.getItem("Idcliente"),
+        numOrden:localStorage.getItem("RegOrden"),
+        estadoFirma:1
       })
       navigate('/Acuerdo/Sign')
 

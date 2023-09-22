@@ -11,6 +11,8 @@ import ClienteRouter from "./routes/ClienteRoutes.js";
 import AcuerdoRouter from "./routes/AcuerdoRoutes.js";
 import MailRouter from "./routes/MailRoutes.js";
 import DispRouter from "./routes/DispositivoRoutes.js";
+import UsuarioRouter from "./routes/UsuarioRoutes.js";
+import RegistroRouter from "./routes/RegistroRoutes.js";
 
 const app = express()
 /*app.use(cors({
@@ -33,6 +35,9 @@ app.use('/cliente', ClienteRouter)
 app.use('/acuerdo', AcuerdoRouter)
 app.use('/mailAcuerdo', MailRouter)
 app.use('/disp', DispRouter)
+app.use('/usr', UsuarioRouter)
+app.use('/log', RegistroRouter)
+
 
 try {
     await db.authenticate()

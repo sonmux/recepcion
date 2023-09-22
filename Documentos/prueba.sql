@@ -61,9 +61,11 @@ create table acuerdo(
 
 
 create table acuerdoPs(
-	id int primary key auto_increment,
+	id int primary key auto_increment, -- DPI_USUARIO (cambiar tipo int, local storage, ya no es auto_increment)
     acuerdo longtext,
     idCliente varchar(250),
+    numOrden varchar(250),
+    estadoFirma int,
     createdAt date,
     updatedAt date
 );
@@ -137,15 +139,21 @@ select * from clienteps;
 drop table clientePs;
 
 create table usuarioPs(
-	id int auto_increment primary key,
+	correo varchar(250) primary key,
+    nombre varchar(250),
+    telefono int,
     usuario varchar(20),
-    pass varchar(20)
+    pass varchar(20),
+    createdAt date,
+    updatedAt date
 );
-insert into usuarioPs(usuario,pass) values ('admin','123');
+insert into usuarioPs(correo,nombre,telefono,usuario,pass) values ('prueba@prueba.com','usuarioPrueba',12345678,'admin','admin123');
+drop table usuarioPs;
+SELECT `correo`, `nombre`, `telefono`, `usuario`, `pass`, `createdAt`, `updatedAt` FROM `usuarioPs` AS `usuarioPs` WHERE `usuarioPs`.`usuario` = 'admin' AND `usuarioPs`.`pass` = 'admin123';
 
 create table dispositivoPs(
 	id int primary key auto_increment,
-    numOrden varchar(250),
+    numOrden varchar(250), -- Codigo LEFCI+FECHA_ACTUAL+HORA
     tipo varchar(250),
     marca varchar(250) ,
     modelo varchar(250),
@@ -156,10 +164,14 @@ create table dispositivoPs(
     sistemaOperativo varchar(250),
     imei varchar(250),
     contraseñaDispositivo varchar(250) ,
+    descripcion text, -- (agregar campo descripcion)
+    solicitud text, -- (agregar campo solicitud)
     foto1 longtext,
     foto2 longtext,
     foto3 longtext,
     foto4 longtext,
+    peritoAsignado int default 0, -- (agregar campo estado)
+    estado text default 'Ingresado', -- (agregar campo estado)
     idCliente varchar(250),
     createdAt date,
     updatedAt date
@@ -168,3 +180,29 @@ insert into dispositivoPs (tipo,marca,modelo,serie,color,capacidadDisco,serieDis
 values ("computadora","marca1","modelo1","serie1","color1",250,"serieDisk1","sistema1","imei1","contra1","foto1","foto2","foto3","foto4","idcliente1");
 select*from dispositivoPs;
 drop table dispositivoPs;
+
+create table servicioPs(
+	id int, -- PK autoIncrement
+    nombre varchar(250),
+    descripcion varchar(250),
+    precio int,
+    createdAt date,
+    updatedAt date
+);
+drop table servicioPs;
+insert into servicioPs (nombre, descripcion, precio) values ('Analisis forense en móvil','Ánalisis forense de dispositivos móviles',0);
+insert into servicioPs (nombre, descripcion, precio) values ('Analisis forense en computadora','Ánalisis forense de computadora',0);
+
+create table registroPs(
+	id int primary key auto_increment, -- primary key auto increment
+	usuario varchar(250),
+    tema varchar(250),
+    descripcion varchar(250),
+    createdAt date,
+    updatedAt date
+);
+select * from registroPs;
+drop table registroPs;
+
+
+

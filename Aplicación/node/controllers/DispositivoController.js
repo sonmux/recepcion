@@ -16,6 +16,28 @@ export const getAllDisp = async (req, res) => {
     }
 }
 
+//! Mostrar todos los registros de dispositivos de un cliente
+export const getAllDispUsr = async (req, res) => {
+    try {
+        const disp = await DispositivoModel.findAll({
+            where:{
+                idCliente:parseInt(req.query.id),
+                numOrden:req.query.orden
+            }
+        })
+        res.json(
+            {
+                auth: true,
+                disp: disp
+            })
+    } catch (error) {
+        res.json({
+            "auth":false,
+            message: error.message
+        })
+    }
+}
+
 //! Mostrar solo un registro dispositivo
 export const getDisp = async (req, res) => {
     try {

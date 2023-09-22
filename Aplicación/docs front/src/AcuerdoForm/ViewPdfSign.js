@@ -4,7 +4,7 @@ import axios from "axios"
 import {useEffect, useState} from 'react'
 //* importar react-router-dom
 import {Link} from 'react-router-dom'
-import './styles.css';
+import '../estilos/stylesPDF.css';
 import { Document, Page, pdfjs } from 'react-pdf';
 
 // Configura la ubicación del worker de pdf.js
@@ -72,7 +72,7 @@ const ViewPdfSign = () => {
             )}
             </div>
             <div>
-                <Link to={`/Dispositivo/`} className='btn btn-primary mt-2 mb-2'>Continuar</Link>
+                <Link to={`/Cliente`} className='btn btn-primary mt-2 mb-2'>Continuar</Link>
             </div>
         </div>
       );

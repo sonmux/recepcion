@@ -6,12 +6,11 @@ import { DataTypes } from "sequelize";
 
 //! en "define" colocamos el nombre de nuestra tabla
 //? para sequelize el nombre de las tablas, en la db, deben estar escritas en plural
-const AcuerdoModel = db.define('acuerdoPs',{
+const RegistroModel = db.define('registroPs',{
     // AUTO INCREMENT id: {type: DataTypes.INTEGER},
-    acuerdo: {type: DataTypes.STRING},
-    idCliente: {type: DataTypes.STRING},
-    numOrden: {type: DataTypes.STRING},
-    estadoFirma: {type: DataTypes.INTEGER},
+    usuario: {type: DataTypes.STRING},
+    tema: {type: DataTypes.STRING},
+    descripcion: {type: DataTypes.STRING},
 })
 
-export default AcuerdoModel
+export default RegistroModel

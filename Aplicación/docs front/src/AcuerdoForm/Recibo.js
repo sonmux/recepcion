@@ -75,7 +75,7 @@ const Recibo = ({datos, pedido})=>{
                         <View style={{flex:1}}>
                             <Image
                                 style={{width:'100px'}}
-                                src='https://cdn-icons-png.flaticon.com/512/492/492705.png'
+                                src='https://scontent.fgua5-2.fna.fbcdn.net/v/t39.30808-6/314904243_138258048984417_971963738718178266_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=vsCSuY-kI8UAX-V92eD&_nc_ht=scontent.fgua5-2.fna&oh=00_AfD-wGB7Ljc7gt3cd9KNHwdwl7r_KCbe4mb7YRLMYorBjQ&oe=650ECF46'
                             />
                         </View>
                         <View style={{flex:2}}>
@@ -87,8 +87,8 @@ const Recibo = ({datos, pedido})=>{
                                 }}
                             >
                                 <Image
-                                    style={{width:'100px'}} 
-                                    src='https://cdn-icons-png.flaticon.com/512/492/492705.png'
+                                    style={{width:'160px'}} 
+                                    src='https://media.licdn.com/dms/image/D4E3DAQF53hk_ZmRA-Q/image-scale_191_1128/0/1684966503570?e=1695160800&v=beta&t=SKydh3cc8towtxtmDxIy6yIpiwmlLO9zLqWxRbUFrKY'
                                 />
                                 <Text style={{textAlign:'center', fontSize:'12px'}}>
                                     VENTA DE TODA CLASE DE MOCHILAS, MALETINES DEPORTIVOS,

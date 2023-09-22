@@ -13,7 +13,6 @@ const ClienteModel = db.define('clientePs',{
     telefono: {type: DataTypes.INTEGER},
     correo: {type: DataTypes.STRING},
     nit: {type: DataTypes.INTEGER},
-    peritoAsignado: {type: DataTypes.INTEGER},
     dpiFrontal: {type: DataTypes.STRING},
     dpiReverso: {type: DataTypes.STRING},
 })

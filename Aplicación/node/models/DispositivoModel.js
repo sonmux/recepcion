@@ -8,6 +8,7 @@ import { DataTypes } from "sequelize";
 //? para sequelize el nombre de las tablas, en la db, deben estar escritas en plural
 const DispositivoModel = db.define('dispositivoPs',{
     // AUTO INCREMENT id: {type: DataTypes.INTEGER},
+    numOrden: {type: DataTypes.STRING},
     tipo: {type: DataTypes.STRING},
     marca: {type: DataTypes.STRING},
     modelo: {type: DataTypes.STRING},
@@ -18,10 +19,14 @@ const DispositivoModel = db.define('dispositivoPs',{
     sistemaOperativo: {type: DataTypes.STRING},
     imei: {type: DataTypes.STRING},
     contraseñaDispositivo: {type: DataTypes.STRING},
+    descripcion: {type: DataTypes.STRING},
+    solicitud: {type: DataTypes.STRING},
     foto1: {type: DataTypes.STRING},
     foto2: {type: DataTypes.STRING},
     foto3: {type: DataTypes.STRING},
     foto4: {type: DataTypes.STRING},
+    peritoAsignado: {type: DataTypes.INTEGER},
+    estado: {type: DataTypes.STRING},
     idCliente: {type: DataTypes.STRING},
 })
 
