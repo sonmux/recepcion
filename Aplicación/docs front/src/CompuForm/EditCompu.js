@@ -13,7 +13,13 @@ import '../estilos/botones.scss'
 const URI = 'http://localhost:8000/disp/'
 const URILOG = 'http://localhost:8000/log/';
 
+// Configura los encabezados de la solicitud para incluir el token JWT
+const headers = {
+    'Authorization': `${localStorage.getItem('token')}` // Utiliza el formato 'Bearer Token'
+  };
+
 const CompEditCompu = (props) => {
+    const [Tipo,setTipo]=useState('')
     const [Marca,setMarca]=useState('')
     const [Modelo,setModelo]=useState('')
     const [Serie,setSerie]=useState('')
@@ -40,6 +46,7 @@ const CompEditCompu = (props) => {
         e.preventDefault()
         try {
             await axios.put(URI+id,{
+                tipo: Tipo,
                 marca:Marca,
                 modelo:Modelo,
                 serie:Serie,
@@ -57,14 +64,14 @@ const CompEditCompu = (props) => {
                 /* aqui no se debe actualizar el idCliente
                 idCliente:IDcliente
                 */
-            })
+            },{ headers })
             //? función para guardar un log en el sistema
             //const URILOG = 'http://localhost:8000/log/';
             await axios.post(URILOG, {
                 usuario: localStorage.getItem("usuario"),
                 tema: "Modificar Computadora",
                 descripcion:`El usuario ${localStorage.getItem("usuario")} modificó los datos de la computadora con serie: ${Serie}, del cliente con dpi: ${localStorage.getItem("Idcliente")}`
-            });
+            },{ headers });
             //?------------------
             window.location.reload();
         } catch (error) {
@@ -78,7 +85,8 @@ const CompEditCompu = (props) => {
     },[])
 
     const getCompuById = async () => {
-        const res = await axios.get(URI+id)
+        const res = await axios.get(URI+id,{ headers })
+        setTipo(res.data.tipo)
         setMarca(res.data.marca)
         setModelo(res.data.modelo)
         setSerie(res.data.serie)
@@ -212,8 +220,19 @@ const CompEditCompu = (props) => {
 
     return (
         <div id='divEditCompu'>
-            <h3>Editar computadora</h3>
+            <h3>Editar dispositivo Almacenamiento</h3>
             <form onSubmit={update}>
+            <div className="mb-3">
+                    <label className="form-label">Tipo</label>
+                    <input 
+                        value={Tipo}
+                        onChange={(e) => setTipo(e.target.value)}
+                        type="text"
+                        className="form-control"
+                        id='input1EDC'
+                        required
+                    />
+                </div>
                 <div className="mb-3">
                     <label className="form-label">Marca</label>
                     <input 

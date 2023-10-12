@@ -13,6 +13,11 @@ import jsPDF from 'jspdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 const URI = 'http://localhost:8000/acuerdo/';
 
+// Configura los encabezados de la solicitud para incluir el token JWT
+const headers = {
+  'Authorization': `${localStorage.getItem('token')}` // Utiliza el formato 'Bearer Token'
+};
+
 const App = () => {
   const [pdfBase64, setPdfBase64] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
@@ -52,14 +57,14 @@ const App = () => {
       setPdfBase64(modifiedPdfBase64);
 
       // Aquí puedes enviar modifiedPdfBase64 al servidor si es necesario
-      // await axios.post(URI, { acuerdo: modifiedPdfBase64, idCliente: localStorage.getItem("Idcliente") });
+      // await axios.post(URI, { acuerdo: modifiedPdfBase64, idCliente: localStorage.getItem("Idcliente") },{ headers });
       //console.log(modifiedPdfBase64); // Muestra la cadena Base64 en la consola
       await axios.post(URI,{
         acuerdo:modifiedPdfBase64,
         idCliente:localStorage.getItem("Idcliente"),
         numOrden:localStorage.getItem("RegOrden"),
         estadoFirma:1
-      })
+      },{ headers })
       navigate('/Acuerdo/Sign')
 
     } catch (error) {
@@ -71,10 +76,10 @@ const App = () => {
   const generatePdfAsBase64 = async () => {
     try {
       const URIDISP = 'http://localhost:8000/disp/';
-      const pedido = await axios.get(URIDISP+'all/'+`?id=${localStorage.getItem("Idcliente")}&orden=${localStorage.getItem("RegOrden")}`)
+      const pedido = await axios.get(URIDISP+'all/'+`?id=${localStorage.getItem("Idcliente")}&orden=${localStorage.getItem("RegOrden")}`,{ headers })
       console.log(pedido.data);
       const URI2 = 'http://localhost:8000/cliente/';
-      const datos = await axios.get(URI2 + localStorage.getItem("Idcliente"));
+      const datos = await axios.get(URI2 + localStorage.getItem("Idcliente"),{ headers });
       console.log(datos);
       console.log('------------------------------');
 

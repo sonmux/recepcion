@@ -10,6 +10,12 @@ import '../estilos/botones.scss'
 
 const URI = 'http://localhost:8000/usr/';
 const URILOG = 'http://localhost:8000/log/';
+//? para borara la variable del local storage
+//localStorage.removeItem('Idcliente')
+//localStorage.removeItem('RegOrden')
+//localStorage.removeItem('tecnico')
+//localStorage.removeItem('usuario')
+//localStorage.removeItem('token')
 
 function CompGetUsr() {
   const [Usuario, setUsuario] = useState('');
@@ -27,7 +33,8 @@ function CompGetUsr() {
     //console.log(login.data)
     if (login.data.auth) {
       //! setIsAuthenticated(true); // Establece el estado de autenticación como verdadero
-      localStorage.setItem('usuario', Usuario);
+      localStorage.setItem('usuario', login.data.usuario.correo);
+      localStorage.setItem('token',login.data.token)
 
       //? función para guardar un log en el sistema
       await axios.post(URILOG, {
@@ -38,7 +45,7 @@ function CompGetUsr() {
       //?------------------
 
       console.log('exito')
-      navigate('/Cliente');
+      navigate('/Inicio');
     } else {
       //! setIsAuthenticated(false); // Establece el estado de autenticación como falso en caso de inicio de sesión fallido
       // Lógica para manejar el inicio de sesión fallido, por ejemplo, mostrar un mensaje de error

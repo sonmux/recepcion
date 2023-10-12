@@ -1,8 +1,10 @@
 //* importamos el modelo
 import UsuarioModel from "../models/Usuario.Model.js";
+import jwt from 'jsonwebtoken'
 
 //* Metodo para el CRUD de usuario
 
+//! LOGIN
 //! Mostrar solo un registro de usuario
 export const getUsuario = async (req, res) => {
     try {
@@ -18,9 +20,12 @@ export const getUsuario = async (req, res) => {
                 message: "Error en las credenciales"
             })
         }else{
-            res.json({
-                auth: true,
-                usuario: usuario[0]
+            jwt.sign({user:usuario[0]}, 'secretkey', (err, token)=>{
+                res.json({
+                    auth:true,
+                    usuario:usuario[0],
+                    token:token
+                })
             })
         }
     } catch (error) {

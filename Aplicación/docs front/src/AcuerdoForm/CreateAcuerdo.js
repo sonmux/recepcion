@@ -15,6 +15,11 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 //* hacemos una constante para las rutas del back
 const URI = 'http://localhost:8000/acuerdo/'
 
+// Configura los encabezados de la solicitud para incluir el token JWT
+const headers = {
+  'Authorization': `${localStorage.getItem('token')}` // Utiliza el formato 'Bearer Token'
+};
+
 const App = () => {
   const [pdfFile, setPdfFile] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
@@ -72,7 +77,7 @@ const App = () => {
       await axios.post(URI,{
         acuerdo:base64modifiedPdf,
         idCliente:localStorage.getItem("Idcliente")
-      })
+      },{ headers })
       
       console.log(base64modifiedPdf); // Muestra la cadena Base64 en la consola
       navigate('/Acuerdo/Sign')

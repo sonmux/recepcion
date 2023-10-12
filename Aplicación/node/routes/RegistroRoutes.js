@@ -1,6 +1,7 @@
 //* import express
 import express from 'express'
 import { createLog } from '../controllers/RegistroController.js'
+import {authenticateToken} from '../controllers/JWTmiddleware.js'
 
 const RegistroRouter = express.Router()
 

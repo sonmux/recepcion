@@ -17,8 +17,8 @@ import CompCreateCliente from './ClienteForm/CreateCliente';
 import CompCreateAcuerdo from './AcuerdoForm/CreateAcuerdo';
 import CompCreateAcuerdo2 from './AcuerdoForm/CreateAcuerdo2';
 import ViewPdfSign from './AcuerdoForm/ViewPdfSign';
-import CompCreateDisp from './Dispositivo/CreateDisp';
-import CompEditDisp from './Dispositivo/EditDisp';
+//import CompCreateDisp from './Dispositivo/CreateDisp';
+//import CompEditDisp from './Dispositivo/EditDisp';
 import CompShowDisp from './Dispositivo/showDisp';
 
 //* importamos el router
@@ -29,6 +29,10 @@ import { AuthProvider } from './LoginForm/AuthContext'; // Asegúrate de que la 
 
 // Importa ProtectedRoute
 import ProtectedRoute from './LoginForm/ProtectedRoute'; // Asegúrate de que la ruta sea correcta
+import CompInventario from './InventarioForm/Inventario';
+import Inicio from './InicioForm/Inicio';
+import DragAndDrop from './TareaForm/Tareas';
+import CompShowTareas from './TecnicoForm/Tecnico';
 
 function App() {
   /*return (
@@ -89,11 +93,15 @@ function App() {
       <BrowserRouter>
           <Routes>
             <Route path='/' element={<CompGetUsr/>} />
+            <Route path='/Inicio' element={<Inicio/>} />
             <Route path='/Cliente' element={<CompCreateCliente/>} />
             <Route path='/Dispositivo' element={<CompShowDisp/>} />
             <Route path='/Acuerdo' element={<CompCreateAcuerdo2/>} />
             {/* {<Route path='/Acuerdo2' element={<CompCreateAcuerdo2/>} /> */}
             <Route path='/Acuerdo/Sign' element={<ViewPdfSign/>} />
+            <Route path='/Inventario' element={<CompInventario/>} />
+            <Route path='/Tareas' element={<DragAndDrop/>} />
+            <Route path='/Tecnico' element={<CompShowTareas/>} />
            </Routes>
       </BrowserRouter>
       <br/><br/><br/><br/>

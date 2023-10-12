@@ -20,6 +20,11 @@ import '../estilos/botones.scss'
 //* hacemos una constante para las rutas del back
 const URI = 'http://localhost:8000/disp/'
 
+// Configura los encabezados de la solicitud para incluir el token JWT
+const headers = {
+    'Authorization': `${localStorage.getItem('token')}` // Utiliza el formato 'Bearer Token'
+  };
+
 const CompShowDisp = () => {
     const [dispos, setDisp] = useState([])
     useEffect (() => {
@@ -28,13 +33,13 @@ const CompShowDisp = () => {
 
     //* procedimiento para mostrar todas las computadoras del usuario
     const getDisp = async () => {
-        const res = await axios.get(URI+'all/'+`?id=${localStorage.getItem("Idcliente")}&orden=${localStorage.getItem("RegOrden")}`)
+        const res = await axios.get(URI+'all/'+`?id=${localStorage.getItem("Idcliente")}&orden=${localStorage.getItem("RegOrden")}`,{ headers })
         setDisp(res.data)
     }
 
     //* procedimiento para eliminar una computadora
     const deleteCompu = async (id) => {
-        await axios.delete(`${URI}${id}`)
+        await axios.delete(`${URI}${id}`,{ headers })
         getDisp()
     }
 
@@ -127,7 +132,7 @@ const CompShowDisp = () => {
                     usuario: localStorage.getItem("usuario"),
                     tema: "Eliminar Dispositivo",
                     descripcion:`El usuario ${localStorage.getItem("usuario")} eliminó un dispositivo del cliente con dpi: ${localStorage.getItem("Idcliente")}, por la siguiente razón: ${Razon}`
-                });
+                },{ headers });
                 deleteCompu(id)
                 //?------------------
                 window.location.reload(); // Recargar la página actual
@@ -186,7 +191,7 @@ const CompShowDisp = () => {
                         <h2>Opciones de Menú</h2>
                         <ul>
                             <li>
-                            <button onClick={() => handleOptionClick('opcion1')} className='btn btn-primary mt-2 mb-2'>Computadora</button>
+                            <button onClick={() => handleOptionClick('opcion1')} className='btn btn-primary mt-2 mb-2'>Dispositivo Almacenamiento</button>
                             </li>
                             <li>
                             <button onClick={() => handleOptionClick('opcion2')} className='btn btn-primary mt-2 mb-2'>Dispositivo Móvil</button>

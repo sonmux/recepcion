@@ -13,6 +13,9 @@ import MailRouter from "./routes/MailRoutes.js";
 import DispRouter from "./routes/DispositivoRoutes.js";
 import UsuarioRouter from "./routes/UsuarioRoutes.js";
 import RegistroRouter from "./routes/RegistroRoutes.js";
+import InventarioRouter from "./routes/InventarioRoutes.js";
+import TipoRouter from "./routes/TiposRoutes.js";
+import RegistroTrabajoRouter from "./routes/RegistroTrabajoRoutes.js";
 
 const app = express()
 /*app.use(cors({
@@ -29,6 +32,8 @@ app.use(express.json({ limit: '200mb' }));
 
 // Aumentar el límite de tamaño de carga para solicitudes codificadas en URL
 app.use(express.urlencoded({ extended: true, limit: '200mb' }));
+
+//? rutas para el modulo de resepcion
 app.use('/compu', CompuRouter)
 app.use('/movil', MovilRouter)
 app.use('/cliente', ClienteRouter)
@@ -38,6 +43,12 @@ app.use('/disp', DispRouter)
 app.use('/usr', UsuarioRouter)
 app.use('/log', RegistroRouter)
 
+//! rutas para el modulo de inventario
+app.use('/inv', InventarioRouter)
+app.use('/tip', TipoRouter)
+
+//? rutas para el modulo de tecnico
+app.use('/tec',RegistroTrabajoRouter)
 
 try {
     await db.authenticate()

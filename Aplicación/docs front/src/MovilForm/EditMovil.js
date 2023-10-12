@@ -9,6 +9,11 @@ import Modal from 'react-modal';
 const URI = 'http://localhost:8000/disp/'
 const URILOG = 'http://localhost:8000/log/';
 
+// Configura los encabezados de la solicitud para incluir el token JWT
+const headers = {
+    'Authorization': `${localStorage.getItem('token')}` // Utiliza el formato 'Bearer Token'
+  }
+
 const CompEditMovil = (props) => {
     const [Marca,setMarca]=useState('')
     const [Modelo,setModelo]=useState('')
@@ -39,14 +44,14 @@ const CompEditMovil = (props) => {
                 foto1:Fotografia1,
                 foto2:Fotografia2,
                 foto3:Fotografia3,
-            })
+            },{ headers })
             //? función para guardar un log en el sistema
             //const URILOG = 'http://localhost:8000/log/';
             await axios.post(URILOG, {
                 usuario: localStorage.getItem("usuario"),
                 tema: "Modificar Dispositivo Móvil",
                 descripcion:`El usuario ${localStorage.getItem("usuario")} modificó los datos del dispositivo móvil con serie: ${Serie}, del cliente con dpi: ${localStorage.getItem("Idcliente")}`
-            });
+            },{ headers });
             //?------------------
 
 
@@ -62,7 +67,7 @@ const CompEditMovil = (props) => {
     },[])
 
     const getMovilById = async () => {
-        const res = await axios.get(URI+id)
+        const res = await axios.get(URI+id,{ headers })
         setMarca(res.data.marca)
         setModelo(res.data.modelo)
         setImei(res.data.imei)

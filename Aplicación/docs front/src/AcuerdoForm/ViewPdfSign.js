@@ -16,6 +16,11 @@ const URI = 'http://localhost:8000/acuerdo/'
 //* hacemos una constante para las rutas del back
 const URI2 = 'http://localhost:8000/mailAcuerdo/'
 
+// Configura los encabezados de la solicitud para incluir el token JWT
+const headers = {
+    'Authorization': `${localStorage.getItem('token')}` // Utiliza el formato 'Bearer Token'
+  };
+
 const ViewPdfSign = () => {
     const [PdfFirma, setPdfFirma] = useState('');
     const [error, setError] = useState(null);
@@ -26,7 +31,7 @@ const ViewPdfSign = () => {
 
     const getPdfFirma = async () => {
         try {
-            const res = await axios.get(URI + localStorage.getItem("Idcliente"));
+            const res = await axios.get(URI + localStorage.getItem("Idcliente"),{ headers });
             const acuerdoBase64 = res.data.acuerdo;
 
             if (acuerdoBase64) {
@@ -49,7 +54,7 @@ const ViewPdfSign = () => {
             const datosusu = await axios.post(URI2, {
                 pdfBase64: acuerdoBase64,
                 id: localStorage.getItem("Idcliente")
-            });
+            },{ headers });
             console.log(datosusu);
         } catch (error) {
             console.error('Error al enviar el PDF por correo electrónico', error);

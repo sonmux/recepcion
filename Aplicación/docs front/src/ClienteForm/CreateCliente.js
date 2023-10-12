@@ -19,6 +19,12 @@ const URI = 'http://localhost:8000/cliente/'
 const URILOG = 'http://localhost:8000/log/';
 //const URI = 'https://prueba-wytc.onrender.com/cliente/'
 
+
+// Configura los encabezados de la solicitud para incluir el token JWT
+const headers = {
+    'Authorization': `${localStorage.getItem('token')}` // Utiliza el formato 'Bearer Token'
+  };
+
 //* borra la variable de sesión
 //sessionStorage.removeItem('Idcliente');
 //! borra la cookie
@@ -48,14 +54,14 @@ const CompCreateCliente = () => {
             nit: parseInt(Nit),
             dpiFrontal: DpiFrontal,
             dpiReverso: DpiReverso
-        })
+        },{ headers })
         //? función para guardar un log en el sistema
         //const URILOG = 'http://localhost:8000/log/';
         await axios.post(URILOG, {
             usuario: localStorage.getItem("usuario"),
             tema: "Nuevo Cliente",
             descripcion:`El usuario ${localStorage.getItem("usuario")} ingresó al cliente ${NombreCliente}`
-        });
+        },{ headers });
         //?------------------
 
         //? crear un registro para la orden
@@ -182,7 +188,7 @@ const CompCreateCliente = () => {
     const BuscarCli = async (e) => {
         e.preventDefault()
         //console.log(buscarCli)
-        const buscar = await axios.get(URI+buscarCli)
+        const buscar = await axios.get(URI+buscarCli,{ headers })
         //console.log(buscar)
         if(buscar.data!=''){
             setIdcliente(buscar.data.id)
@@ -200,7 +206,7 @@ const CompCreateCliente = () => {
                 usuario: localStorage.getItem("usuario"),
                 tema: "Buscar Cliente Exitoso",
                 descripcion:`El usuario ${localStorage.getItem("usuario")} realizo la busqueda del cliente ${buscar.data.nombreCliente}, con dpi: ${buscarCli}`
-            });
+            },{ headers });
             //?------------------
 
         }else{
@@ -217,7 +223,7 @@ const CompCreateCliente = () => {
                 usuario: localStorage.getItem("usuario"),
                 tema: "Buscar Cliente Fallido",
                 descripcion:`El usuario ${localStorage.getItem("usuario")} realizo la busqueda de un cliente con dpi: ${buscarCli}`
-            });
+            },{ headers });
             //?------------------
         }
     }

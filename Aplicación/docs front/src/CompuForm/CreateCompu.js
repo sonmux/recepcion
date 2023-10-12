@@ -16,7 +16,13 @@ import '../estilos/botones.scss'
 const URI = 'http://localhost:8000/disp/'
 const URILOG = 'http://localhost:8000/log/';
 
+// Configura los encabezados de la solicitud para incluir el token JWT
+const headers = {
+    'Authorization': `${localStorage.getItem('token')}` // Utiliza el formato 'Bearer Token'
+  };
+
 const CompCreateCompu = () => {
+    const [Tipo,setTipo]=useState('')
     const [Marca,setMarca]=useState('')
     const [Modelo,setModelo]=useState('')
     const [Serie,setSerie]=useState('')
@@ -55,7 +61,7 @@ const CompCreateCompu = () => {
         try {
             await axios.post(URI,{
                 numOrden:localStorage.getItem("RegOrden"),
-                tipo:"Computadora",
+                tipo:Tipo,
                 marca:Marca,
                 modelo:Modelo,
                 serie:Serie,
@@ -72,14 +78,14 @@ const CompCreateCompu = () => {
                 foto3:Fotografia3,
                 foto4:Fotografia4,
                 idCliente:localStorage.getItem("Idcliente")
-            })
+            },{ headers })
             //? función para guardar un log en el sistema
             //const URILOG = 'http://localhost:8000/log/';
             await axios.post(URILOG, {
                 usuario: localStorage.getItem("usuario"),
                 tema: "Crear Computadora",
                 descripcion:`El usuario ${localStorage.getItem("usuario")} registro la computadora con serie: ${Serie}, del cliente con dpi: ${localStorage.getItem("Idcliente")}`
-            });
+            },{ headers });
             //?------------------
             window.location.reload(); // Recargar la página actual
         } catch (error) {
@@ -206,6 +212,17 @@ const CompCreateCompu = () => {
         <div id='divCrearCompu'>
             <h3>Agregar computadora</h3>
             <form onSubmit={store}>
+                <div className="mb-3">
+                    <label className="form-label">Tipo</label>
+                    <input 
+                        value={Tipo}
+                        onChange={(e) => setTipo(e.target.value)}
+                        type="text"
+                        className="form-control"
+                        id='input1DC'
+                        required
+                    />
+                </div>
                 <div className="mb-3">
                     <label className="form-label">Marca</label>
                     <input 

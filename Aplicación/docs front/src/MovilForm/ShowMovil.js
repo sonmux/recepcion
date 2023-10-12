@@ -8,6 +8,11 @@ import {Link} from 'react-router-dom'
 //* hacemos una constante para las rutas del back
 const URI = 'http://localhost:8000/movil/'
 
+// Configura los encabezados de la solicitud para incluir el token JWT
+const headers = {
+    'Authorization': `${localStorage.getItem('token')}` // Utiliza el formato 'Bearer Token'
+  }
+
 const CompShowMovil = () => {
     const [movils, setMovils] = useState([])
     useEffect(() => {
@@ -16,14 +21,14 @@ const CompShowMovil = () => {
 
     //* procedimiento para mostrar todos los dispositivos moviles
     const getMovils = async () => {
-        const res = await axios.get(URI)
+        const res = await axios.get(URI,{ headers })
         setMovils(res.data)
         console.log(res.data)
     }
 
     //* procedimiento para eliminar un dispositivo movil
     const deleteMovil = async (id) => {
-        await axios.delete(`${URI}${id}`)
+        await axios.delete(`${URI}${id}`,{ headers })
         getMovils()
     }
 

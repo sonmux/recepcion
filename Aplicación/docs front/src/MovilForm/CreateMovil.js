@@ -15,6 +15,11 @@ import '../estilos/botones.scss'
 const URI = 'http://localhost:8000/disp/'
 const URILOG = 'http://localhost:8000/log/';
 
+// Configura los encabezados de la solicitud para incluir el token JWT
+const headers = {
+    'Authorization': `${localStorage.getItem('token')}` // Utiliza el formato 'Bearer Token'
+  }
+
 const CompCreateMovil = () => {
     const [Marca,setMarca]=useState('')
     const [Modelo,setModelo]=useState('')
@@ -52,14 +57,14 @@ const CompCreateMovil = () => {
                 foto3:Fotografia3,
                 foto4:'',
                 idCliente:localStorage.getItem("Idcliente")
-            })
+            },{ headers })
             //? función para guardar un log en el sistema
             //const URILOG = 'http://localhost:8000/log/';
             await axios.post(URILOG, {
                 usuario: localStorage.getItem("usuario"),
                 tema: "Crear Dispositivo Móvil",
                 descripcion:`El usuario ${localStorage.getItem("usuario")} registro el dispositivo móvil con serie: ${Serie}, del cliente con dpi: ${localStorage.getItem("Idcliente")}`
-            });
+            },{ headers });
             //?------------------
 
 

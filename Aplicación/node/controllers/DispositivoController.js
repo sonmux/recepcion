@@ -1,5 +1,9 @@
 //* importamos el Modelo
 import DispositivoModel from "../models/DispositivoModel.js"
+//* importar la conexión de la db
+import db from '../database/db.js';
+//? comparadores logicos en sequelize
+import {Op} from "sequelize";
 
 //* Metodo para el CRUD de dispositivos
 
@@ -25,6 +29,23 @@ export const getAllDispUsr = async (req, res) => {
                 numOrden:req.query.orden
             }
         })
+        res.json(
+            {
+                auth: true,
+                disp: disp
+            })
+    } catch (error) {
+        res.json({
+            "auth":false,
+            message: error.message
+        })
+    }
+}
+
+//! Mostrar todos los registros asignados a un tecnico
+export const getAllTask = async (req, res) => {
+    try {
+        const disp = await db.query(`call misTrabajos(${req.query.usuario});`)
         res.json(
             {
                 auth: true,

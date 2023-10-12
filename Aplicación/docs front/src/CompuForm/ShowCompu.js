@@ -8,6 +8,11 @@ import {Link} from 'react-router-dom'
 //* hacemos una constante para las rutas del back
 const URI = 'http://localhost:8000/compu/'
 
+// Configura los encabezados de la solicitud para incluir el token JWT
+const headers = {
+    'Authorization': `${localStorage.getItem('token')}` // Utiliza el formato 'Bearer Token'
+  };
+
 const CompShowCompus = () => {
     const [compus, setCompus] = useState([])
     useEffect (() => {
@@ -16,14 +21,14 @@ const CompShowCompus = () => {
 
     //* procedimiento para mostrar todas las computadoras
     const getCompus = async () => {
-        const res = await axios.get(URI)
+        const res = await axios.get(URI,{ headers })
         setCompus(res.data)
         console.log(res.data)
     }
 
     //* procedimiento para eliminar una computadora
     const deleteCompu = async (id) => {
-        await axios.delete(`${URI}${id}`)
+        await axios.delete(`${URI}${id}`,{ headers })
         getCompus()
     }
 
