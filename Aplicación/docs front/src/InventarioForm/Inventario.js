@@ -2,11 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'
 import Modal from 'react-modal';
+import {Link} from 'react-router-dom'
 
 //?imports para la tabla
 import "../estilos/tablaInventario.css";
 import useColumns from "./useColumns"
-import usesRows from "./useRows(sin uso)";
+//import usesRows from "./useRows(sin uso)";
 import { useTable, useGlobalFilter, useAsyncDebounce } from "react-table";
 
 //* importamos los estilos CSS
@@ -196,7 +197,12 @@ function CompInventario(){
                 setGlobalFilter={setGlobalFilter}
               />
             </th>
-            <button onClick={openModal} className='btn btn-primary mt-2 mb-2'>Agregar Equipo</button>
+            <th>
+              <button onClick={openModal} className='btn btn-primary mt-2 mb-2'>Agregar Equipo</button>
+            </th>
+            <th>
+              <Link to={`/Inicio`} className='btn btn-primary mt-2 mb-2'>Regresar Inicio</Link>
+            </th>
           </tr>
           <Modal
               isOpen={isModalOpen}

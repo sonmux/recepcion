@@ -21,3 +21,25 @@ export const createRegTrabajo = async (req, res) => {
         })
     }
 }
+
+//! Mostrar el registro de trabajo de un tecnico
+export const getRegTec = async (req,res) => {
+    console.log(req.query)
+    try {
+        const reg = await RegistroTrabajoModel.findAll({
+            where:{
+                perito: req.query.tec,
+                dispositivoId: req.query.disp
+            }
+        })
+        res.json({
+            auth:true,
+            registro: reg
+        })
+    } catch (error) {
+        res.json({
+            "auth":false,
+            message: error.message
+        })
+    }
+}

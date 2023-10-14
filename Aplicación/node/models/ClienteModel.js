@@ -10,7 +10,7 @@ const ClienteModel = db.define('clientePs',{
     // AUTO INCREMENT id: {type: DataTypes.INTEGER},
     nombreCliente: {type: DataTypes.STRING},
     direcciónCliente: {type: DataTypes.STRING},
-    telefono: {type: DataTypes.INTEGER},
+    telefono: {type: DataTypes.STRING},
     correo: {type: DataTypes.STRING},
     nit: {type: DataTypes.INTEGER},
     dpiFrontal: {type: DataTypes.STRING},

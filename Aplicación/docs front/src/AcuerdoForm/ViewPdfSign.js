@@ -77,7 +77,7 @@ const ViewPdfSign = () => {
             )}
             </div>
             <div>
-                <Link to={`/Cliente`} className='btn btn-primary mt-2 mb-2'>Continuar</Link>
+                <Link to={`/Inicio`} className='btn btn-primary mt-2 mb-2'>Continuar</Link>
             </div>
         </div>
       );

@@ -1,0 +1,13 @@
+/* styles.css */
+.react-pdf__Page__textContent {
+  display: none !important;
+}
+.cuadroFirma{
+  border: 1px solid #000
+}
+.cuadroPDF {
+  border: 10px solid #000;
+  display: grid;
+  place-items: center;
+  display:inline-block;
+}

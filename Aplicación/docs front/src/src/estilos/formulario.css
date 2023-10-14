@@ -1,0 +1,134 @@
+/* SECCIÓN CSS PARA PANTALLA LOGIN*/
+.div-principalLogin{
+    display: grid;
+    place-items: center;
+    display:inline-block;
+    background-color: #F79C2E;
+    width: 30%;
+    padding: 20px 40px;
+    box-shadow: 0 20px 35px rgba(92, 99, 105, 2);
+}
+
+#input1L:focus,#input2L:focus{
+    border: 2px solid purple;
+}
+
+div label {
+    float: left;
+}
+
+div {
+    margin: .20em 0;
+}
+  
+label {
+    display: block;
+    margin: .2em 0 0 0;
+}
+
+/* SECCIÓN CSS PARA PANTALLA CLIENTE*/
+.div-principalCliente{
+    display: grid;
+    place-items: center;
+    display:inline-block;
+    background-color: #F79C2E;
+    width: 40%;
+    padding: 20px 40px;
+    box-shadow: 0 20px 35px rgba(92, 99, 105, 2);
+}
+
+#input1C:focus,#input2C:focus,
+#input3C:focus,#input4C:focus,
+#input5C:focus,#input6C:focus,
+#input7C:focus {
+    border: 2px solid purple;
+}
+
+/* SECCIÓN DEL MENU PARA DISPOSITIVOS */
+#modalMenuDispositivos,#modalEditar{
+    width: 750px; /* Ancho personalizado */
+    height: 500px; /* Altura personalizada */
+    margin-top: 15vh;
+    margin-left: 50vh;
+}
+
+#divMenuDispositivo{
+    background-color: #CCCCCC;
+    width: 700px;
+    height: 450px;
+}
+
+#head1Table{
+    background-color: #F79C2E;
+}
+
+#head2Table{
+    background-color: #f6b15c;
+}
+
+#body1Table{
+    background-color: #242432;
+    color: white;
+}
+
+#body2Table{
+    background-color: #2f2f42;
+    color: white;
+}
+
+/* SECCIÓN PARA CREAR COMPUTADORA*/
+#divCrearCompu,#divEditCompu{
+    background-color: #40405a;
+    color: white;
+}
+
+#input1DC:focus,#input2DC:focus,
+#input3DC:focus,#input4DC:focus,
+#input5DC:focus,#input6DC:focus,
+#input7DC:focus,#input8DC:focus,
+#input9DC:focus,#input10DC:focus {
+    border: 2px solid #F79C2E;
+}
+
+/* SECCIÓN PARA CREAR MOVIL*/
+#divCrearMovil,#divEditMovil{
+    background-color: #595970;
+    color: white;
+}
+
+#input1DM:focus,#input2DM:focus,
+#input3DM:focus,#input4DM:focus,
+#input5DM:focus,#input6DM:focus,
+#input7DM:focus {
+    border: 2px solid #F79C2E;
+}
+
+/* SECCIÓN PARA EDITAR UNA COMPUTADORA */
+#input1EDC:focus,#input2EDC:focus,
+#input3EDC:focus,#input4EDC:focus,
+#input5EDC:focus,#input6EDC:focus,
+#input7EDC:focus,#input8EDC:focus,
+#input9EDC:focus,#input10EDC:focus {
+    border: 2px solid #F79C2E;
+}
+
+/* SECCION PARA EDITAR UN MÓVIL*/
+#input1EDM:focus,#input2EDM:focus,
+#input3EDM:focus,#input4EDM:focus,
+#input5EDM:focus,#input6EDM:focus,
+#input7EDM:focus {
+    border: 2px solid #F79C2E;
+}
+
+/* SECCIÓN DE PANTALLA PARA ELIMINAR */
+#modalEliminar{
+    width: 500px; /* Ancho personalizado */
+    height: 250px; /* Altura personalizada */
+    margin-top: 30vh;
+    margin-left: 65vh;
+}
+
+#divEliminarDisp{
+    background-color: rgb(255, 81, 81);
+    color: rgb(255, 255, 255);
+}

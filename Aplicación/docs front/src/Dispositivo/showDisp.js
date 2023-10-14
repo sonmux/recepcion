@@ -107,14 +107,13 @@ const CompShowDisp = () => {
 
     const renderFormEdit = (id, tipo) => {
         //console.log(id + ' - ' + tipo)
-        if(tipo === 'Computadora'){
-            return(
-                <CompEditCompu id={id} />
-            )
-        }
-        else if(tipo === 'Móvil'){
+        if(tipo === 'Móvil'){
             return(
                 <CompEditMovil id={id}/>
+            )
+        }else{
+            return(
+                <CompEditCompu id={id} />
             )
         }
         return null

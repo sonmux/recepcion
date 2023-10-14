@@ -298,15 +298,9 @@ const CompCreateCliente = () => {
                     <label className="form-label" id='labelC'>telefono</label>
                     <input
                     value={Telefono}
-                    onChange={(e) => {
-                        // Utiliza una expresión regular para eliminar caracteres no numéricos
-                        const numericValue = e.target.value.replace(/\D/g, '');
-                        setTelefono(numericValue);
-                    }}
+                    onChange={(e) => setTelefono(e.target.value)}
                     type="text"
                     className="form-control"
-                    inputMode="numeric" // Indica que se espera un valor numérico
-                    pattern="[0-9]*"  // Acepta solo caracteres numéricos
                     placeholder="1234568"
                     id="input5C"
                     //required 

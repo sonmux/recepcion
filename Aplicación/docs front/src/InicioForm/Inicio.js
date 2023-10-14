@@ -19,11 +19,14 @@ function Inicio() {
                 <Link to="/Cliente">
                     <button type="button" className="pulse" id='pulse'>Ingresar Cliente</button>
                 </Link>
+                <Link to="/Tareas">
+                    <button type="button" className="pulse" id='pulse'>Asignar Tarea</button>
+                </Link>
                 <Link to="/Inventario">
                     <button type="button" className="pulse" id='pulse'>Inventario</button>
                 </Link>
-                <Link to="/Tareas">
-                    <button type="button" className="pulse" id='pulse'>Tareas</button>
+                <Link to="/">
+                    <button type="button" className="pulse" id='pulse'>Salir</button>
                 </Link>
             </form>
           </div>

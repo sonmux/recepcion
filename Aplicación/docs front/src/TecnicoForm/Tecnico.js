@@ -6,13 +6,14 @@ import {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 //? importar librerias necesarias para el popupMenu
 import Modal from 'react-modal';
-import ModalAñadirHistorial from './ModalAñadirHistorial';
-import ModalAñadirRepuesto from './ModalAñadirRepuesto';
+//import ModalAñadirHistorial from './ModalAñadirHistorial';
+//import ModalAñadirRepuesto from './ModalAñadirRepuesto';
 
 //* importamos los estilos CSS
 import '../estilos/formulario.css'
 import '../estilos/botones.scss'
 import CompRegistroTrabajo from './RegistroTrabajo';
+import CompRegistroRep from './RegistroRepuesto';
 
 //* hacemos una constante para las rutas del back
 const URI = 'http://localhost:8000/disp/'
@@ -23,21 +24,20 @@ const headers = {
   };
 
 const CompShowTareas = () => {
-    const [dispos, setDisp] = useState([])
-    useEffect (() => {
-        getDisp()
-    },[])
-
-    //* Procedimiento para mostar todas las tareas asignadas
-    const getDisp = async () => {
-        const res = await axios.get(URI+'task/'+`?usuario='${localStorage.getItem('usuario')}'`,{ headers })
-        setDisp(res.data)
-    }
+    
+        const [dispos, setDisp] = useState([])
+        useEffect (() => {
+            getDisp()
+        },[])
+        //* Procedimiento para mostar todas las tareas asignadas
+        const getDisp = async () => {
+            const res = await axios.get(URI+'task/'+`?usuario='${localStorage.getItem('usuario')}'`,{ headers })
+            setDisp(res.data)
+        }
 
     //*** MODAL PARA LA FUNCION DE AGREGAR UN REGISTRO DE TRABAJO */
     const [ID, setId]=useState(0)
     const [historialModalOpen, setHistorialModalOpen] = useState(false);
-    const [repuestoModalOpen, setRepuestoModalOpen] = useState(false);
     const openHistorialModal = (id) => {
         setId(id)
         setHistorialModalOpen(true);
@@ -46,13 +46,37 @@ const CompShowTareas = () => {
         setId(0)
         setHistorialModalOpen(false);
     };
-    const openRepuestoModal = () => {
-        setRepuestoModalOpen(true);
-    };
     const renderHistorial = (id) => {
         return(
-            <CompRegistroTrabajo id={id} />
+            <CompRegistroTrabajo disp={id} />
         )
+    }
+
+    //*** MODAL PARA LA FUNCION DE AGREGAR UN REGISTRO DE REPUESTO */
+    const [repuestoModalOpen, setRepuestoModalOpen] = useState(false);
+    const openRepuestoModal = (id) => {
+        setId(id)
+        setRepuestoModalOpen(true);
+    };
+    const onCloseRep = (id) => {
+        setId(0)
+        setRepuestoModalOpen(false);
+    };
+    const renderRepuesto = (id) => {
+        console.log(id)
+        return(
+            <CompRegistroRep disp={id} />
+        )
+    }
+
+    //*** FUNCIÓN PARA TERMINAR UNA TAREA */
+    const finTarea = async (id) => {
+        //console.log(id)
+        await axios.put(URI+id,{
+            estado: 'Terminado'
+        },{ headers })
+        window.confirm('Tarea terminada, Gracias!');
+        window.location.reload(); // Recargar la página actual
     }
 
     return(
@@ -63,7 +87,7 @@ const CompShowTareas = () => {
                     <table className='table'>
                         <thead className='table-primary'>
                             <tr>
-                                <td id='head1Table'>Registro</td>
+                                <td id='head1Table'>Actividad</td>
                                 <td id='head2Table'>Dispositivo</td>
                                 <td id='head1Table'>Marca</td>
                                 <td id='head2Table'>Modelo</td>
@@ -80,14 +104,15 @@ const CompShowTareas = () => {
                                 <td id='head1Table'>Fotografia 2</td>
                                 <td id='head2Table'>Fotografia 3</td>
                                 <td id='head1Table'>Fotografia 4</td>
+                                <td id='head1Table'>Terminar</td>
                             </tr>
                         </thead>
                         <tbody>
                             {dispos.auth ? dispos.disp.map((disp) => (
                                 <tr key={disp.id}>
                                     <td id='body1Table'>
-                                        <button onClick={()=>openHistorialModal(disp.id)} className='btn btn-info'><i className="fa-solid fa-pen-to-square"></i></button>
-                                        <button onClick={openRepuestoModal} className='btn btn-info'>Añadir Repuesto</button>
+                                        <button onClick={()=>openHistorialModal(disp.id)} className='btn btn-info'>Registro</button>
+                                        <button onClick={()=>openRepuestoModal(disp.id)} className='btn btn-info'>Repuesto</button>
                                         <Modal
                                             isOpen={historialModalOpen}
                                         >
@@ -96,7 +121,14 @@ const CompShowTareas = () => {
                                             )}
                                             <button onClick={onClose} className="close-button">CERRAR</button>
                                         </Modal>
-                                        {repuestoModalOpen && <ModalAñadirRepuesto onClose={() => setRepuestoModalOpen(false)} />}
+                                        <Modal
+                                            isOpen={repuestoModalOpen}
+                                        >
+                                            {ID!==0 && (
+                                                renderRepuesto(ID)
+                                            )}
+                                            <button onClick={onCloseRep} className="close-button">CERRAR</button>
+                                        </Modal>
                                     </td>
                                     <td id='body2Table'>{disp.tipo}</td>
                                     <td id='body1Table'>{disp.marca}</td>
@@ -114,6 +146,21 @@ const CompShowTareas = () => {
                                     <td id='body1Table'><img src={disp.foto2} alt="" width='70px' height='60px'/></td>
                                     <td id='body2Table'><img src={disp.foto3} alt="" width='70px' height='60px'/></td>
                                     <td id='body1Table'><img src={disp.foto4} alt="" width='70px' height='60px'/></td>
+                                    <td id='body2Table'>
+                                        <button
+                                            onClick={() => {
+                                                const confirmAction = window.confirm("¿Estás seguro de que deseas terminar esta tarea?");
+                                                if (confirmAction) {
+                                                    // Aquí puedes agregar la lógica para realizar la acción de "Terminar"
+                                                    // Puedes llamar a una función o realizar una solicitud al servidor, por ejemplo
+                                                    finTarea(disp.id)
+                                                }
+                                            }}
+                                            className='btn btn-info'
+                                        >
+                                            Terminar
+                                        </button>
+                                    </td>
                                 </tr>
                             )):<></>}
                         </tbody>

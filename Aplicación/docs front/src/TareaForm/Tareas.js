@@ -1,6 +1,7 @@
 import axios from "axios";
 import {useState, useEffect} from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 //* importamos los estilos CSS
 import '../estilos/formulario.css'
@@ -62,6 +63,7 @@ function DragAndDrop () {
             Asignar tareas &nbsp;
             <img className='icon-react' src="src/assets/react.svg" alt="" />
         </h1>
+            <Link to={`/Inicio`} className='btn btn-primary mt-2 mb-2'>Regresar Inicio</Link>
         <br/>
         <div className='drag-and-drop'>
             <div className="column column--0">
@@ -72,7 +74,7 @@ function DragAndDrop () {
                     {getList(0).map(item=>(
                         <div className="dd-element" key={item.id} draggable onDragStart={(event) => startDrag(event,item)}>
                             <strong className="title">{item.tipo}</strong>
-                            <p className="body">Orden id: {item.id}</p>
+                            <p className="body">ID: {item.id}</p>
                             <p className="body"># Orden: {item.numOrden}</p>
                             <p className="body">Solicitud: {item.solicitud}</p>
                         </div>
@@ -81,13 +83,13 @@ function DragAndDrop () {
             </div>
             <div className="column column--1">
                 <h3>
-                    Perito 1
+                    Técnico 1
                 </h3>
                 <div className="dd-zone" droppable='true' onDragOver={(event=>dragginOver(event))} onDrop={(event => onDrop(event,1))}>
                     {getList(1).map(item=>(
                         <div className="dd-element" key={item.id} draggable onDragStart={(event) => startDrag(event,item)}>
                             <strong className="title">{item.tipo}</strong>
-                            <p className="body">Orden id: {item.id}</p>
+                            <p className="body">ID: {item.id}</p>
                             <p className="body"># Orden: {item.numOrden}</p>
                             <p className="body">Solicitud: {item.solicitud}</p>
                         </div>
@@ -96,13 +98,13 @@ function DragAndDrop () {
             </div>
             <div className="column column--2">
                 <h3>
-                    Perito 2
+                    Técnico 2
                 </h3>
                 <div className="dd-zone" droppable='true' onDragOver={(event=>dragginOver(event))} onDrop={(event => onDrop(event,2))}>
                     {getList(2).map(item=>(
                         <div className="dd-element" key={item.id} draggable onDragStart={(event) => startDrag(event,item)}>
                             <strong className="title">{item.tipo}</strong>
-                            <p className="body">Orden id: {item.id}</p>
+                            <p className="body">ID: {item.id}</p>
                             <p className="body"># Orden: {item.numOrden}</p>
                             <p className="body">Solicitud: {item.solicitud}</p>
                         </div>
@@ -111,13 +113,13 @@ function DragAndDrop () {
             </div>
             <div className="column column--3">
                 <h3>
-                    Perito 3
+                    Técnico 3
                 </h3>
                 <div className="dd-zone" droppable='true' onDragOver={(event=>dragginOver(event))} onDrop={(event => onDrop(event,3))}>
                     {getList(3).map(item=>(
                         <div className="dd-element" key={item.id} draggable onDragStart={(event) => startDrag(event,item)}>
                             <strong className="title">{item.tipo}</strong>
-                            <p className="body">Orden id: {item.id}</p>
+                            <p className="body">ID: {item.id}</p>
                             <p className="body"># Orden: {item.numOrden}</p>
                             <p className="body">Solicitud: {item.solicitud}</p>
                         </div>

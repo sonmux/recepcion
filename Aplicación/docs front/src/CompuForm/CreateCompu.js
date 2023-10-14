@@ -210,7 +210,7 @@ const CompCreateCompu = () => {
 
     return(
         <div id='divCrearCompu'>
-            <h3>Agregar computadora</h3>
+            <h3>Agregar dispositivo almacenamiento</h3>
             <form onSubmit={store}>
                 <div className="mb-3">
                     <label className="form-label">Tipo</label>
@@ -264,7 +264,7 @@ const CompCreateCompu = () => {
                     />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Capacidad</label>
+                    <label className="form-label">Capacidad del disco</label>
                     <input 
                         value={Capacidad}
                         onChange={(e) => setCapacidad(e.target.value)}
