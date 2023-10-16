@@ -33,6 +33,7 @@ import CompInventario from './InventarioForm/Inventario';
 import Inicio from './InicioForm/Inicio';
 import DragAndDrop from './TareaForm/Tareas';
 import CompShowTareas from './TecnicoForm/Tecnico';
+import CompDispTerminado from './Entrega/Entregar';
 
 function App() {
   /*return (
@@ -102,6 +103,7 @@ function App() {
             <Route path='/Inventario' element={<CompInventario/>} />
             <Route path='/Tareas' element={<DragAndDrop/>} />
             <Route path='/Tecnico' element={<CompShowTareas/>} />
+            <Route path='/Entrega' element={<CompDispTerminado/>} />
            </Routes>
       </BrowserRouter>
       <br/><br/><br/><br/>

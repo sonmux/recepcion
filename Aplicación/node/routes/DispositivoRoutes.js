@@ -1,15 +1,17 @@
 //* importamos express
 import express from 'express'
-import { createDisp, deleteDisp, getAllDisp, getAllDispUsr, getAllTask, getDisp, updateDisp } from '../controllers/DispositivoController.js'
+import { createDisp, deleteDisp, getAllDisEnd, getAllDisp, getAllDispUsr, getAllTask, getDisp, updateDisp } from '../controllers/DispositivoController.js'
 import {authenticateToken} from '../controllers/JWTmiddleware.js'
 
 const DispRouter = express.Router()
 
 
-//? Ruta para traer solo registros dispositivo de un suauario
+//? Ruta para traer solo registros dispositivo de tareas de un tecnico
 DispRouter.get('/task', authenticateToken, getAllTask)
 //? Ruta para traer solo registros dispositivo de un suauario
 DispRouter.get('/all', authenticateToken, getAllDispUsr)
+//? Ruta para traer solo registros dispositivo terminados
+DispRouter.get('/endDisp', authenticateToken, getAllDisEnd)
 //? Ruta para traer todos los registros de dispositivo
 DispRouter.get('/', authenticateToken, getAllDisp)
 //? Ruta para traer solo un registro dispositivo

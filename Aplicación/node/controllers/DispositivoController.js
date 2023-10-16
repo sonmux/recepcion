@@ -59,6 +59,27 @@ export const getAllTask = async (req, res) => {
     }
 }
 
+//! Mostrar todos los registros de dispositivos terminados
+export const getAllDisEnd = async (req, res) => {
+    try {
+        const disp = await DispositivoModel.findAll({
+            where:{
+                estado: 'Terminado'
+            }
+        })
+        res.json(
+            {
+                auth: true,
+                disp: disp
+            })
+    } catch (error) {
+        res.json({
+            "auth":false,
+            message: error.message
+        })
+    }
+}
+
 //! Mostrar solo un registro dispositivo
 export const getDisp = async (req, res) => {
     try {

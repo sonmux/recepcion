@@ -25,6 +25,12 @@ function Inicio() {
                 <Link to="/Inventario">
                     <button type="button" className="pulse" id='pulse'>Inventario</button>
                 </Link>
+                <Link to="/Tecnico">
+                    <button type="button" className="pulse" id='pulse'>Mis tareas</button>
+                </Link>
+                <Link to="/Entrega">
+                    <button type="button" className="pulse" id='pulse'>Entregas</button>
+                </Link>
                 <Link to="/">
                     <button type="button" className="pulse" id='pulse'>Salir</button>
                 </Link>

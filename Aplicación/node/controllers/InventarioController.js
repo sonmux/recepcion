@@ -3,6 +3,8 @@ import InventarioModel from "../models/InventarioModel.js";
 import TiposModel from "../models/TiposModel.js";
 //* importar la conexión de la db
 import db from '../database/db.js';
+import ServiciosModel from "../models/ServiciosModel.js";
+import DispServModel from "../models/DispServ.js";
 
 //* Metodo para el CRUD del inventario
 
@@ -198,6 +200,42 @@ export const deleteTipo = async (req, res) => {
         res.json({
             auth: true,
             message: 'Tipo eliminado correctamente'
+        })
+    } catch (error) {
+        res.json({
+            auth:false,
+            message: error.message
+        })
+    }
+}
+
+
+//* Metodo para el CRUD de servicios
+//! Obtener todos los servicios
+export const getAllServ = async (req, res) => {
+    try {
+        const servicios = await ServiciosModel.findAll()
+        res.json({
+            auth: true,
+            servicios: servicios
+        })
+    } catch (error) {
+        res.json({
+            auth:false,
+            message: error.message
+        })
+    }
+}
+
+
+//* Metodo paraasignar un servicio a un dispositivo
+//! Incertar servicio y dispositivo en tabla dispServ
+export const createServDisp = async (req, res) => {
+    try {
+        await DispServModel.create(req.body)
+        res.json({
+            auth:true,
+            message: "Servicio asignado a dispositivo"
         })
     } catch (error) {
         res.json({

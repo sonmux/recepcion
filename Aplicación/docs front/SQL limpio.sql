@@ -187,3 +187,36 @@ inner join inventarios i on r.inventarioId = i.id
 inner join tipos t on i.tipo = t.id
 where r.dispositivoId = 1;
 
+/* ************************************
+***************************************
+********* SECCIÓN DE ENTREGA *******
+***************************************
+************************************* */
+
+create table servicios(
+	id int primary key auto_increment,
+    servicio varchar(250),
+    descripcion varchar(250),
+    precio int,
+    createdAt date,
+    updatedAt date
+);
+select*from servicios;
+insert into servicios(servicio, descripcion, precio) values ('extracción de imagenes', 'se extrajeron las imagenes', 300);
+insert into servicios(servicio, descripcion, precio) values ('extracción de mensajes', 'se extrajeron los mensajes', 200);
+insert into servicios(servicio, descripcion, precio) values ('extracción de documentos', 'se extrajeron los documentos', 300);
+insert into servicios(servicio, descripcion, precio) values ('Borrado seguro', 'se eliminó toda la información del dispositivo', 500);
+
+create table dispServs(
+	id int primary key auto_increment,
+    dispId int,
+    servId int,
+    createdAt date,
+    updatedAt date
+);
+select*from dispServs;
+drop table dispServs;
+
+select s.servicio, s.descripcion, s.precio from dispServs as ds
+inner join servicios s on ds.servId = s.id
+where ds.dispId = 2
