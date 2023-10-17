@@ -202,6 +202,7 @@ create table servicios(
     updatedAt date
 );
 select*from servicios;
+drop table servicios;
 insert into servicios(servicio, descripcion, precio) values ('extracción de imagenes', 'se extrajeron las imagenes', 300);
 insert into servicios(servicio, descripcion, precio) values ('extracción de mensajes', 'se extrajeron los mensajes', 200);
 insert into servicios(servicio, descripcion, precio) values ('extracción de documentos', 'se extrajeron los documentos', 300);
@@ -217,6 +218,6 @@ create table dispServs(
 select*from dispServs;
 drop table dispServs;
 
-select s.servicio, s.descripcion, s.precio from dispServs as ds
+select ds.id, s.servicio, s.descripcion, s.precio from dispServs as ds
 inner join servicios s on ds.servId = s.id
 where ds.dispId = 2

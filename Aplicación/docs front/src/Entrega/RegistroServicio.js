@@ -20,6 +20,7 @@ import {Drodown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap'
 //* hacemos una constante para las rutas del back
 //const URI = 'http://localhost:8000/inv/'
 const URILOG = 'http://localhost:8000/log/';
+const URITIP = 'http://localhost:8000/serv';
 
 // Configura los encabezados de la solicitud para incluir el token JWT
 const headers = {
@@ -28,19 +29,26 @@ const headers = {
 
 const CompRegistroServ = (props) => {
     const {disp} = props
-    const [Tipo,setTipo]=useState('')
-    //const [Descripcion,setDescripcion]=useState('')
-    const [Serie,setSerie]=useState('')
-    const [Marca,setMarca]=useState('')
-    const [Modelo,setModelo]=useState('')
-    const [Cantidad,setCantidad]=useState('')
+    let Total=0
+
+    //* Procedimiento para obtener todos los servicios dados al abrir la pagina
+    const [reg, setReg] = useState([])
+    useEffect (() => {
+        getReg()
+    },[])
+    //* Procedimiento para mostar todos los servicios dados
+    const getReg = async () => {
+        const res = await axios.get(URITIP+'/getServ/'+`${disp}`,{ headers })
+        //console.log(res.data)
+        setReg(res.data)
+    }
 
     //*** FUNCION PARA EL DROPDOWN MENU */
-    const URITIP = 'http://localhost:8000/tip';
     const [supliers, setSupliers] = useState([]);
     const [suplier, setSuplier] = useState(0);
     const [Descripcion, setDescrip] = useState('');
     const [Precio, setPrecio] = useState(0);
+    
     useEffect (() => {
         getServicios()
     },[])
@@ -74,6 +82,7 @@ const CompRegistroServ = (props) => {
             },{ headers });*/
 
             //window.location.reload()
+            getReg()
         }catch(error){
             console.error('Error al agregar el servicio al dispositivo', error)
         }
@@ -81,7 +90,7 @@ const CompRegistroServ = (props) => {
 
     return(
         <div id='divCrearCompu'>
-            <h3>Servicio brindado</h3>
+            <h3>Seleccionar un servicio</h3>
             <form onSubmit={store}>
                 {/*<div className="mb-3">
                     <label className="form-label">Tipo</label>
@@ -122,6 +131,40 @@ const CompRegistroServ = (props) => {
                 </div>
                 <button type='submit' className="btn btn-primary">Agregar</button>
             </form>
+            <h3>Servicios brindados</h3>
+            <div className="container" style={{ maxHeight: '420px', overflowY: 'auto' }}>
+                <form onSubmit={store}>
+                    <div className='row'>
+                            <div className='col'>
+                                <table className='table'>
+                                    <thead className='table-primary'>
+                                        <tr>
+                                            <td id='head1Table'>servicio</td>
+                                            <td id='head2Table'>descripcion</td>
+                                            <td id='head2Table'>precio</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {reg.auth ? reg.servicios.map((regs) => {
+                                        Total = Total + regs.precio
+                                        return (
+                                                <tr key={regs.id}>
+                                                    <td id='body1Table'>{regs.servicio}</td>
+                                                    <td id='body2Table'>{regs.descripcion}</td>
+                                                    <td id='body2Table'>{regs.precio}</td>
+                                                </tr>
+                                            )
+                                        }):<></>}
+                                    </tbody>
+                                    <tr>
+                                        <td id='head1Table'>Total</td>
+                                        <td id='body1Table'>{Total}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                </form>
+            </div>
         </div>
     )
 }

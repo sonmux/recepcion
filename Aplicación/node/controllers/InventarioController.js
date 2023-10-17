@@ -210,37 +210,3 @@ export const deleteTipo = async (req, res) => {
 }
 
 
-//* Metodo para el CRUD de servicios
-//! Obtener todos los servicios
-export const getAllServ = async (req, res) => {
-    try {
-        const servicios = await ServiciosModel.findAll()
-        res.json({
-            auth: true,
-            servicios: servicios
-        })
-    } catch (error) {
-        res.json({
-            auth:false,
-            message: error.message
-        })
-    }
-}
-
-
-//* Metodo paraasignar un servicio a un dispositivo
-//! Incertar servicio y dispositivo en tabla dispServ
-export const createServDisp = async (req, res) => {
-    try {
-        await DispServModel.create(req.body)
-        res.json({
-            auth:true,
-            message: "Servicio asignado a dispositivo"
-        })
-    } catch (error) {
-        res.json({
-            auth:false,
-            message: error.message
-        })
-    }
-}

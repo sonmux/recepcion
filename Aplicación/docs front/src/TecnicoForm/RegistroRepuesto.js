@@ -60,7 +60,7 @@ function CompRegistroRep(props) {
     useEffect (() => {
         getReg()
     },[])
-    //* Procedimiento para mostar todas las tareas asignadas
+    //* Procedimiento para mostar todos los repeustos usados
     const getReg = async () => {
         const res = await axios.get(URITEC+'getRep/'+`${disp}`,{ headers })
         //console.log(res.data)
@@ -207,7 +207,7 @@ function CompRegistroRep(props) {
                         </div>
                     </div>
             </form>
-        </div>
+          </div>
         </div>
       </div>
     );

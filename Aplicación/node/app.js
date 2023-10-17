@@ -17,6 +17,7 @@ import InventarioRouter from "./routes/InventarioRoutes.js";
 import TipoRouter from "./routes/TiposRoutes.js";
 import RegistroTrabajoRouter from "./routes/RegistroTrabajoRoutes.js";
 import TecnicoRouter from "./routes/TecnicoRoutes.js";
+import ServicioRouter from "./routes/ServicioRoutes.js";
 
 const app = express()
 /*app.use(cors({
@@ -50,6 +51,9 @@ app.use('/tip', TipoRouter)
 
 //? rutas para el modulo de tecnico
 app.use('/tec',TecnicoRouter)
+
+// rutas para los servicios dados
+app.use('/serv/', ServicioRouter)
 
 try {
     await db.authenticate()
