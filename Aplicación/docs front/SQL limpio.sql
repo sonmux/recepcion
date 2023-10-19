@@ -28,7 +28,41 @@ insert into usuarioPs(correo,nombre,telefono,usuario,pass) values ('prueba@prueb
 insert into usuarioPs(correo,nombre,telefono,usuario,pass,numPerito) values ('prueba1@prueba.com','tecnico1',12345678,'tec1','tec1',1);
 insert into usuarioPs(correo,nombre,telefono,usuario,pass,numPerito) values ('prueba2@prueba.com','tecnico2',12345678,'tec2','tec2',2);
 insert into usuarioPs(correo,nombre,telefono,usuario,pass,numPerito) values ('prueba3@prueba.com','tecnico3',12345678,'tec3','tec3',3);
+insert into usuarioPs(correo,nombre,telefono,usuario,pass,numPerito) values ('prueba4@prueba.com','tecnico3',12345678,'recep','recep',999);
 drop table usuarioPs;
+create table usrtecnicos(
+	correo varchar(250) primary key,
+    nombre varchar(250),
+    telefono int,
+    usuario varchar(20),
+    pass varchar(20),
+    numPerito int default 0,
+    createdAt date,
+    updatedAt date
+);
+drop table usrtecnicos;
+insert into usrtecnicos(correo,nombre,telefono,usuario,pass,numPerito) values ('utec1','tecnico1',12345678,'tec1','tec1',1);
+insert into usrtecnicos(correo,nombre,telefono,usuario,pass,numPerito) values ('utec2','tecnico2',12345678,'tec2','tec2',2);
+insert into usrtecnicos(correo,nombre,telefono,usuario,pass,numPerito) values ('utec3','tecnico3',12345678,'tec3','tec3',3);
+create table usrreceps(
+	correo varchar(250) primary key,
+    nombre varchar(250),
+    telefono int,
+    usuario varchar(20),
+    pass varchar(20),
+    createdAt date,
+    updatedAt date
+);
+drop table usrreceps;
+insert into usrreceps(correo,nombre,telefono,usuario,pass) values ('urcp','tecnico3',12345678,'recep','rcp');
+create table admins(
+	correo varchar(250) primary key,
+    pass varchar(20),
+    createdAt date,
+    updatedAt date
+);
+drop table admins;
+insert into admins(correo,pass) values ('admin','admin123');
 
 create table clientePs(
 	id varchar(250) primary key,
@@ -45,7 +79,7 @@ create table clientePs(
 );
 select * from clienteps;
 drop table clientePs;
-update clienteps set correo='son.anggelo@gmail.com' where nombreCliente='anggelo';
+update clienteps set telefono='+50230002168' where nombreCliente='anggelo';
 
 create table dispositivoPs(
 	id int primary key auto_increment,
@@ -149,11 +183,11 @@ CREATE PROCEDURE misTrabajos(
 )
 BEGIN
 	DECLARE numP INT;
-	SET numP = (select numPerito from usuarioPs where correo = perito);
+	SET numP = (select numPerito from usrtecnicos where correo = perito);
 	SELECT * FROM dispositivoPs where peritoAsignado = numP and estado!='Terminado';
 END
 $$
-call misTrabajos("prueba1@prueba.com");
+call misTrabajos("utec1");
 
 create table registroRepuestos(
 	id int primary key auto_increment,
@@ -221,3 +255,38 @@ drop table dispServs;
 select ds.id, s.servicio, s.descripcion, s.precio from dispServs as ds
 inner join servicios s on ds.servId = s.id
 where ds.dispId = 2
+
+/* ************************************
+***************************************
+****** SECCIÓN DE DATOS EMPRESA *******
+***************************************
+************************************* */
+
+create table emprs(
+	id int primary key auto_increment,
+    nombre varchar(250),
+    direccion varchar(250),
+    telefono varchar(250),
+    correo varchar(250),
+    regMercantil varchar(250),
+    nit varchar(250),
+    createdAt date,
+    updatedAt date
+);
+insert into emprs (nombre,direccion,telefono,correo,regMercantil,nit)
+values ('LEFCI','z13','+50288888888','soporte@grupoitd.com','reg_mercantil','589367k')
+select*from emprs;
+drop table emprs;
+
+create table cuents(
+	id int primary key auto_increment,
+    emprsId int,
+    banco varchar(250),
+    numero bigint,
+    createdAt date,
+    updatedAt date
+);
+insert into cuents(emprsId, banco, numero) values (1,'GyT',93849283748581273);
+insert into cuents(emprsId, banco, numero) values (1,'Banrural','2930495839402839');
+select*from cuents;
+drop table cuents;

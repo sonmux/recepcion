@@ -8,7 +8,7 @@ import '../estilos/formulario.css'
 import '../estilos/botones.scss'
 
 
-const URI = 'http://localhost:8000/usr/';
+const URI = 'http://localhost:8000/usr/utec';
 const URILOG = 'http://localhost:8000/log/';
 //? para borara la variable del local storage
 //localStorage.removeItem('Idcliente')
@@ -17,7 +17,7 @@ const URILOG = 'http://localhost:8000/log/';
 //localStorage.removeItem('usuario')
 //localStorage.removeItem('token')
 
-function CompGetUsr() {
+function CompGetUsrTec() {
   const [Usuario, setUsuario] = useState('');
   const [Pass, setPass] = useState('');
   const navigate = useNavigate(); // Importa navigate desde react-router-dom
@@ -35,7 +35,7 @@ function CompGetUsr() {
       //! setIsAuthenticated(true); // Establece el estado de autenticación como verdadero
       localStorage.setItem('usuario', login.data.usuario.correo);
       localStorage.setItem('token',login.data.token)
-      localStorage.setItem('sesion','adm')
+      localStorage.setItem('sesion','tec')
 
       //? función para guardar un log en el sistema
       await axios.post(URILOG, {
@@ -46,7 +46,7 @@ function CompGetUsr() {
       //?------------------
 
       console.log('exito')
-      navigate('/Inicio');
+      navigate('/InicioTec');
     } else {
       //! setIsAuthenticated(false); // Establece el estado de autenticación como falso en caso de inicio de sesión fallido
       // Lógica para manejar el inicio de sesión fallido, por ejemplo, mostrar un mensaje de error
@@ -65,7 +65,7 @@ function CompGetUsr() {
     <div className="div-principalLogin">
       <div className="mb-3">
         <form onSubmit={store}>
-          <h1>Login</h1>
+          <h1>Login Tecnico</h1>
           <label className="form-label" id='label'>Usuario</label>
           <input
             id="input1L"
@@ -94,4 +94,4 @@ function CompGetUsr() {
   );
 }
 
-export default CompGetUsr;
+export default CompGetUsrTec;

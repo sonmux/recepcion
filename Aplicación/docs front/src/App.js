@@ -34,6 +34,11 @@ import Inicio from './InicioForm/Inicio';
 import DragAndDrop from './TareaForm/Tareas';
 import CompShowTareas from './TecnicoForm/Tecnico';
 import CompDispTerminado from './Entrega/Entregar';
+import CompEmpForm from './EmpresaForm/EmpForm';
+import InicioTec from './InicioForm/InicioTec';
+import InicioRecep from './InicioForm/InicioRecep';
+import CompGetUsrTec from './LoginForm/LoginTec';
+import CompGetUsrRecep from './LoginForm/LoginRecep';
 
 function App() {
   /*return (
@@ -94,7 +99,11 @@ function App() {
       <BrowserRouter>
           <Routes>
             <Route path='/' element={<CompGetUsr/>} />
+            <Route path='/LoginTec' element={<CompGetUsrTec/>} />
+            <Route path='/LoginRecep' element={<CompGetUsrRecep/>} />
             <Route path='/Inicio' element={<Inicio/>} />
+            <Route path='/InicioTec' element={<InicioTec/>} />
+            <Route path='/InicioRecep' element={<InicioRecep/>} />
             <Route path='/Cliente' element={<CompCreateCliente/>} />
             <Route path='/Dispositivo' element={<CompShowDisp/>} />
             <Route path='/Acuerdo' element={<CompCreateAcuerdo2/>} />
@@ -104,6 +113,7 @@ function App() {
             <Route path='/Tareas' element={<DragAndDrop/>} />
             <Route path='/Tecnico' element={<CompShowTareas/>} />
             <Route path='/Entrega' element={<CompDispTerminado/>} />
+            <Route path='/Empresa' element={<CompEmpForm/>} />
            </Routes>
       </BrowserRouter>
       <br/><br/><br/><br/>

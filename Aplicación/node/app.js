@@ -18,6 +18,7 @@ import TipoRouter from "./routes/TiposRoutes.js";
 import RegistroTrabajoRouter from "./routes/RegistroTrabajoRoutes.js";
 import TecnicoRouter from "./routes/TecnicoRoutes.js";
 import ServicioRouter from "./routes/ServicioRoutes.js";
+import EmpRouter from "./routes/EmpRoutes.js";
 
 const app = express()
 /*app.use(cors({
@@ -51,6 +52,9 @@ app.use('/tip', TipoRouter)
 
 //? rutas para el modulo de tecnico
 app.use('/tec',TecnicoRouter)
+
+//* rutas para el modulo de empresa
+app.use('/emp', EmpRouter)
 
 // rutas para los servicios dados
 app.use('/serv/', ServicioRouter)

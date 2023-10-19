@@ -14,6 +14,10 @@ import Modal from 'react-modal';
 import '../estilos/formulario.css'
 import '../estilos/botones.scss'
 
+//* import para poder tener lista de codigo de area por pais para los telefonos
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
+
 //* hacemos una constante para las rutas del back
 const URI = 'http://localhost:8000/cliente/'
 const URILOG = 'http://localhost:8000/log/';
@@ -41,6 +45,7 @@ const CompCreateCliente = () => {
     const [Nit,setNit]=useState('')
     const [DpiFrontal,setDpiFrontal]=useState('')
     const [DpiReverso,setDpiReverso]=useState('')
+    const [value, setValue] = useState('')
     const navigate = useNavigate()
 
     const store = async (e) => {
@@ -194,7 +199,7 @@ const CompCreateCliente = () => {
             setIdcliente(buscar.data.id)
             setNombreCliente(buscar.data.nombreCliente)
             setDirecciónCliente(buscar.data.direcciónCliente)
-            setTelefono(buscar.data.telefono)
+            setValue(buscar.data.telefono.toString())
             setCorreo(buscar.data.correo)
             setNit(buscar.data.nit)
             setDpiFrontal(buscar.data.dpiFrontal)
@@ -213,7 +218,8 @@ const CompCreateCliente = () => {
             setIdcliente('')
             setNombreCliente('')
             setDirecciónCliente('')
-            setTelefono('')
+            //setTelefono('')
+            setValue('')
             setCorreo('')
             setNit('')
             setDpiFrontal('')
@@ -298,14 +304,12 @@ const CompCreateCliente = () => {
                 </div>
                 <div className="mb-3">
                     <label className="form-label" id='labelC'>telefono</label>
-                    <input
-                    value={Telefono}
-                    onChange={(e) => setTelefono(e.target.value)}
-                    type="text"
-                    className="form-control"
-                    placeholder="1234568"
-                    id="input5C"
-                    //required 
+                    <PhoneInput
+                        placeholder="número de telefono"
+                        className="form-control"
+                        value={value}
+                        onChange={setValue}
+                        id="input5C"
                     />
                 </div>
                 <div className="mb-3">

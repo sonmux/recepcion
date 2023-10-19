@@ -28,7 +28,7 @@ function DragAndDrop () {
         setTareas(res.data)
     }
     const getList=(List)=>{
-        return Tareas.filter(item=>item.peritoAsignado===List&&item.estado!=='Terminado')
+        return Tareas.filter(item=>item.peritoAsignado===List&&item.estado!=='Terminado'&&item.estado!=='Entregado')
     }
     const startDrag = (event, item) => {
         event.dataTransfer.setData('itemID',item.id)
@@ -44,7 +44,7 @@ function DragAndDrop () {
             await axios.put(URIDisp+itemID,{
                 peritoAsignado: List
             },{ headers })
-            const item = Tareas.find(item => item.id == itemID && item.estado!=='Terminado')
+            const item = Tareas.find(item => item.id == itemID && item.estado!=='Terminado' && item.estado!=='Entregado')
             item.peritoAsignado=List
             const newState = Tareas.map(task=>{
                 if(task.id === itemID) return item;
