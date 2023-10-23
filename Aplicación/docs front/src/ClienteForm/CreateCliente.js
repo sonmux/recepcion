@@ -54,7 +54,7 @@ const CompCreateCliente = () => {
             id: Idcliente,
             nombreCliente: NombreCliente,
             direcciónCliente: DirecciónCliente,
-            telefono: parseInt(Telefono),
+            telefono: value,
             correo: Correo,
             nit: parseInt(Nit),
             dpiFrontal: DpiFrontal,

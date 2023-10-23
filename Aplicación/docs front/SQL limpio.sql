@@ -65,7 +65,7 @@ drop table admins;
 insert into admins(correo,pass) values ('admin','admin123');
 
 create table clientePs(
-	id varchar(250) primary key,
+	id varchar(250) primary key, -- Modificar a BigInt (es el DPI)
     nombreCliente varchar(250),
     direcciónCliente varchar(250),
     telefono varchar(250),
@@ -252,9 +252,17 @@ create table dispServs(
 select*from dispServs;
 drop table dispServs;
 
-select ds.id, s.servicio, s.descripcion, s.precio from dispServs as ds
-inner join servicios s on ds.servId = s.id
-where ds.dispId = 2
+create table regServicios(
+	id int primary key auto_increment,
+    disp int,
+    servicio varchar(250),
+    descripcion varchar(250),
+    precio int,
+    createdAt date,
+    updatedAt date
+);
+select*from regServicios;
+drop table regServicios;
 
 /* ************************************
 ***************************************

@@ -19,6 +19,7 @@ import RegistroTrabajoRouter from "./routes/RegistroTrabajoRoutes.js";
 import TecnicoRouter from "./routes/TecnicoRoutes.js";
 import ServicioRouter from "./routes/ServicioRoutes.js";
 import EmpRouter from "./routes/EmpRoutes.js";
+import regServicioRouter from "./routes/regServicioRoutes.js";
 
 const app = express()
 /*app.use(cors({
@@ -58,6 +59,9 @@ app.use('/emp', EmpRouter)
 
 // rutas para los servicios dados
 app.use('/serv/', ServicioRouter)
+
+// rutas para los servicios.v2
+app.use('/addserv/', regServicioRouter)
 
 try {
     await db.authenticate()

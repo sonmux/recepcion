@@ -2,6 +2,7 @@
 import express from 'express'
 import { createServ, createServDisp, getAllServ, getServ } from '../controllers/ServicioController.js'
 import { authenticateToken } from '../controllers/JWTmiddleware.js'
+import regServicioModel from '../models/RegistroServicioModel.js'
 
 const ServicioRouter = express.Router()
 

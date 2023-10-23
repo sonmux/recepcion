@@ -1,7 +1,6 @@
 import axios from "axios";
 import {useState, useEffect} from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import {Link} from 'react-router-dom'
 
 //* importamos los estilos CSS
 import '../estilos/formulario.css'
@@ -18,7 +17,8 @@ const headers = {
   }
 
 function DragAndDrop () {
-    //* Funcion para obtener las tareas en el sistema
+    const navigate = useNavigate();
+    //* Funcion para obtener las tareas en el siste
     const [Tareas, setTareas] = useState([])
     useEffect (() => {
         getTareas()
@@ -56,6 +56,18 @@ function DragAndDrop () {
         }
     }
 
+    // Función para manejar la redirección
+    const redirigirAInicio = () => {
+        const condicion = localStorage.getItem('sesion');
+
+        if (condicion === 'tec') {
+            navigate('/InicioTec'); // Redirige a inicio tecnico
+        } else if (condicion === 'rcp') {
+            navigate('/InicioRecep'); // Redirige a inicio recepcion
+        } else {
+            navigate('/Inicio'); // Redirige a Inicio
+        }
+    }
 
     return(
       <>
@@ -63,7 +75,10 @@ function DragAndDrop () {
             Asignar tareas &nbsp;
             <img className='icon-react' src="src/assets/react.svg" alt="" />
         </h1>
-            <Link to={`/Inicio`} className='btn btn-primary mt-2 mb-2'>Regresar Inicio</Link>
+            {/*<Link to={`/Inicio`} className='btn btn-primary mt-2 mb-2'>Regresar Inicio</Link>*/}
+            <button className='btn btn-primary mt-2 mb-2' onClick={redirigirAInicio}>
+                Regresar al inicio
+            </button>
         <br/>
         <div className='drag-and-drop'>
             <div className="column column--0">

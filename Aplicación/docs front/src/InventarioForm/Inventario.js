@@ -51,6 +51,7 @@ function CarsFilter({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) {
 
 
 function CompInventario(){
+  const navigate = useNavigate();
   //const [data, setData] = useState(null)
   const columns = useColumns();
   /*useEffect(() => {
@@ -184,6 +185,19 @@ function CompInventario(){
     )
   };
 
+  // Función para manejar la redirección
+  const redirigirAInicio = () => {
+    const condicion = localStorage.getItem('sesion');
+
+    if (condicion === 'tec') {
+        navigate('/InicioTec'); // Redirige a inicio tecnico
+    } else if (condicion === 'rcp') {
+        navigate('/InicioRecep'); // Redirige a inicio recepcion
+    } else {
+        navigate('/Inicio'); // Redirige a Inicio
+    }
+  }
+
 
   return (
     <div className="container">
@@ -201,7 +215,9 @@ function CompInventario(){
               <button onClick={openModal} className='btn btn-primary mt-2 mb-2'>Agregar Equipo</button>
             </th>
             <th>
-              <Link to={`/Inicio`} className='btn btn-primary mt-2 mb-2'>Regresar Inicio</Link>
+              <button className='btn btn-primary mt-2 mb-2' onClick={redirigirAInicio}>
+                  Regresar al inicio
+              </button>
             </th>
           </tr>
           <Modal

@@ -28,7 +28,6 @@ export const getRegTec = async (req,res) => {
     try {
         const reg = await RegistroTrabajoModel.findAll({
             where:{
-                perito: req.query.tec,
                 dispositivoId: req.query.disp
             }
         })

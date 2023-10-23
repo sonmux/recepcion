@@ -15,6 +15,7 @@ import '../estilos/botones.scss'
 import CompRegistroTrabajo from '../TecnicoForm/RegistroTrabajo';
 import CompRegistroRep from '../TecnicoForm/RegistroRepuesto';
 import CompRegistroServ from './RegistroServicio';
+import CompAddRegistroServ from './AgregarServicio';
 
 //* hacemos una constante para las rutas del back
 const URI = 'http://localhost:8000/disp/'
@@ -87,6 +88,23 @@ const CompDispTerminado = () => {
         )
     }
 
+    //*** MODAL PARA LA FUNCION DE AGREGAR UN SERVICIO.v2 */
+    const [addservicioModalOpen, addsetServicioModalOpen] = useState(false);
+    const addopenServicioModal = (id) => {
+        setId(id)
+        addsetServicioModalOpen(true);
+    };
+    const addonCloseServ = (id) => {
+        setId(0)
+        addsetServicioModalOpen(false);
+    };
+    const addrenderServicio = (id) => {
+        //console.log(id)
+        return(
+            <CompAddRegistroServ disp={id} />
+        )
+    }
+
     //*** FUNCIÓN PARA TERMINAR UNA TAREA */
     const finTarea = async (id) => {
         //console.log(id)
@@ -132,6 +150,7 @@ const CompDispTerminado = () => {
                                         <button onClick={()=>openHistorialModal(disp.id)} className='btn btn-info'>Registro</button>
                                         <button onClick={()=>openRepuestoModal(disp.id)} className='btn btn-info'>Repuesto</button>
                                         <button onClick={()=>openServicioModal(disp.id)} className='btn btn-info'>Servicios</button>
+                                        <button onClick={()=>addopenServicioModal(disp.id)} className='btn btn-info'>Servicios.v2</button>
                                         <Modal
                                             isOpen={historialModalOpen}
                                         >
@@ -155,6 +174,14 @@ const CompDispTerminado = () => {
                                                 renderServicio(ID)
                                             )}
                                             <button onClick={onCloseServ} className="close-button">CERRAR</button>
+                                        </Modal>
+                                        <Modal
+                                            isOpen={addservicioModalOpen}
+                                        >
+                                            {ID!==0 && (
+                                                addrenderServicio(ID)
+                                            )}
+                                            <button onClick={addonCloseServ} className="close-button">CERRAR</button>
                                         </Modal>
                                     </td>
                                     <td id='body2Table'>{disp.tipo}</td>
