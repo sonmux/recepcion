@@ -283,6 +283,8 @@ create table emprs(
 );
 insert into emprs (nombre,direccion,telefono,correo,regMercantil,nit)
 values ('LEFCI','z13','+50288888888','soporte@grupoitd.com','reg_mercantil','589367k')
+insert into emprs (nombre,direccion,telefono,correo,regMercantil,nit)
+values ('LEFCI2','z132','+50288888888','soporte2@grupoitd.com','reg_mercantil2','589367k2')
 select*from emprs;
 drop table emprs;
 

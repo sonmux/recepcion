@@ -20,15 +20,14 @@ import {Drodown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap'
 //* hacemos una constante para las rutas del back
 //const URI = 'http://localhost:8000/inv/'
 const URILOG = 'http://localhost:8000/log/';
-const URITIP = 'http://localhost:8000/addserv';
+const URITIP = 'http://localhost:8000/serv';
 
 // Configura los encabezados de la solicitud para incluir el token JWT
 const headers = {
     'Authorization': `${localStorage.getItem('token')}` // Utiliza el formato 'Bearer Token'
 };
 
-const CompAddRegistroServ = (props) => {
-    const {disp} = props
+const CompAddRegistroServ = () => {
     let Total=0
 
     //* Procedimiento para obtener todos los servicios dados al abrir la pagina
@@ -38,14 +37,12 @@ const CompAddRegistroServ = (props) => {
     },[])
     //* Procedimiento para mostar todos los servicios dados
     const getReg = async () => {
-        const res = await axios.get(URITIP+'/getServ/'+`${disp}`,{ headers })
+        const res = await axios.get(URITIP+'/serv/',{ headers })
         //console.log(res.data)
         setReg(res.data)
     }
 
     //*** FUNCION PARA EL DROPDOWN MENU */
-    const [supliers, setSupliers] = useState([]);
-    const [suplier, setSuplier] = useState(0);
     const [Servicio, setServicio] = useState('');
     const [Descripcion, setDescrip] = useState('');
     const [Precio, setPrecio] = useState(0);
@@ -55,7 +52,6 @@ const CompAddRegistroServ = (props) => {
         e.preventDefault()
         try{
             await axios.post(URITIP,{
-                disp: disp,
                 servicio: Servicio,
                 descripcion:Descripcion,
                 precio:parseInt(Precio)
@@ -136,10 +132,6 @@ const CompAddRegistroServ = (props) => {
                                             )
                                         }):<></>}
                                     </tbody>
-                                    <tr>
-                                        <td id='head1Table'>Total</td>
-                                        <td id='body1Table'>{Total}</td>
-                                    </tr>
                                 </table>
                             </div>
                         </div>

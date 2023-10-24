@@ -9,7 +9,7 @@ export const getData = async (req, res) => {
         const data = await EmpModel.findAll()
         res.json({
             auth:true,
-            dato:data[0]
+            dato:data
         })
     } catch (error) {
         res.json({
@@ -23,7 +23,7 @@ export const getData = async (req, res) => {
 export const updateEmp = async (req,res) => {
     try {
         await EmpModel.update(req.body,{
-            where:{id:1}
+            where: {id: req.params.id}
         })
         res.json({
             auth: true,
@@ -40,7 +40,9 @@ export const updateEmp = async (req,res) => {
 //! Obtener las cuenta bancarias
 export const getDB = async (req,res)=>{
     try {
-        const data = await DBModel.findAll()
+        const data = await DBModel.findAll({
+            where: {emprsId: req.params.id}
+        })
         res.json({
             auth:true,
             datos:data
@@ -84,6 +86,24 @@ export const updateDB = async (req,res) => {
     } catch (error) {
         res.json({
             auth: false,
+            message: error.message
+        })
+    }
+}
+
+//! Mostrar solo los nombres de empresas
+export const getNameEmp = async (req, res) => {
+    try {
+        const data = await EmpModel.findAll({
+            attributes: ['id','nombre'], // Selecciona el campo 'id' y 'nombre'
+          });
+        res.json({
+            auth:true,
+            dato:data
+        })
+    } catch (error) {
+        res.json({
+            "auth":false,
             message: error.message
         })
     }

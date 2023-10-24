@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'
+import Select from 'react-select'
 //! import { useAuth } from './AuthContext'; // Importa useAuth desde el archivo AuthContext.js
 
 //* importamos los estilos CSS
@@ -10,6 +11,7 @@ import '../estilos/botones.scss'
 
 const URI = 'http://localhost:8000/usr/urcp';
 const URILOG = 'http://localhost:8000/log/';
+const URIEMP = 'http://localhost:8000/emp/';
 //? para borara la variable del local storage
 //localStorage.removeItem('Idcliente')
 //localStorage.removeItem('RegOrden')
@@ -20,6 +22,7 @@ const URILOG = 'http://localhost:8000/log/';
 function CompGetUsrRecep() {
   const [Usuario, setUsuario] = useState('');
   const [Pass, setPass] = useState('');
+  const [Emp, setEmp] = useState('');
   const navigate = useNavigate(); // Importa navigate desde react-router-dom
   //! const { setIsAuthenticated } = useAuth(); // Obtén la función para establecer la autenticación desde el contexto
 
@@ -36,6 +39,7 @@ function CompGetUsrRecep() {
       localStorage.setItem('usuario', login.data.usuario.correo);
       localStorage.setItem('token',login.data.token)
       localStorage.setItem('sesion','rcp')
+      localStorage.setItem('emp', Emp)
 
       //? función para guardar un log en el sistema
       await axios.post(URILOG, {
@@ -61,6 +65,22 @@ function CompGetUsrRecep() {
     }
   };
 
+  //*** FUNCION PARA EL DROPDOWN MENU */
+  const [supliers, setSupliers] = useState([]);
+  
+  useEffect (() => {
+      getEmp()
+  },[])
+  const getEmp = async () => {
+      const servi = await axios.get(URIEMP+'emplog/')
+      //console.log(servi.data)
+      setSupliers(servi.data.dato)
+  }
+  const handleSelectChange = (event) =>{
+      //console.log(event)
+      setEmp(event.value)
+  }
+
   return (
     <div className="div-principalLogin">
       <div className="mb-3">
@@ -84,7 +104,15 @@ function CompGetUsrRecep() {
             type="password"
             className="form-control"
           />
+          <label className="form-label" id='label'>Seleccioar empresa</label>
           <br/>
+          <div className="Supliers-container">
+            <Select 
+              options={supliers.map(sup=>({label: sup.nombre, value: sup.id}))}
+              onChange={handleSelectChange}
+              required
+            />
+          </div>
           <button type="submit" className="pulse" id='pulse'>
             Ingresar
           </button>

@@ -3,7 +3,7 @@ import axios from  'axios'
 //* importar las librerias de react
 import {useState, useEffect} from 'react'
 //* importar react-router-dom
-import {Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 //? importar librerias necesarias para el popupMenu
 import Modal from 'react-modal';
 //import ModalAñadirHistorial from './ModalAñadirHistorial';
@@ -26,6 +26,7 @@ const headers = {
   };
 
 const CompDispTerminado = () => {
+        const navigate = useNavigate();
     
         const [dispos, setDisp] = useState([])
         useEffect (() => {
@@ -90,18 +91,17 @@ const CompDispTerminado = () => {
 
     //*** MODAL PARA LA FUNCION DE AGREGAR UN SERVICIO.v2 */
     const [addservicioModalOpen, addsetServicioModalOpen] = useState(false);
-    const addopenServicioModal = (id) => {
-        setId(id)
+    const addopenServicioModal = () => {
         addsetServicioModalOpen(true);
     };
-    const addonCloseServ = (id) => {
+    const addonCloseServ = () => {
         setId(0)
         addsetServicioModalOpen(false);
     };
-    const addrenderServicio = (id) => {
+    const addrenderServicio = () => {
         //console.log(id)
         return(
-            <CompAddRegistroServ disp={id} />
+            <CompAddRegistroServ/>
         )
     }
 
@@ -115,11 +115,28 @@ const CompDispTerminado = () => {
         window.location.reload(); // Recargar la página actual
     }
 
+    // Función para manejar la redirección
+    const redirigirAInicio = () => {
+        const condicion = localStorage.getItem('sesion');
+
+        if (condicion === 'tec') {
+            navigate('/InicioTec'); // Redirige a inicio tecnico
+        } else if (condicion === 'rcp') {
+            navigate('/InicioRecep'); // Redirige a inicio recepcion
+        } else {
+            navigate('/Inicio'); // Redirige a Inicio
+        }
+    }
+
     return(
         <div className='container'>
             <div className='row'>
                 <div className='col'>
                     <h1>Tareas terminadas</h1>
+                    <button onClick={()=>addopenServicioModal()} className='btn btn-info'>Nuevo Servicio</button>
+                    <button className='btn btn-primary mt-2 mb-2' onClick={redirigirAInicio}>
+                        Regresar al inicio
+                    </button>
                     <table className='table'>
                         <thead className='table-primary'>
                             <tr>
@@ -150,7 +167,7 @@ const CompDispTerminado = () => {
                                         <button onClick={()=>openHistorialModal(disp.id)} className='btn btn-info'>Registro</button>
                                         <button onClick={()=>openRepuestoModal(disp.id)} className='btn btn-info'>Repuesto</button>
                                         <button onClick={()=>openServicioModal(disp.id)} className='btn btn-info'>Servicios</button>
-                                        <button onClick={()=>addopenServicioModal(disp.id)} className='btn btn-info'>Servicios.v2</button>
+                                        {/*<button onClick={()=>addopenServicioModal(disp.id)} className='btn btn-info'>Servicios.v2</button>*/}
                                         <Modal
                                             isOpen={historialModalOpen}
                                         >
@@ -178,9 +195,9 @@ const CompDispTerminado = () => {
                                         <Modal
                                             isOpen={addservicioModalOpen}
                                         >
-                                            {ID!==0 && (
-                                                addrenderServicio(ID)
-                                            )}
+                                            {
+                                                addrenderServicio()
+                                            }
                                             <button onClick={addonCloseServ} className="close-button">CERRAR</button>
                                         </Modal>
                                     </td>

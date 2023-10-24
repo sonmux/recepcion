@@ -34,11 +34,12 @@ const CompEmpForm = () => {
     const [Correo, setCorreo] = useState('')
     const [RegMercantil, setRegMercantil] = useState('')
     const [Nit, setNit] = useState('')
+    const [Emp, setEmp] = useState(0);
     //const [Banco, setB] = useState('')
     //const [Cuenta, setCuenta] = useState(0)
 
     //* Procedimiento para obtener todos los servicios dados al abrir la pagina
-    useEffect (() => {
+    /*useEffect (() => {
         getDatos()
         getDB()
     },[])
@@ -55,18 +56,22 @@ const CompEmpForm = () => {
                 setNit(res.data.dato.nit)
             }
         }
-    }
+    }*/
 
     const [ban, setBan] = useState([])
-    const getDB = async () => {
-        const res = await axios.get(URI+'DB/',{ headers })
+
+    const getDB = async (id) => {
+        const res = await axios.get(URI+'DB/'+id,{ headers })
+        //console.log(res.data)
         setBan(res.data)
     }
+
+    
 
     const storeEEdt = async (e) => {
         e.preventDefault()
         try {
-            await axios.put(URI+'update/',{
+            await axios.put(URI+'update/'+Emp,{
                 nombre:Nombre,
                 direccion:Direccion,
                 telefono:Telefono,
@@ -74,7 +79,8 @@ const CompEmpForm = () => {
                 regMercantil:RegMercantil,
                 nit:Nit
             },{ headers })
-            await getDatos()
+            //await getDatos()
+            await getEmp()
             window.confirm("Datos Actualizados");
         } catch (error) {
             console.error('Error al modificar los datos de la empresa', error)
@@ -109,8 +115,48 @@ const CompEmpForm = () => {
         )
     }
 
+    //*** FUNCION PARA EL DROPDOWN MENU */
+    const [supliers, setSupliers] = useState([]);
+    
+    useEffect (() => {
+        getEmp()
+    },[])
+    const getEmp = async () => {
+        const servi = await axios.get(URI,{ headers })
+        //console.log(servi.data)
+        setSupliers(servi.data.dato)
+    }
+    const handleSelectChange = async (event) =>{
+        //console.log(event.value)
+        setEmp(event.value)
+        setNombre(event.label)
+        setDireccion(event.dir)
+        setTelefono(event.tel)
+        setCorreo(event.corr)
+        setRegMercantil(event.reg)
+        setNit(event.nit)
+        await getDB(event.value)
+    }
+
     return(
         <div id='divCrearCompu'>
+            <label className="form-label" id='label'>Seleccioar empresa</label>
+            <br/>
+            <div className="Supliers-container">
+                <Select 
+                options={supliers.map(sup=>({
+                    value: sup.id, 
+                    label: sup.nombre, 
+                    dir: sup.direccion, 
+                    tel: sup.telefono, 
+                    corr: sup.correo,
+                    reg: sup.regMercantil,
+                    nit: sup.nit
+                }))}
+                onChange={handleSelectChange}
+                required
+                />
+            </div>
             <h3>Datos de la empresa</h3>
             <form onSubmit={storeEEdt}>
                 <div className="mb-3">
@@ -180,10 +226,6 @@ const CompEmpForm = () => {
                 </div>
                 <button type='submit' className="btn btn-primary">Actualizar</button>
             </form>
-
-
-
-
             <div className='container'>
                 <div className='row'>
                     <div className='col'>
@@ -219,21 +261,6 @@ const CompEmpForm = () => {
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
     )
 
