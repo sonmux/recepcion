@@ -16,7 +16,7 @@ import '../estilos/botones.scss'
 import CompCreateInv from "./CreateInv";
 import CompEditInv from "./EditInv";
 
-const URI = 'http://localhost:8000/inv/';
+const URI = process.env.REACT_APP_DIRFRONT+'inv/';
 // Configura los encabezados de la solicitud para incluir el token JWT
 const headers = {
   'Authorization': `${localStorage.getItem('token')}` // Utiliza el formato 'Bearer Token'
@@ -62,7 +62,7 @@ function CompInventario(){
       console.error(error);
     });
   }, []);*/
-  const URINV = 'http://localhost:8000/inv/';
+  const URINV = process.env.REACT_APP_DIRFRONT+'inv/';
   /*const response = await axios.get(URI);
   const data = response.data.inventario;*/
   const [data, setDisp] = useState([])
@@ -108,7 +108,7 @@ function CompInventario(){
   const [Razon,setRazon]=useState('')
   const [selectIdDelete, setIdDelete] = useState('')
   const [isModalOpenDelete, setIsModalOpenDelete] = useState(false)
-  const URILOG = 'http://localhost:8000/log/';
+  const URILOG = process.env.REACT_APP_DIRFRONT+'log/';
   const openModalDelete = (id) => {
     setIdDelete(id)
     setIsModalOpenDelete(true);

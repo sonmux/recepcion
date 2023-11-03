@@ -18,9 +18,9 @@ import {Drodown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap'
 
 
 //* hacemos una constante para las rutas del back
-//const URI = 'http://localhost:8000/inv/'
-const URILOG = 'http://localhost:8000/log/';
-const URITIP = 'http://localhost:8000/serv';
+//const URI = process.env.REACT_APP_DIRFRONT+'inv/'
+const URILOG = process.env.REACT_APP_DIRFRONT+'log/';
+const URITIP = process.env.REACT_APP_DIRFRONT+'serv';
 
 // Configura los encabezados de la solicitud para incluir el token JWT
 const headers = {

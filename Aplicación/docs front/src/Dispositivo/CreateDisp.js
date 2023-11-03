@@ -6,7 +6,7 @@ import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 
 //* hacemos una constante para las rutas del back
-const URI = 'http://localhost:8000/disp/'
+const URI = process.env.REACT_APP_DIRFRONT+'disp/'
 
 const CompCreateDisp = () => {
     const [Marca,setMarca]=useState('')

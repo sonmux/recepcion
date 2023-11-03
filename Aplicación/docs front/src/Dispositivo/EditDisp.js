@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 //* hacemos una constante para las rutas del back
-//const URI = 'http://localhost:8000/disp/'
+//const URI = process.env.REACT_APP_DIRFRONT+'disp/'
 const URI = 'https://prueba-wytc.onrender.com/disp/'
 
 const CompEditDisp = () => {

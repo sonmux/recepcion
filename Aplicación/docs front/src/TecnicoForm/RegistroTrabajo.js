@@ -12,8 +12,8 @@ import '../estilos/formulario.css'
 import '../estilos/botones.scss'
 
 //* hacemos una constante para las rutas del back
-const URI = 'http://localhost:8000/tec/'
-const URILOG = 'http://localhost:8000/log/';
+const URI = process.env.REACT_APP_DIRFRONT+'tec/'
+const URILOG = process.env.REACT_APP_DIRFRONT+'log/';
 
 const headers = {
     'Authorization': `${localStorage.getItem('token')}` // Utiliza el formato 'Bearer Token'
@@ -42,7 +42,7 @@ const CompRegistroTrabajo = (props) => {
                 historial: Historial
             },{ headers })
             //? función para guardar un log en el sistema
-            //const URILOG = 'http://localhost:8000/log/';
+            //const URILOG = process.env.REACT_APP_DIRFRONT+'log/';
             await axios.post(URILOG, {
                 usuario: localStorage.getItem("usuario"),
                 tema: "Historial Trabajo",

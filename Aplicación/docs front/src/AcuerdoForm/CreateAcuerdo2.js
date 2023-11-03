@@ -11,7 +11,7 @@ import Recibo from "./Recibo";
 import jsPDF from 'jspdf';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-const URI = 'http://localhost:8000/acuerdo/';
+const URI = process.env.REACT_APP_DIRFRONT+'acuerdo/';
 
 // Configura los encabezados de la solicitud para incluir el token JWT
 const headers = {
@@ -75,10 +75,10 @@ const App = () => {
   const [showPdf, setShowPdf] = useState(false);
   const generatePdfAsBase64 = async () => {
     try {
-      const URIDISP = 'http://localhost:8000/disp/';
+      const URIDISP = process.env.REACT_APP_DIRFRONT+'disp/';
       const pedido = await axios.get(URIDISP+'all/'+`?id=${localStorage.getItem("Idcliente")}&orden=${localStorage.getItem("RegOrden")}`,{ headers })
       console.log(pedido.data);
-      const URI2 = 'http://localhost:8000/cliente/';
+      const URI2 = process.env.REACT_APP_DIRFRONT+'cliente/';
       const datos = await axios.get(URI2 + localStorage.getItem("Idcliente"),{ headers });
       console.log(datos);
       console.log('------------------------------');

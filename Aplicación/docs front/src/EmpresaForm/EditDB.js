@@ -10,8 +10,8 @@ import '../estilos/formulario.css'
 import '../estilos/botones.scss'
 
 //* hacemos una constante para las rutas del back
-const URI = 'http://localhost:8000/emp/'
-const URILOG = 'http://localhost:8000/log/';
+const URI = process.env.REACT_APP_DIRFRONT+'emp/'
+const URILOG = process.env.REACT_APP_DIRFRONT+'log/';
 
 // Configura los encabezados de la solicitud para incluir el token JWT
 const headers = {

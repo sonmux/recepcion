@@ -8,8 +8,13 @@ import '../estilos/formulario.css'
 import '../estilos/botones.scss'
 
 
-const URI = 'http://localhost:8000/usr/';
-const URILOG = 'http://localhost:8000/log/';
+/*const URI = process.env.REACT_APP_DIRFRONT+'usr/';
+const URILOG = process.env.REACT_APP_DIRFRONT+'log/';*/
+
+const URI = process.env.REACT_APP_DIRFRONT+'usr/';
+const URILOG = process.env.REACT_APP_DIRFRONT+'log/';
+
+
 //? para borara la variable del local storage
 //localStorage.removeItem('Idcliente')
 //localStorage.removeItem('RegOrden')
@@ -51,7 +56,7 @@ function CompGetUsr() {
       //! setIsAuthenticated(false); // Establece el estado de autenticación como falso en caso de inicio de sesión fallido
       // Lógica para manejar el inicio de sesión fallido, por ejemplo, mostrar un mensaje de error
       //? función para guardar un log en el sistema
-      //const URILOG = 'http://localhost:8000/log/';
+      //const URILOG = process.env.REACT_APP_DIRFRONT+'log/';
       await axios.post(URILOG, {
         usuario: localStorage.getItem("usuario"),
         tema: "Inicio de sesión fallido",

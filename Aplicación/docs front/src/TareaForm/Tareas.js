@@ -8,8 +8,8 @@ import '../estilos/botones.scss'
 import '../estilos/drag_and_drop.css'
 
 
-const URIDisp = 'http://localhost:8000/disp/'
-const URILOG = 'http://localhost:8000/log/';
+const URIDisp = process.env.REACT_APP_DIRFRONT+'disp/'
+const URILOG = process.env.REACT_APP_DIRFRONT+'log/';
 
 // Configura los encabezados de la solicitud para incluir el token JWT
 const headers = {

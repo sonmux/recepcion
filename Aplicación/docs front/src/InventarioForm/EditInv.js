@@ -11,8 +11,8 @@ import '../estilos/formulario.css'
 import '../estilos/botones.scss'
 
 //* hacemos una constante para las rutas del back
-const URI = 'http://localhost:8000/inv/'
-const URILOG = 'http://localhost:8000/log/';
+const URI = process.env.REACT_APP_DIRFRONT+'inv/'
+const URILOG = process.env.REACT_APP_DIRFRONT+'log/';
 
 // Configura los encabezados de la solicitud para incluir el token JWT
 const headers = {
@@ -73,7 +73,7 @@ const CompEditInv = (props) => {
     };
 
     //*** FUNCION PARA EL DROPDOWN MENU */
-    const URITIP = 'http://localhost:8000/tip/';
+    const URITIP = process.env.REACT_APP_DIRFRONT+'tip/';
     const [supliers, setSupliers] = useState([]);
     const [suplier, setSuplier] = useState(0);
     useEffect (() => {

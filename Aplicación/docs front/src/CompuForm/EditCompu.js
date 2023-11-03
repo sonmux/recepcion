@@ -10,8 +10,8 @@ import '../estilos/formulario.css'
 import '../estilos/botones.scss'
 
 //* hacemos una constante para las rutas del back
-const URI = 'http://localhost:8000/disp/'
-const URILOG = 'http://localhost:8000/log/';
+const URI = process.env.REACT_APP_DIRFRONT+'disp/'
+const URILOG = process.env.REACT_APP_DIRFRONT+'log/';
 
 // Configura los encabezados de la solicitud para incluir el token JWT
 const headers = {
@@ -66,7 +66,7 @@ const CompEditCompu = (props) => {
                 */
             },{ headers })
             //? función para guardar un log en el sistema
-            //const URILOG = 'http://localhost:8000/log/';
+            //const URILOG = process.env.REACT_APP_DIRFRONT+'log/';
             await axios.post(URILOG, {
                 usuario: localStorage.getItem("usuario"),
                 tema: "Modificar Computadora",

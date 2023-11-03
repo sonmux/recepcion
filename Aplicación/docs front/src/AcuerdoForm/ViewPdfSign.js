@@ -12,9 +12,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 
 //* hacemos una constante para las rutas del back
-const URI = 'http://localhost:8000/acuerdo/'
+const URI = process.env.REACT_APP_DIRFRONT+'acuerdo/'
 //* hacemos una constante para las rutas del back
-const URI2 = 'http://localhost:8000/mailAcuerdo/'
+const URI2 = process.env.REACT_APP_DIRFRONT+'mailAcuerdo/'
 
 // Configura los encabezados de la solicitud para incluir el token JWT
 const headers = {

@@ -16,7 +16,7 @@ import CompRegistroTrabajo from './RegistroTrabajo';
 import CompRegistroRep from './RegistroRepuesto';
 
 //* hacemos una constante para las rutas del back
-const URI = 'http://localhost:8000/disp/'
+const URI = process.env.REACT_APP_DIRFRONT+'disp/'
 
 // Configura los encabezados de la solicitud para incluir el token JWT
 const headers = {
@@ -31,7 +31,8 @@ const CompShowTareas = () => {
         },[])
         //* Procedimiento para mostar todas las tareas asignadas
         const getDisp = async () => {
-            const res = await axios.get(URI+'task/'+`?usuario='${localStorage.getItem('usuario')}'`,{ headers })
+            const res = await axios.get(URI+'task/'+`?usuario='${localStorage.getItem('usuario')}'&sesion=${localStorage.getItem('sesion')}`,{ headers })
+            console.log(res)
             setDisp(res.data)
         }
 

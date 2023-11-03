@@ -45,12 +45,21 @@ export const getAllDispUsr = async (req, res) => {
 //! Mostrar todos los registros asignados a un tecnico
 export const getAllTask = async (req, res) => {
     try {
-        const disp = await db.query(`call misTrabajos(${req.query.usuario});`)
-        res.json(
-            {
-                auth: true,
-                disp: disp
-            })
+        if(req.query.sesion == 'adm'){
+            const disp = await db.query(`SELECT * FROM dispositivoPs where estado!='Terminado' and estado!='Entregado';`)
+            res.json(
+                {
+                    auth: true,
+                    disp: disp[0]
+                })
+        }else{
+            const disp = await db.query(`call misTrabajos(${req.query.usuario});`)
+            res.json(
+                {
+                    auth: true,
+                    disp: disp
+                })
+        }
     } catch (error) {
         res.json({
             "auth":false,

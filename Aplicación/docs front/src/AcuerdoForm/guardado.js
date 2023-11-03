@@ -12,7 +12,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 
 //* hacemos una constante para las rutas del back
-const URI = 'http://localhost:8000/acuerdo/'
+const URI = process.env.REACT_APP_DIRFRONT+'acuerdo/'
 
 const ViewPdfSign = () => {
     const [PdfFirma, setPdfFirma] = useState('')

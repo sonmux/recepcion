@@ -15,8 +15,8 @@ import '../estilos/formulario.css'
 import '../estilos/botones.scss'
 
 
-const URITEC = 'http://localhost:8000/tec/';
-const URINV = 'http://localhost:8000/inv/';
+const URITEC = process.env.REACT_APP_DIRFRONT+'tec/';
+const URINV = process.env.REACT_APP_DIRFRONT+'inv/';
 // Configura los encabezados de la solicitud para incluir el token JWT
 const headers = {
   'Authorization': `${localStorage.getItem('token')}` // Utiliza el formato 'Bearer Token'

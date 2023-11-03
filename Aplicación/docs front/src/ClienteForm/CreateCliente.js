@@ -19,8 +19,8 @@ import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 
 //* hacemos una constante para las rutas del back
-const URI = 'http://localhost:8000/cliente/'
-const URILOG = 'http://localhost:8000/log/';
+const URI = process.env.REACT_APP_DIRFRONT+'cliente/'
+const URILOG = process.env.REACT_APP_DIRFRONT+'log/';
 //const URI = 'https://prueba-wytc.onrender.com/cliente/'
 
 
@@ -61,7 +61,7 @@ const CompCreateCliente = () => {
             dpiReverso: DpiReverso
         },{ headers })
         //? función para guardar un log en el sistema
-        //const URILOG = 'http://localhost:8000/log/';
+        //const URILOG = process.env.REACT_APP_DIRFRONT+'log/';
         await axios.post(URILOG, {
             usuario: localStorage.getItem("usuario"),
             tema: "Nuevo Cliente",
@@ -206,7 +206,7 @@ const CompCreateCliente = () => {
             setDpiReverso(buscar.data.dpiReverso)
 
             //? función para guardar un log en el sistema
-            //const URILOG = 'http://localhost:8000/log/';
+            //const URILOG = process.env.REACT_APP_DIRFRONT+'log/';
             await axios.post(URILOG, {
                 usuario: localStorage.getItem("usuario"),
                 tema: "Buscar Cliente Exitoso",

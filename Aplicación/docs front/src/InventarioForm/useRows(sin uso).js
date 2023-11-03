@@ -97,7 +97,7 @@ import axios from  'axios'
 }*/
 
 export default async function usesRows() {
-  const URI = 'http://localhost:8000/inv/';
+  const URI = process.env.REACT_APP_DIRFRONT+'inv/';
   const response = await axios.get(URI);
   const rows = response.data;
 
