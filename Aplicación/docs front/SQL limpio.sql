@@ -1,6 +1,6 @@
-create database recepcion;
-use recepcion;
-drop database recepcion;
+create database sistemaRecepcion;
+use sistemaRecepcion;
+drop database sistemaRecepcion;
 
 create table registroPs( -- HISTORIAL DE ACCIONES EN EL SISTEMA
 	id int primary key auto_increment, -- primary key auto increment
@@ -61,6 +61,7 @@ create table admins(
     createdAt date,
     updatedAt date
 );
+select*from admins;
 drop table admins;
 insert into admins(correo,pass) values ('admin','admin123');
 
@@ -80,6 +81,7 @@ create table clientePs(
 select * from clienteps;
 drop table clientePs;
 update clienteps set telefono='+50230002168' where nombreCliente='anggelo';
+delete from clientePs where peritoAsignado = 0;
 
 create table dispositivoPs(
 	id int primary key auto_increment,
@@ -104,21 +106,25 @@ create table dispositivoPs(
     estado text default('Ingresado'), -- (agregar campo estado)
     idCliente varchar(250),
     createdAt date,
-    updatedAt date
+    updatedAt date,
+    foreign key (idCliente) references clientePs (id)
 );
 insert into dispositivoPs (tipo,marca,modelo,serie,color,capacidadDisco,serieDisco,sistemaOperativo,imei,contraseñaDispositivo,foto1,foto2,foto3,foto4,idCliente)
 values ("computadora","marca1","modelo1","serie1","color1",250,"serieDisk1","sistema1","imei1","contra1","foto1","foto2","foto3","foto4","idcliente1");
 select*from dispositivoPs;
 drop table dispositivoPs;
 
+delete from dispositivoPs where id = 3;
+
 create table acuerdoPs(
-	id int primary key auto_increment, -- DPI_USUARIO (cambiar tipo int, local storage, ya no es auto_increment)
+	id int primary key auto_increment, -- DPI_USUARIO (cambiar tipo bigint, local storage, ya no es auto_increment)
     acuerdo longtext,
     idCliente varchar(250),
     numOrden varchar(250),
     estadoFirma int,
     createdAt date,
-    updatedAt date
+    updatedAt date,
+    foreign key (idCliente) references clientePs (id)
 );
 select * from acuerdops;
 drop table acuerdoPs;
@@ -137,9 +143,9 @@ create table tipos(
     updatedAt date
 );
 select*from tipos;
-insert into tipos(tipo) values ('usb');
-insert into tipos(tipo) values ('disco duro');
-insert into tipos(tipo) values ('pantalla');
+insert into tipos(tipo) values ('Unidad de almacenamiento');
+insert into tipos(tipo) values ('Pantalla');
+insert into tipos(tipo) values ('Bateria');
 drop table tipos;
 
 create table inventarios(
@@ -151,7 +157,8 @@ create table inventarios(
     modelo varchar(250),
     cantidad int,
     createdAt date,
-    updatedAt date
+    updatedAt date,
+    foreign key (tipo) references tipos (id)
 );
 select*from inventarios;
 insert into inventarios (tipo, descripcion, serie, marca, modelo, cantidad)values (2,'External HDD','1N0321615484','ADATA','HD680',13);
@@ -171,10 +178,13 @@ create table registroTrabajos (
     dispositivoId int,
     historial varchar(800),
     createdAt date,
-    updatedAt date
+    updatedAt date,
+    foreign key (perito) references usrtecnicos (correo),
+    foreign key (dispositivoId) references dispositivoPs(id)
 );
 select*from registroTrabajos;
 drop table registroTrabajos;
+delete from registroTrabajos where id = 3;
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS misTrabajos$$
@@ -184,7 +194,7 @@ CREATE PROCEDURE misTrabajos(
 BEGIN
 	DECLARE numP INT;
 	SET numP = (select numPerito from usrtecnicos where correo = perito);
-	SELECT * FROM dispositivoPs where peritoAsignado = numP and estado!='Terminado';
+	SELECT * FROM dispositivoPs where peritoAsignado = numP and estado!='Terminado' and estado!='Entregado';
 END
 $$
 call misTrabajos("utec1");
@@ -196,7 +206,10 @@ create table registroRepuestos(
     inventarioId int,
     cantidad int,
     createdAt date,
-    updatedAt date
+    updatedAt date,
+    foreign key (perito) references usrtecnicos (correo),
+    foreign key (dispositivoId) references dispositivoPs(id),
+    foreign key (inventarioId) references inventarios(id)
 );
 select*from registroRepuestos;
 drop table registroRepuestos;
@@ -247,12 +260,14 @@ create table dispServs(
     dispId int,
     servId int,
     createdAt date,
-    updatedAt date
+    updatedAt date,
+    foreign key (dispId) references dispositivoPs (id),
+    foreign key (servId) references servicios (id)
 );
 select*from dispServs;
 drop table dispServs;
 
-create table regServicios(
+/* create table regServicios(
 	id int primary key auto_increment,
     disp int,
     servicio varchar(250),
@@ -262,7 +277,7 @@ create table regServicios(
     updatedAt date
 );
 select*from regServicios;
-drop table regServicios;
+drop table regServicios;*/
 
 /* ************************************
 ***************************************
@@ -284,7 +299,7 @@ create table emprs(
 insert into emprs (nombre,direccion,telefono,correo,regMercantil,nit)
 values ('LEFCI','z13','+50288888888','soporte@grupoitd.com','reg_mercantil','589367k')
 insert into emprs (nombre,direccion,telefono,correo,regMercantil,nit)
-values ('LEFCI2','z132','+50288888888','soporte2@grupoitd.com','reg_mercantil2','589367k2')
+values ('ITD','z132','+50289657','soporte2@grupoitd.com','reg_mercantil2','589367k2')
 select*from emprs;
 drop table emprs;
 
@@ -294,7 +309,8 @@ create table cuents(
     banco varchar(250),
     numero bigint,
     createdAt date,
-    updatedAt date
+    updatedAt date,
+    foreign key (emprsId) references emprs (id)
 );
 insert into cuents(emprsId, banco, numero) values (1,'GyT',93849283748581273);
 insert into cuents(emprsId, banco, numero) values (1,'Banrural','2930495839402839');
